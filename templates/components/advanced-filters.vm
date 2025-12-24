@@ -54,9 +54,9 @@
             <div class="form-grid form-grid-4">
                 
                 ## Data do Protocolo
-                #parse("components/filters/date-range-field.vm")
                 #set($fieldId = "dt_protocolo_tdt")
                 #set($fieldLabel = "Data do Protocolo")
+                #parse("components/filters/date-range-field.vm")
                 
                 ## Data da Juntada
                 #set($fieldId = "dt_juntada_tdt")
