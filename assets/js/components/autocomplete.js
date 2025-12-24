@@ -183,3 +183,8 @@ const Autocomplete = (function() {
         configure
     };
 })();
+
+function loadValues(input) {
+    Autocomplete.load(input);
+}
+window.loadValues = loadValues;

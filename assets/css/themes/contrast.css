@@ -381,3 +381,14 @@
         text-decoration: underline;
     }
 }
+
+/* ============================================
+   MODO ESCURO AUTOMÁTICO
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    :root:not(.light-theme) {
+        --background-white: #1a1a1a;
+        --text-primary: #ffffff;
+        /* ... */
+    }
+}
