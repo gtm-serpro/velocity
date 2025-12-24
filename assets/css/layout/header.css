@@ -1,0 +1,199 @@
+/**
+ * header.css
+ * Estilos do cabeçalho da aplicação
+ */
+
+/* ============================================
+   CONTAINER DO HEADER
+   ============================================ */
+#header {
+    width: 100%;
+    position: relative;
+    z-index: var(--z-sticky);
+}
+
+/* ============================================
+   BARRA SUPERIOR (TOP3)
+   ============================================ */
+#top3 {
+    height: 84px;
+    background-image: url('/img/4fbae8678490deba79866a4ec705b22c.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-top: 3px solid #0071BC;
+    box-sizing: content-box;
+    text-align: right;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-md);
+}
+
+/* ============================================
+   LOGOS
+   ============================================ */
+#logo-eprocesso {
+    float: left;
+    margin: 8px 8px 8px 20px;
+    max-height: 78px;
+}
+
+#logo-receita,
+#logo-pgfn,
+#logo-carf {
+    margin-right: 10px;
+    max-height: 78px;
+    vertical-align: middle;
+    margin-top: -22px;
+    text-align: right;
+}
+
+#logo-icone {
+    margin-top: 22px;
+    max-height: 78px;
+    vertical-align: middle;
+    text-align: right;
+}
+
+/* Grupo de logos à direita */
+.header-logos-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* ============================================
+   NAVEGAÇÃO PRINCIPAL (SE HOUVER)
+   ============================================ */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header-nav a {
+    color: var(--text-inverse);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: var(--transition-base);
+}
+
+.header-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+/* ============================================
+   CONTROLES DO HEADER
+   ============================================ */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.header-control-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--text-inverse);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition: var(--transition-base);
+}
+
+.header-control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Botão de alto contraste */
+.contrast-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.contrast-toggle i {
+    font-size: var(--font-size-md);
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+@media (max-width: 1024px) {
+    #top3 {
+        height: auto;
+        min-height: 60px;
+        padding: var(--spacing-sm);
+        flex-wrap: wrap;
+    }
+    
+    #logo-eprocesso {
+        margin: var(--spacing-xs);
+        max-height: 50px;
+    }
+    
+    #logo-receita,
+    #logo-pgfn,
+    #logo-carf,
+    #logo-icone {
+        max-height: 40px;
+        margin: var(--spacing-xs);
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #top3 {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    #logo-eprocesso {
+        float: none;
+        display: block;
+        margin: var(--spacing-sm) auto;
+    }
+    
+    .header-logos-right {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #logo-receita,
+    #logo-pgfn,
+    #logo-carf {
+        display: none;
+    }
+    
+    #logo-icone {
+        margin-top: 0;
+    }
+    
+    .header-controls {
+        width: 100%;
+        justify-content: center;
+        margin-top: var(--spacing-sm);
+    }
+}
+
+/* ============================================
+   MODO ALTO CONTRASTE
+   ============================================ */
+.high-contrast #top3 {
+    background-image: none;
+    background-color: #000;
+    border-top-color: #fff;
+}
+
+.high-contrast #logo-eprocesso,
+.high-contrast #logo-receita,
+.high-contrast #logo-pgfn,
+.high-contrast #logo-carf,
+.high-contrast #logo-icone {
+    filter: grayscale(100%) contrast(2);
+}

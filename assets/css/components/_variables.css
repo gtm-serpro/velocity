@@ -1,0 +1,136 @@
+/**
+ * _variables.css
+ * Variáveis CSS globais do eProcesso Buscador
+ */
+
+:root {
+    /* ============================================
+       CORES PRIMÁRIAS (Gov.br)
+       ============================================ */
+    --primary-color: #1351B4;
+    --primary-dark: #0C326F;
+    --primary-light: #2670E8;
+    --primary-lightest: #C5D4EB;
+    
+    /* ============================================
+       CORES SECUNDÁRIAS
+       ============================================ */
+    --secondary-color: #666666;
+    --secondary-dark: #4A4A4A;
+    --secondary-light: #888888;
+    
+    /* ============================================
+       CORES DE STATUS
+       ============================================ */
+    --success-color: #168821;
+    --success-light: #E3F9E5;
+    --warning-color: #FFCD07;
+    --warning-light: #FFF5CC;
+    --danger-color: #E52207;
+    --danger-light: #FDE0DB;
+    --info-color: #155BCB;
+    --info-light: #D4E5FF;
+    
+    /* ============================================
+       CORES DE FUNDO
+       ============================================ */
+    --background-white: #FFFFFF;
+    --background-light: #F9F9F9;
+    --background-gray: #F0F0F0;
+    --background-dark: #333333;
+    
+    /* ============================================
+       CORES DE BORDA
+       ============================================ */
+    --border-color: #DDDDDD;
+    --border-light: #E8E8E8;
+    --border-dark: #CCCCCC;
+    
+    /* ============================================
+       CORES DE TEXTO
+       ============================================ */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-muted: #888888;
+    --text-light: #AAAAAA;
+    --text-inverse: #FFFFFF;
+    
+    /* ============================================
+       SOMBRAS
+       ============================================ */
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.16);
+    
+    /* ============================================
+       ESPAÇAMENTOS
+       ============================================ */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+    
+    /* ============================================
+       BORDAS
+       ============================================ */
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+    --border-radius-full: 50%;
+    
+    /* ============================================
+       TIPOGRAFIA
+       ============================================ */
+    --font-family-base: 'Rawline', 'Raleway', Arial, Helvetica, sans-serif;
+    --font-family-mono: 'Courier New', Courier, monospace;
+    
+    --font-size-xs: 11px;
+    --font-size-sm: 13px;
+    --font-size-base: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-xxl: 24px;
+    --font-size-xxxl: 32px;
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    --line-height-tight: 1.2;
+    --line-height-base: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* ============================================
+       TRANSIÇÕES
+       ============================================ */
+    --transition-fast: all 0.15s ease;
+    --transition-base: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    
+    /* ============================================
+       Z-INDEX
+       ============================================ */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
+    
+    /* ============================================
+       LARGURAS MÁXIMAS
+       ============================================ */
+    --max-width-sm: 540px;
+    --max-width-md: 720px;
+    --max-width-lg: 960px;
+    --max-width-xl: 1140px;
+    --max-width-xxl: 1320px;
+}

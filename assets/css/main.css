@@ -1,22 +1,117 @@
-/* assets/css/main.css */
+/**
+ * main.css
+ * CSS principal - importa todos os módulos
+ * 
+ * eProcesso Buscador
+ * SERPRO / Receita Federal do Brasil
+ */
 
-/* Variáveis */
+/* ============================================
+   VARIÁVEIS GLOBAIS
+   ============================================ */
 @import '_variables.css';
 
-/* Base */
+/* ============================================
+   BASE (Reset e Tipografia)
+   ============================================ */
 @import 'base/reset.css';
 @import 'base/typography.css';
 
-/* Layout */
+/* ============================================
+   LAYOUT (Header e Footer)
+   ============================================ */
 @import 'layout/header.css';
 @import 'layout/footer.css';
 
-/* Componentes */
+/* ============================================
+   COMPONENTES
+   ============================================ */
 @import 'components/search-form.css';
 @import 'components/advanced-filters.css';
 @import 'components/results.css';
 @import 'components/navigation.css';
 @import 'components/pagination.css';
 
-/* Temas */
+/* ============================================
+   TEMAS
+   ============================================ */
 @import 'themes/contrast.css';
+
+/* ============================================
+   UTILITÁRIOS GLOBAIS
+   ============================================ */
+
+/* Clearfix */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Visualmente escondido mas acessível */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Container principal */
+#content {
+    min-height: calc(100vh - 200px);
+    padding: var(--spacing-md);
+}
+
+/* Mensagens de erro */
+.error {
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.error h1 {
+    color: var(--danger-color);
+}
+
+/* Loading state */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Constraints (filtros ativos antigos) */
+.constraints {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-sm);
+}
+
+.constraints a {
+    margin-right: var(--spacing-sm);
+    color: var(--danger-color);
+}
+
+/* Print styles */
+@media print {
+    #header,
+    #footer,
+    .dialog-overlay,
+    .dialog-box,
+    .btn-filters,
+    .navigators {
+        display: none !important;
+    }
+    
+    .results {
+        margin-left: 0 !important;
+    }
+    
+    .result-document {
+        page-break-inside: avoid;
+        border: 1px solid #000;
+        margin-bottom: 10px;
+    }
+}

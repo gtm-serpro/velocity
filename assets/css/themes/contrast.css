@@ -1,0 +1,383 @@
+/**
+ * contrast.css
+ * Tema de alto contraste para acessibilidade
+ */
+
+/* ============================================
+   MODO ALTO CONTRASTE
+   ============================================ */
+.high-contrast {
+    /* Cores de alto contraste */
+    --primary-color: #FFFF00;
+    --primary-dark: #CCCC00;
+    --primary-light: #FFFF66;
+    
+    --secondary-color: #FFFFFF;
+    --secondary-dark: #CCCCCC;
+    
+    --background-white: #000000;
+    --background-light: #1A1A1A;
+    --background-gray: #333333;
+    --background-dark: #000000;
+    
+    --text-primary: #FFFFFF;
+    --text-secondary: #EEEEEE;
+    --text-muted: #CCCCCC;
+    --text-inverse: #000000;
+    
+    --border-color: #FFFFFF;
+    --border-light: #CCCCCC;
+    
+    --success-color: #00FF00;
+    --warning-color: #FFFF00;
+    --danger-color: #FF0000;
+    --info-color: #00FFFF;
+}
+
+/* ============================================
+   BODY E ELEMENTOS BASE
+   ============================================ */
+.high-contrast body {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+.high-contrast a {
+    color: #FFFF00;
+    text-decoration: underline;
+}
+
+.high-contrast a:hover {
+    color: #FFFFFF;
+    background-color: #FFFF00;
+    text-decoration: none;
+}
+
+.high-contrast a:focus {
+    outline: 3px solid #FFFFFF;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+.high-contrast .btn {
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast .btn-primary {
+    background-color: #FFFF00;
+    color: #000000;
+    border-color: #FFFF00;
+}
+
+.high-contrast .btn-primary:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.high-contrast .btn-secondary,
+.high-contrast .btn-filters {
+    background-color: #000000;
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.high-contrast .btn-secondary:hover,
+.high-contrast .btn-filters:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+/* ============================================
+   INPUTS
+   ============================================ */
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast input:focus,
+.high-contrast textarea:focus,
+.high-contrast select:focus {
+    outline: 3px solid #FFFF00;
+    border-color: #FFFF00;
+}
+
+.high-contrast input::placeholder {
+    color: #AAAAAA;
+}
+
+/* ============================================
+   FORMULÁRIO DE BUSCA
+   ============================================ */
+.high-contrast .query-box {
+    background-color: #1A1A1A;
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast .input-group input {
+    background-color: #000000;
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.high-contrast .clear-input-btn {
+    color: #FFFFFF;
+}
+
+.high-contrast .clear-input-btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+/* ============================================
+   FILTROS ATIVOS
+   ============================================ */
+.high-contrast .active-filters {
+    background-color: #1A1A1A;
+    border: 1px solid #FFFFFF;
+}
+
+.high-contrast .filter-tag {
+    background-color: #000000;
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.high-contrast .filter-tag:hover {
+    background-color: #FF0000;
+    border-color: #FF0000;
+}
+
+/* ============================================
+   DIALOG DE FILTROS AVANÇADOS
+   ============================================ */
+.high-contrast .dialog-overlay {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.high-contrast .dialog-box {
+    background-color: #000000;
+    border: 3px solid #FFFFFF;
+}
+
+.high-contrast .dialog-header {
+    background-color: #1A1A1A;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+.high-contrast .dialog-header h2 {
+    color: #FFFF00;
+}
+
+.high-contrast .dialog-close,
+.high-contrast .dialog-maximize {
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+.high-contrast .dialog-close:hover,
+.high-contrast .dialog-maximize:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.high-contrast .dialog-footer {
+    background-color: #1A1A1A;
+    border-top: 2px solid #FFFFFF;
+}
+
+/* ============================================
+   SEÇÕES DE FILTROS
+   ============================================ */
+.high-contrast .filter-section {
+    background-color: #1A1A1A;
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast .filter-section h3 {
+    color: #FFFF00;
+    border-bottom-color: #FFFF00;
+}
+
+.high-contrast .form-group label {
+    color: #FFFFFF;
+}
+
+/* ============================================
+   TOGGLE SWITCH
+   ============================================ */
+.high-contrast .toggle-switch {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast .toggle-switch:hover {
+    background-color: #333333;
+}
+
+.high-contrast .toggle-switch.exclude {
+    background-color: #330000;
+    border-color: #FF0000;
+    color: #FF0000;
+}
+
+.high-contrast .toggle-switch.exact {
+    background-color: #003300;
+    border-color: #00FF00;
+    color: #00FF00;
+}
+
+/* ============================================
+   AUTOCOMPLETE BADGE
+   ============================================ */
+.high-contrast .autocomplete-badge {
+    background-color: #FFFF00;
+    color: #000000;
+}
+
+/* ============================================
+   RESULTADOS
+   ============================================ */
+.high-contrast .result-document {
+    background-color: #1A1A1A;
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast .result-document:hover {
+    border-color: #FFFF00;
+}
+
+.high-contrast .result-title {
+    background-color: #333333;
+    border-bottom-color: #FFFFFF;
+}
+
+.high-contrast .highlight {
+    background-color: #FFFF00;
+    color: #000000;
+}
+
+/* ============================================
+   NAVEGAÇÃO FACETADA
+   ============================================ */
+.high-contrast .navigators {
+    background-color: #1A1A1A;
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast .navigators h2 {
+    color: #FFFF00;
+    border-bottom-color: #FFFF00;
+}
+
+.high-contrast .navigators a {
+    color: #FFFFFF;
+}
+
+.high-contrast .navigators a:hover {
+    color: #FFFF00;
+}
+
+.high-contrast .facet-field {
+    color: #FFFF00;
+}
+
+/* ============================================
+   PAGINAÇÃO
+   ============================================ */
+.high-contrast .pagination {
+    background-color: #1A1A1A;
+    border: 1px solid #FFFFFF;
+}
+
+.high-contrast .pagination a {
+    background-color: #FFFF00;
+    color: #000000;
+}
+
+.high-contrast .pagination a:hover {
+    background-color: #FFFFFF;
+}
+
+.high-contrast .page-num {
+    background-color: #003300;
+    color: #00FF00;
+}
+
+/* ============================================
+   TABELAS
+   ============================================ */
+.high-contrast table {
+    border: 2px solid #FFFFFF;
+}
+
+.high-contrast th {
+    background-color: #333333;
+    color: #FFFF00;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+.high-contrast td {
+    border-bottom: 1px solid #666666;
+}
+
+.high-contrast tbody tr:hover {
+    background-color: #333333;
+}
+
+/* ============================================
+   AUTOCOMPLETE DROPDOWN (jQuery UI)
+   ============================================ */
+.high-contrast .ui-autocomplete {
+    background-color: #000000 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+.high-contrast .ui-menu-item {
+    color: #FFFFFF !important;
+}
+
+.high-contrast .ui-menu-item:hover,
+.high-contrast .ui-menu-item.ui-state-focus {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+}
+
+/* ============================================
+   SCROLLBAR EM ALTO CONTRASTE
+   ============================================ */
+.high-contrast ::-webkit-scrollbar-track {
+    background: #1A1A1A;
+}
+
+.high-contrast ::-webkit-scrollbar-thumb {
+    background: #FFFFFF;
+}
+
+.high-contrast ::-webkit-scrollbar-thumb:hover {
+    background: #FFFF00;
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+@media print {
+    .high-contrast body {
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+    
+    .high-contrast a {
+        color: #000000;
+        text-decoration: underline;
+    }
+}
