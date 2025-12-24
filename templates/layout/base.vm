@@ -1,0 +1,33 @@
+## ============================================
+## templates/layout/base.vm
+## ============================================
+##
+## Base template - estrutura HTML principal
+##
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    #parse("layout/head.vm")
+</head>
+<body>
+    #parse("layout/header.vm")
+    
+    <div id="content">
+        $content
+    </div>
+    
+    #parse("layout/footer.vm")
+    
+    ## Scripts no final do body para melhor performance
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/assets/js/utils/solr-escape.js"></script>
+    <script src="/assets/js/utils/date-utils.js"></script>
+    <script src="/assets/js/utils/validation.js"></script>
+    <script src="/assets/js/components/toggle-mode.js"></script>
+    <script src="/assets/js/components/search-form.js"></script>
+    <script src="/assets/js/components/advanced-filters.js"></script>
+    <script src="/assets/js/contrast.js"></script>
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

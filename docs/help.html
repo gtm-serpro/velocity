@@ -1,0 +1,205 @@
+# ============================================
+# docs/help.html
+# ============================================
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - eProcesso Buscador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #1351B4;
+            border-bottom: 2px solid #1351B4;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #0C326F;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #666;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .example {
+            background: #e3f2fd;
+            padding: 10px;
+            border-left: 4px solid #2196F3;
+            margin: 10px 0;
+        }
+        .tip {
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ff9800;
+            margin: 10px 0;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Ajuda - eProcesso Buscador</h1>
+
+    <div class="section">
+        <h2>Busca Básica</h2>
+        <p>Digite os termos que deseja buscar no campo principal e clique em <strong>Buscar</strong>.</p>
+        
+        <div class="example">
+            <strong>Exemplo:</strong> <code>imposto de renda</code>
+            <p>Busca por documentos que contenham "imposto" E "de" E "renda"</p>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Dica:</strong> Use aspas para buscar uma frase exata: <code>"imposto de renda"</code>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Operadores de Busca</h2>
+        
+        <h3>AND (E)</h3>
+        <p>Busca documentos que contenham TODOS os termos:</p>
+        <div class="example">
+            <code>processo AND tributário</code>
+        </div>
+
+        <h3>OR (OU)</h3>
+        <p>Busca documentos que contenham QUALQUER um dos termos:</p>
+        <div class="example">
+            <code>IRPF OR IRPJ</code>
+        </div>
+
+        <h3>NOT (NÃO)</h3>
+        <p>Exclui documentos que contenham o termo:</p>
+        <div class="example">
+            <code>processo NOT arquivado</code>
+        </div>
+
+        <h3>Parênteses</h3>
+        <p>Agrupa operadores para controlar a ordem de execução:</p>
+        <div class="example">
+            <code>(IRPF OR IRPJ) AND 2024</code>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Filtros Avançados</h2>
+        <p>Clique em <strong>Filtros Avançados</strong> para acessar opções de busca mais específicas:</p>
+
+        <h3>Filtros de Data</h3>
+        <ul>
+            <li><strong>Data do Protocolo:</strong> Quando o processo foi protocolado</li>
+            <li><strong>Data da Juntada:</strong> Quando o documento foi juntado ao processo</li>
+            <li><strong>Data de Registro:</strong> Quando o processo foi registrado</li>
+            <li><strong>Data de Anexação:</strong> Quando foi anexado a outro processo</li>
+        </ul>
+
+        <h3>Modos de Busca</h3>
+        <p>Cada campo de texto possui três modos:</p>
+        <ul>
+            <li><strong>✓ Contém:</strong> Busca parcial (padrão)</li>
+            <li><strong>✗ Não Contém:</strong> Exclui documentos com o termo</li>
+            <li><strong>= Igual:</strong> Busca exata</li>
+        </ul>
+
+        <div class="example">
+            <strong>Exemplo - Contém:</strong>
+            <p>Digitando "Silva" encontra: Silva, Silvana, João da Silva</p>
+            
+            <strong>Exemplo - Igual:</strong>
+            <p>Digitando "Silva" encontra apenas: Silva</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Autocomplete</h2>
+        <p>Campos marcados com <span style="background:#2196F3;color:white;padding:2px 6px;border-radius:10px;font-size:9px;">🪄 AUTO</span> possuem sugestões automáticas.</p>
+        <p>Digite pelo menos 2 caracteres para ver as sugestões mais comuns.</p>
+    </div>
+
+    <div class="section">
+        <h2>Navegação Facetada</h2>
+        <p>Use a barra lateral para refinar sua busca:</p>
+        <ul>
+            <li>Clique em qualquer valor para filtrar por aquela categoria</li>
+            <li>O número entre parênteses indica quantos resultados existem</li>
+            <li>Você pode aplicar múltiplos filtros simultaneamente</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Exportação de Resultados</h2>
+        <p>No rodapé da página, você encontra links para exportar os resultados em:</p>
+        <ul>
+            <li><strong>XML:</strong> Para processamento automatizado</li>
+            <li><strong>JSON:</strong> Para APIs e integrações</li>
+            <li><strong>CSV:</strong> Para análise em planilhas</li>
+        </ul>
+        
+        <div class="tip">
+            <strong>💡 Dica:</strong> Adicione <code>&rows=100</code> na URL para exportar mais resultados (até 1000)
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Atalhos de Teclado</h2>
+        <ul>
+            <li><strong>ESC:</strong> Fecha o dialog de filtros avançados</li>
+            <li><strong>F11:</strong> Maximiza/restaura o dialog de filtros</li>
+            <li><strong>Enter:</strong> Executa a busca</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Dúvidas Frequentes</h2>
+        
+        <h3>Por que minha busca não retornou resultados?</h3>
+        <p>Verifique se:</p>
+        <ul>
+            <li>Os termos estão escritos corretamente</li>
+            <li>Você não está usando filtros muito restritivos</li>
+            <li>Os dados que procura realmente existem no sistema</li>
+        </ul>
+
+        <h3>Como buscar por CPF ou CNPJ?</h3>
+        <p>Digite apenas os números, sem pontos ou traços:</p>
+        <div class="example">
+            <code>12345678901</code> ao invés de <code>123.456.789-01</code>
+        </div>
+
+        <h3>Como buscar processos de um período?</h3>
+        <p>Use os filtros de data nos Filtros Avançados. Você pode especificar apenas a data inicial, apenas a final, ou ambas.</p>
+    </div>
+
+    <div class="section">
+        <h2>Contato</h2>
+        <p>Para suporte técnico ou dúvidas, entre em contato:</p>
+        <p><strong>Email:</strong> eduardo.saintclair@serpro.gov.br</p>
+    </div>
+</body>
+</html>

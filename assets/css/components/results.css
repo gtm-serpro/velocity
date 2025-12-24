@@ -1,0 +1,187 @@
+/* ============================================
+   assets/css/components/results.css
+   ============================================ */
+/**
+ * results.css
+ * Estilos para exibição de resultados de busca
+ */
+
+/* Container de resultados */
+.results {
+    margin-left: 310px; /* Espaço para navegação lateral */
+}
+
+/* Documento de resultado individual */
+.result-document {
+    border: 1px solid #9f9f9f;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.65);
+    margin: 5px 5px 20px 5px;
+    padding: 15px;
+    background-color: #e7e7e7;
+    border-radius: 4px;
+    transition: var(--transition-base);
+}
+
+.result-document:hover {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.75);
+    transform: translateY(-2px);
+}
+
+/* Título do resultado */
+.result-document .result-title {
+    background-color: var(--background-white);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    color: #000;
+    margin: -15px -15px 4px;
+    padding: 10px 15px 7px;
+    line-height: 17px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.result-document .result-title a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.result-document .result-title a:hover {
+    text-decoration: underline;
+}
+
+/* Corpo do resultado */
+.result-body {
+    background: #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+/* Campos do documento */
+.result-document div {
+    color: #404040;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 2px 0 1px;
+}
+
+.result-document div strong {
+    color: #000;
+    font-weight: bold;
+}
+
+/* Nome do campo */
+.field-name {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Highlight de termos buscados */
+.highlight {
+    color: white;
+    background-color: #ff9800;
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.highlight-box {
+    margin-left: 15px;
+    padding: 8px;
+    background: #fff3cd;
+    border-left: 3px solid #ff9800;
+}
+
+/* More Like This */
+.mlt {
+    margin: 10px 0 0 10px;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.mlt ul {
+    list-style: none;
+    padding: 0;
+}
+
+.mlt li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.mlt li:last-child {
+    border-bottom: none;
+}
+
+/* Grupos (agrupamento de resultados) */
+.group-value {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 10px;
+    padding: 5px;
+    background: #e3f2fd;
+    border-radius: 4px;
+}
+
+.group-doclist {
+    margin-left: 15px;
+}
+
+/* Mapa (se houver) */
+.map {
+    float: right;
+    position: relative;
+    margin: 0 0 10px 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.map img {
+    display: block;
+}
+
+.map div {
+    text-align: center;
+    background: var(--background-white);
+    padding: 5px;
+}
+
+/* Info sobre resultados */
+.results-info {
+    background: var(--background-white);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 0 5px 20px 310px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.results-count {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .results,
+    .results-info {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .result-document {
+        margin: 5px 0 15px 0;
+        padding: 12px;
+    }
+    
+    .map {
+        float: none;
+        margin: 10px auto;
+        display: block;
+    }
+}

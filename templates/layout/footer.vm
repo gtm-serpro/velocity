@@ -1,0 +1,24 @@
+## ============================================
+## templates/layout/footer.vm
+## ============================================
+##
+## Footer com links de exportação
+##
+#set ($startPage = ($page.current_page_number - 1) * $page.results_per_page)
+
+<div id="footer">
+    <div>
+        <a href="#url_for_lens&wt=xml&start=$startPage#if($request.params.get('debugQuery'))&debugQuery=true#end"
+           title="Clique para obter o resultado em XML. Acrescente &rows=100 na URL para 100 registros, por exemplo.">
+            Resultados em XML
+        </a>,
+        <a href="#url_for_lens&wt=json&start=$startPage#if($request.params.get('debugQuery'))&debugQuery=true#end"
+           title="Clique para obter o resultado em JSON. Acrescente &rows=100 na URL para 100 registros, por exemplo.">
+            em JSON
+        </a> e 
+        <a href="#url_for_lens&wt=csv&start=$startPage#if($request.params.get('debugQuery'))&debugQuery=true#end"
+           title="Clique para obter o resultado em CSV. Acrescente &rows=100 na URL para 100 registros, por exemplo.">
+            em CSV
+        </a>
+    </div>
+</div>

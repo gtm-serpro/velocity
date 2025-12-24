@@ -1,0 +1,105 @@
+/* ============================================
+   assets/css/components/pagination.css
+   ============================================ */
+/**
+ * pagination.css
+ * Estilos para controles de paginação
+ */
+
+.pagination {
+    margin: 5px;
+    margin-left: 310px;
+    padding: 10px 5px;
+    text-align: right;
+    background: var(--background-white);
+    border-radius: 4px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Texto de resultados encontrados */
+.pagination > span:first-child {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.pagination .results-found {
+    font-size: 16px;
+    line-height: 16px;
+    padding-right: 5px;
+    color: var(--primary-color);
+}
+
+/* Controles de navegação */
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination a,
+.pagination .page-num,
+.pagination .page-count {
+    display: inline-block;
+    margin: 0 2px;
+    padding: 6px 12px;
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+
+/* Links de navegação */
+.pagination a {
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    color: var(--background-white);
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-1px);
+}
+
+.pagination a:active {
+    transform: translateY(0);
+}
+
+/* Números de página */
+.page-num,
+.page-count {
+    color: #333;
+    font-weight: bold;
+}
+
+.page-num {
+    background: #e3f2fd;
+    border-radius: 4px;
+    color: var(--primary-color);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .pagination {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .pagination {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .pagination > span:first-child {
+        width: 100%;
+    }
+    
+    .pagination-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}

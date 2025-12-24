@@ -1,0 +1,19 @@
+## ============================================
+## templates/components/did-you-mean.vm
+## ============================================
+##
+## Sugestões de correção ortográfica
+##
+#set($collations = $response.response.spellcheck.collations.getAll("collation"))
+#if($collations && $collations.size() > 0)
+    <div class="did-you-mean">
+        <span>Você quis dizer:</span>
+        #foreach($collation in $collations)
+            <a href="#{url_for_home}#{lensNoQ}&q=$esc.url($collation.collationQuery)">
+                $esc.html($collation.collationQuery)
+            </a> 
+            ($collation.hits resultados)?
+            #if($velocityCount < $collations.size()), #end
+        #end
+    </div>
+#end

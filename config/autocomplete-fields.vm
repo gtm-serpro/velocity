@@ -1,0 +1,20 @@
+# ============================================
+# config/autocomplete-fields.vm
+# ============================================
+##
+## Lista de campos que possuem autocomplete
+##
+#set($autocompleteFields = [
+    'grupo_processo_s',
+    'tipo_processo_s',
+    'subtipo_processo_s',
+    'situacao_s',
+    'tipo_documento_s',
+    'tributo_act_s',
+    'unidade_origem_s',
+    'equipe_origem_s',
+    'nome_unidade_atual_s',
+    'nome_equipe_atual_s',
+    'aleg_recurso_contrib_txt',
+    'result_questdrj_nivel1_s'
+])

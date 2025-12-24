@@ -1,0 +1,35 @@
+# ============================================
+# config/field-labels.vm
+# ============================================
+##
+## Mapeamento de labels amigáveis para campos
+##
+#set($fieldLabels = {
+    'grupo_processo_s': 'Grupo do Processo',
+    'tipo_processo_s': 'Tipo de Processo',
+    'subtipo_processo_s': 'Subtipo de Processo',
+    'processo_s': 'Número do Processo',
+    'situacao_s': 'Situação do Processo',
+    'assuntos_objetos_s': 'Assuntos/Objetos',
+    'tipo_documento_s': 'Tipo de Documento',
+    'titulo_s': 'Título do Documento',
+    'numero_doc_principal_exp_s': 'Número do Documento Principal',
+    'tributo_act_s': 'Tributo ACT',
+    'valor_processo_d': 'Valor do Processo',
+    'unidade_origem_s': 'Unidade de Origem',
+    'equipe_origem_s': 'Equipe de Origem',
+    'nome_unidade_atual_s': 'Unidade Atual',
+    'nome_equipe_atual_s': 'Equipe Atual',
+    'ni_contribuinte_s': 'NI do Contribuinte',
+    'nome_contribuinte_s': 'Nome do Contribuinte',
+    'cpf_responsavel_s': 'CPF do Responsável',
+    'nome_usuario_juntada_doc_s': 'Nome do Usuário que Juntou',
+    'nome_relator_drj_s': 'Nome do Relator DRJ',
+    'aleg_recurso_contrib_txt': 'Alegações no Recurso do Contribuinte',
+    'result_questdrj_nivel1_s': 'Resultado Julgamento DRJ Nível 1',
+    'result_questdrj_nivel2_s': 'Resultado Julgamento DRJ Nível 2',
+    'dt_protocolo_tdt': 'Data do Protocolo',
+    'dt_juntada_tdt': 'Data da Juntada',
+    'dt_registro_tdt': 'Data de Registro',
+    'dt_anexacao_tdt': 'Data de Anexação'
+})

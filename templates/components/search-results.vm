@@ -1,0 +1,41 @@
+## ============================================
+## templates/components/search-results.vm
+## ============================================
+##
+## Lista de resultados da busca
+##
+<div class="results">
+    #if($response.response.get('grouped'))
+        ## Resultados agrupados
+        #foreach($grouping in $response.response.get('grouped'))
+            <div class="result-document">
+                <div class="result-title">
+                    <b>$grouping.key</b>
+                </div>
+                <div>Total de correspondências no grupo: $grouping.value.matches</div>
+                <div>
+                    #foreach($group in $grouping.value.groups)
+                        <div class="group-value">
+                            #if($group.groupValue)
+                                $group.groupValue
+                            #else
+                                <i>Sem grupo</i>
+                            #end
+                            <span>($group.doclist.numFound)</span>
+                        </div>
+                        <div class="group-doclist">
+                            #foreach($doc in $group.doclist)
+                                #parse("documents/hit.vm")
+                            #end
+                        </div>
+                    #end
+                </div>
+            </div>
+        #end
+    #else
+        ## Resultados normais
+        #foreach($doc in $response.results)
+            #parse("documents/hit.vm")
+        #end
+    #end
+</div>

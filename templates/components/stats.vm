@@ -1,0 +1,41 @@
+## ============================================
+## templates/components/stats.vm
+## ============================================
+##
+## Estatísticas dos campos numéricos
+##
+#if($response.response.stats.stats_fields)
+    <h2 title="Estatísticas automaticamente geradas para os campos numéricos respeitando os resultados da busca e filtros">
+        Estatísticas
+    </h2>
+    
+    #set($labelsMap = {})
+    #set($labelsMap['total_valor_nota'] = 'Valor total da nota')
+    #set($labelsMap['total_valor_icms'] = 'Valor total do ICMS')
+    #set($labelsMap['total_valor_icms_desonerado'] = 'Valor total do ICMS desonerado')
+    #set($labelsMap['total_valor_ipi'] = 'Valor total do IPI')
+    #set($labelsMap['total_valor_pis'] = 'Valor total do PIS')
+    #set($labelsMap['total_valor_cofins'] = 'Valor total do COFINS')
+    #set($labelsMap['det_produto_valor_unitario_tfs'] = 'Valor unitário por produto')
+    #set($labelsMap['valor_processo_d'] = 'Valor do processo')
+
+    #foreach($field in $response.response.stats.stats_fields)
+        #if($field.value && $field.value.size() > 0)
+            <span class="facet-field">
+                #if($labelsMap.get($field.key))
+                    $labelsMap.get($field.key) 
+                #else 
+                    $field.key 
+                #end
+            </span>
+            #set($stat = $field.value)
+            <ul>
+                <li><strong>Mínimo:</strong> $number.format('R$ #,##0.00', $stat.min)</li>
+                <li><strong>Máximo:</strong> $number.format('R$ #,##0.00', $stat.max)</li>
+                <li><strong>Soma:</strong> $number.format('R$ #,##0.00', $stat.sum)</li>
+                <li><strong>Média:</strong> $number.format('R$ #,##0.00', $stat.mean)</li>
+                <li><strong>Desvio padrão:</strong> $number.format('R$ #,##0.00', $stat.stddev)</li>
+            </ul>
+        #end
+    #end
+#end

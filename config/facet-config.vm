@@ -1,0 +1,22 @@
+# ============================================
+# config/facet-config.vm
+# ============================================
+##
+## Configuração de facetas
+##
+#set($facetFields = [
+    'grupo_processo_s',
+    'tipo_processo_s',
+    'subtipo_processo_s',
+    'situacao_s',
+    'tipo_documento_s',
+    'unidade_origem_s',
+    'equipe_origem_s',
+    'nome_unidade_atual_s',
+    'nome_equipe_atual_s',
+    'tributo_act_s',
+    'dt_juntada_tdt'
+])
+
+#set($facetLimit = 10)
+#set($facetMinCount = 1)

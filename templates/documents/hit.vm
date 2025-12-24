@@ -1,0 +1,38 @@
+## ============================================
+## templates/documents/hit.vm
+## ============================================
+##
+## Template genérico para documento de resultado
+##
+#set($docId = $doc.getFieldValue('id'))
+
+<div class="result-document" id="doc-$docId">
+    <div class="result-title">
+        <strong>#field('title')</strong>
+    </div>
+    
+    <div class="result-body">
+        #foreach($fieldName in $doc.getFieldNames())
+            #if($fieldName != 'id' && $fieldName != 'title')
+                <div>
+                    <span class="field-name">$fieldName:</span>
+                    #field($fieldName)
+                </div>
+            #end
+        #end
+    </div>
+    
+    ## Highlighting se disponível
+    #if($response.highlighting.get($docId))
+        <div class="highlight-box">
+            #foreach($entry in $response.highlighting.get($docId).entrySet())
+                <div>
+                    <span class="field-name">$entry.key:</span>
+                    #foreach($snippet in $entry.value)
+                        <span class="highlight">$snippet</span>
+                    #end
+                </div>
+            #end
+        </div>
+    #end
+</div>
