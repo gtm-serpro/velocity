@@ -1,0 +1,118 @@
+##
+## query-form.vm
+## Formulário principal de busca com filtros avançados
+##
+## Dependências:
+## - CSS: /assets/css/components/search-form.css
+## - JS: /assets/js/components/search-form.js
+##
+
+<div class="query-box">
+    <form id="query-form" action="#{url_for_home}" method="GET">
+        
+        ## Campo de busca principal
+        <div class="search-input-wrapper">
+            <div class="input-group has-value">
+                <label for="q">Buscar:</label>
+                <input 
+                    type="text" 
+                    id="q" 
+                    name="q" 
+                    value="$!esc.html($params.get('q'))" 
+                    placeholder="Digite sua busca..." 
+                    autocomplete="off"
+                    aria-label="Campo de busca principal"
+                    data-autocomplete-url="${solr_base_url}/terms"
+                >
+                <button 
+                    type="button" 
+                    class="clear-input-btn" 
+                    onclick="SearchForm.clearMainSearch()" 
+                    title="Limpar busca"
+                    aria-label="Limpar campo de busca"
+                >
+                    ×
+                </button>
+            </div>
+            
+            ## Botões de ação
+            <div class="search-actions">
+                <button 
+                    type="button" 
+                    class="btn btn-filters" 
+                    onclick="AdvancedFilters.open()"
+                    aria-label="Abrir filtros avançados"
+                >
+                    <i class="fas fa-filter"></i> 
+                    Filtros Avançados
+                </button>
+                
+                <button 
+                    type="submit" 
+                    id="querySubmit" 
+                    class="btn btn-primary"
+                    aria-label="Executar busca"
+                >
+                    <i class="fas fa-search"></i>
+                    Buscar
+                </button>
+            </div>
+        </div>
+
+        ## Campos hidden necessários
+        <input type="hidden" name="status" id="status" value="$!esc.html($params.get('status'))">
+        
+        #if($request.params.get('debugQuery'))
+            <input type="hidden" name="debugQuery" value="true">
+        #end
+
+        #if($annotate == true)
+            <input type="hidden" name="annotateBrowse" value="true">
+        #end
+        
+        ## Filtros ativos (fq)
+        #foreach($fq in $request.params.getParams('fq'))
+            #if ($fq != "{!bbox}")
+                <input type="hidden" name="fq" class="active-filter" value="$esc.html($fq)">
+            #end
+        #end
+        
+        ## Query options
+        #set($queryOpts = $request.params.get("queryOpts"))
+        #if($queryOpts && $queryOpts != "")
+            <input type="hidden" name="queryOpts" value="$queryOpts">
+        #end
+        
+        ## Filtros ativos visíveis
+        #if($params.getParams('fq').size() > 0)
+            <div class="active-filters" aria-label="Filtros ativos">
+                <span class="filters-label">Filtros ativos:</span>
+                #foreach($fq in $params.getParams('fq'))
+                    #set($previous_fq_count = $velocityCount - 1)
+                    #if($fq != '')
+                        <a 
+                            href="#url_for_filters($request.params.getParams('fq').subList(0,$previous_fq_count))" 
+                            class="filter-tag"
+                            title="Clique para remover este filtro"
+                            aria-label="Remover filtro: $fq"
+                        >
+                            $esc.html($fq)
+                            <span class="remove-icon">×</span>
+                        </a>
+                    #end
+                #end
+            </div>
+        #end
+
+        ## Include do componente de filtros avançados
+        #parse("components/advanced-filters.vm")
+        
+    </form>
+</div>
+
+## Inicialização do componente
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        SearchForm.init();
+    });
+</script>

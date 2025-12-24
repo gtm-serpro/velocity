@@ -1,0 +1,470 @@
+/**
+ * advanced-filters.css
+ * Estilos para o dialog de filtros avançados
+ */
+
+/* ============================================
+   OVERLAY E DIALOG BASE
+   ============================================ */
+.dialog-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    animation: fadeIn 0.3s;
+}
+
+.dialog-overlay.active {
+    display: block;
+}
+
+.dialog-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background-white);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    max-width: 1200px;
+    max-height: 85vh;
+    width: 95%;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, max-width 0.3s, max-height 0.3s;
+}
+
+.dialog-box.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog-box.maximized {
+    max-width: 98vw;
+    max-height: 95vh;
+    width: 98vw;
+    height: 95vh;
+}
+
+/* ============================================
+   HEADER DO DIALOG
+   ============================================ */
+.dialog-header {
+    background: var(--primary-color);
+    color: var(--background-white);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+    flex-shrink: 0;
+}
+
+.dialog-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.dialog-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.dialog-maximize,
+.dialog-close {
+    background: rgba(255, 255, 255, 0);
+    border: none;
+    color: var(--background-white);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-maximize:hover,
+.dialog-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   BODY DO DIALOG
+   ============================================ */
+.dialog-body {
+    padding: var(--spacing-md);
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Scrollbar customizada */
+.dialog-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dialog-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.dialog-body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.dialog-body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ============================================
+   SEÇÕES DE FILTROS
+   ============================================ */
+.filter-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    border: 1px solid #e0e0e0;
+}
+
+.filter-section:last-child {
+    margin-bottom: 0;
+}
+
+.filter-section h3 {
+    color: var(--primary-color);
+    font-size: 16px;
+    margin: 0 0 var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* ============================================
+   GRID DE FORMULÁRIO
+   ============================================ */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.form-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+    font-size: 13px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: var(--transition-base);
+    font-family: inherit;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(19, 81, 180, 0.1);
+}
+
+/* ============================================
+   FIELD GROUP (Input + Toggle)
+   ============================================ */
+.field-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: stretch;
+}
+
+.field-group input[type="text"] {
+    flex: 1;
+}
+
+/* ============================================
+   FIELD WRAPPER (Badge + Label)
+   ============================================ */
+.field-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: 4px;
+}
+
+.autocomplete-badge {
+    background: #2196F3;
+    color: var(--background-white);
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    line-height: 1;
+}
+
+.autocomplete-badge i {
+    font-size: 8px;
+    color: var(--background-white);
+}
+
+/* ============================================
+   TOGGLE SWITCH (3 Modos)
+   ============================================ */
+.toggle-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: var(--background-light);
+    color: #333;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition-base);
+    height: 42px;
+    white-space: nowrap;
+    user-select: none;
+    min-width: 110px;
+}
+
+.toggle-switch:hover {
+    background-color: #f1f1f1;
+    border-color: #bbb;
+    transform: scale(1.02);
+}
+
+.toggle-switch .toggle-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.toggle-text {
+    font-size: 13px;
+    line-height: 1;
+}
+
+/* Estado: Não Contém (Excluir) */
+.toggle-switch.exclude {
+    background-color: #ffe6e6;
+    border-color: #e57373;
+    color: #b71c1c;
+}
+
+.toggle-switch.exclude:hover {
+    background-color: #ffd6d6;
+    border-color: #ef5350;
+}
+
+/* Estado: Igual (Exato) */
+.toggle-switch.exact {
+    background-color: #e3f2fd;
+    border-color: #2196F3;
+    color: var(--primary-color);
+}
+
+.toggle-switch.exact:hover {
+    background-color: #bbdefb;
+    border-color: var(--primary-color);
+}
+
+/* ============================================
+   CAMPOS DE DATA
+   ============================================ */
+.date-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.date-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.date-row .date-label {
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--secondary-color);
+    min-width: 30px;
+    margin: 0;
+}
+
+.date-row input[type="date"] {
+    flex: 1;
+    padding: 8px;
+}
+
+/* ============================================
+   VALOR RANGE
+   ============================================ */
+.valor-range {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    background-color: #e8e8e8;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #d0d0d0;
+}
+
+/* ============================================
+   FOOTER DO DIALOG
+   ============================================ */
+.dialog-footer {
+    padding: 12px var(--spacing-md);
+    background: var(--background-white);
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.dialog-footer .spacer {
+    flex: 1;
+}
+
+.btn-help {
+    background: var(--background-light);
+    color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-help:hover {
+    background: #e0e0e0;
+}
+
+.btn-secondary {
+    background: var(--background-white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--background-light);
+}
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .form-grid,
+    .form-grid-2,
+    .form-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .dialog-box {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .dialog-box.maximized {
+        width: 100%;
+        height: 100%;
+    }
+
+    .valor-range {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-section {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ============================================
+   MELHORIAS NO AUTOCOMPLETE (jQuery UI)
+   ============================================ */
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10000 !important;
+    border: 1px solid var(--primary-color) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    font-family: inherit !important;
+}
+
+.ui-menu-item {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+}
+
+.ui-menu-item:hover,
+.ui-menu-item.ui-state-focus {
+    background-color: #e3f2fd !important;
+    border: none !important;
+    color: #1565c0 !important;
+}

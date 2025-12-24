@@ -1,0 +1,22 @@
+/* assets/css/main.css */
+
+/* Variáveis */
+@import '_variables.css';
+
+/* Base */
+@import 'base/reset.css';
+@import 'base/typography.css';
+
+/* Layout */
+@import 'layout/header.css';
+@import 'layout/footer.css';
+
+/* Componentes */
+@import 'components/search-form.css';
+@import 'components/advanced-filters.css';
+@import 'components/results.css';
+@import 'components/navigation.css';
+@import 'components/pagination.css';
+
+/* Temas */
+@import 'themes/contrast.css';

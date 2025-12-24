@@ -1,0 +1,91 @@
+##
+## components/filters/text-field-with-toggle.vm
+## Campo de texto com toggle de modo de busca (Contém/Não Contém/Igual)
+##
+## Parâmetros esperados:
+## - $fieldId: ID do campo
+## - $fieldLabel: Label do campo
+## - $hasAutocomplete: boolean indicando se tem autocomplete
+## - $inputMask: opcional, tipo de máscara (cpf, cnpj, etc)
+##
+
+<div class="form-group">
+    <div class="field-wrapper">
+        #if($hasAutocomplete)
+            <span class="autocomplete-badge" title="Campo com sugestões automáticas">
+                <i class="fas fa-magic"></i> AUTO
+            </span>
+        #end
+        <label for="$fieldId">$fieldLabel</label>
+    </div>
+    
+    <div class="field-group">
+        <input 
+            type="text" 
+            id="$fieldId" 
+            name="$fieldId" 
+            placeholder="$fieldLabel" 
+            value="$!esc.html($params.get($fieldId))"
+            #if($hasAutocomplete)
+                onkeyup="Autocomplete.load(this)" 
+                autocomplete="off" 
+                class="ac_input"
+                data-autocomplete="true"
+            #end
+            #if($inputMask)
+                data-mask="$inputMask"
+            #end
+            aria-label="$fieldLabel"
+        >
+        
+        <button
+            type="button"
+            class="toggle-switch" 
+            data-mode="contains"
+            data-field="$fieldId"
+            onclick="ToggleMode.toggle(this)"
+            title="Alterar modo de busca"
+            aria-label="Modo de busca: Contém"
+        >
+            <span class="toggle-icon">✓</span>
+            <span class="toggle-text">Contém</span>
+        </button>
+    </div>
+</div>
+
+##
+## components/filters/date-range-field.vm
+## Campo de range de datas (De/Até)
+##
+## Parâmetros esperados:
+## - $fieldId: ID base do campo (será sufixado com _from e _to)
+## - $fieldLabel: Label do campo
+##
+
+<div class="form-group">
+    <label>$fieldLabel</label>
+    <div class="date-group">
+        <div class="date-row">
+            <label for="${fieldId}_from" class="date-label">De:</label>
+            <input 
+                type="date" 
+                id="${fieldId}_from" 
+                name="${fieldId}_from" 
+                value="$!esc.html($params.get("${fieldId}_from"))"
+                aria-label="$fieldLabel - Data inicial"
+                max="9999-12-31"
+            >
+        </div>
+        <div class="date-row">
+            <label for="${fieldId}_to" class="date-label">Até:</label>
+            <input 
+                type="date" 
+                id="${fieldId}_to" 
+                name="${fieldId}_to" 
+                value="$!esc.html($params.get("${fieldId}_to"))"
+                aria-label="$fieldLabel - Data final"
+                max="9999-12-31"
+            >
+        </div>
+    </div>
+</div>

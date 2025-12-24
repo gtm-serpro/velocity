@@ -1,0 +1,321 @@
+##
+## advanced-filters.vm
+## Dialog modal com filtros avançados de busca
+##
+## Dependências:
+## - CSS: /assets/css/components/advanced-filters.css
+## - JS: /assets/js/components/advanced-filters.js
+## - Config: /config/field-labels.vm
+##
+
+## Overlay do dialog
+<div class="dialog-overlay" id="dialogOverlay" onclick="AdvancedFilters.close(event)"></div>
+
+## Dialog principal
+<div class="dialog-box" id="dialogBox" role="dialog" aria-labelledby="dialogTitle" aria-modal="true">
+    
+    ## Header
+    <div class="dialog-header">
+        <h2 id="dialogTitle">
+            <i class="fas fa-sliders-h"></i>
+            Filtros Avançados de Busca
+        </h2>
+        <div class="dialog-controls">
+            <button 
+                type="button" 
+                class="dialog-maximize" 
+                onclick="AdvancedFilters.toggleMaximize(event)" 
+                title="Maximizar/Restaurar (F11)"
+                aria-label="Maximizar ou restaurar janela"
+            >
+                <span id="maximizeIcon">⛶</span>
+            </button>
+            <button 
+                type="button" 
+                class="dialog-close" 
+                onclick="AdvancedFilters.close(event)" 
+                title="Fechar (ESC)"
+                aria-label="Fechar filtros avançados"
+            >
+                ×
+            </button>
+        </div>
+    </div>
+
+    ## Body com filtros
+    <div class="dialog-body">
+        
+        ## Seção: Filtros de Data
+        <div class="filter-section" data-section="dates">
+            <h3>
+                <i class="fas fa-calendar"></i> 
+                Filtros de Data
+            </h3>
+            <div class="form-grid form-grid-4">
+                
+                ## Data do Protocolo
+                #parse("components/filters/date-range-field.vm")
+                #set($fieldId = "dt_protocolo_tdt")
+                #set($fieldLabel = "Data do Protocolo")
+                
+                ## Data da Juntada
+                #set($fieldId = "dt_juntada_tdt")
+                #set($fieldLabel = "Data da Juntada")
+                #parse("components/filters/date-range-field.vm")
+                
+                ## Data de Registro
+                #set($fieldId = "dt_registro_tdt")
+                #set($fieldLabel = "Data de Registro")
+                #parse("components/filters/date-range-field.vm")
+                
+                ## Data de Anexação
+                #set($fieldId = "dt_anexacao_tdt")
+                #set($fieldLabel = "Data de Anexação")
+                #parse("components/filters/date-range-field.vm")
+                
+            </div>
+        </div>
+
+        ## Seção: Processo e Documento
+        <div class="filter-section" data-section="process">
+            <h3>
+                <i class="fas fa-file-alt"></i> 
+                Processo e Documento
+            </h3>
+            <div class="form-grid">
+                
+                ## Grupo Processo (com autocomplete)
+                #set($fieldId = "grupo_processo_s")
+                #set($fieldLabel = "Grupo Processo")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Tipo Processo (com autocomplete)
+                #set($fieldId = "tipo_processo_s")
+                #set($fieldLabel = "Tipo Processo")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Subtipo Processo (com autocomplete)
+                #set($fieldId = "subtipo_processo_s")
+                #set($fieldLabel = "Subtipo Processo")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Nr Processo
+                #set($fieldId = "processo_s")
+                #set($fieldLabel = "Número do Processo")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Situação Processo (com autocomplete)
+                #set($fieldId = "situacao_s")
+                #set($fieldLabel = "Situação do Processo")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Assuntos/Objetos
+                #set($fieldId = "assuntos_objetos_s")
+                #set($fieldLabel = "Assuntos/Objetos")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Tipo do Documento (com autocomplete)
+                #set($fieldId = "tipo_documento_s")
+                #set($fieldLabel = "Tipo do Documento")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Título Documento
+                #set($fieldId = "titulo_s")
+                #set($fieldLabel = "Título do Documento")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Nr Doc Principal
+                #set($fieldId = "numero_doc_principal_exp_s")
+                #set($fieldLabel = "Número Doc Principal")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Tributo ACT (com autocomplete)
+                #set($fieldId = "tributo_act_s")
+                #set($fieldLabel = "Tributo ACT")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Valor do Processo (range)
+                <div class="valor-range">
+                    <div class="form-group">
+                        <label for="valor_processo_d_from">Valor Mínimo</label>
+                        <input 
+                            type="text" 
+                            id="valor_processo_d_from" 
+                            name="valor_processo_d_from" 
+                            placeholder="0.00" 
+                            value="$!esc.html($params.get('valor_processo_d_from'))"
+                            data-input-type="currency"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="valor_processo_d_to">Valor Máximo</label>
+                        <input 
+                            type="text" 
+                            id="valor_processo_d_to" 
+                            name="valor_processo_d_to" 
+                            placeholder="0.00" 
+                            value="$!esc.html($params.get('valor_processo_d_to'))"
+                            data-input-type="currency"
+                        >
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        ## Seção: Unidade e Equipe
+        <div class="filter-section" data-section="unit">
+            <h3>
+                <i class="fas fa-building"></i> 
+                Unidade e Equipe
+            </h3>
+            <div class="form-grid form-grid-2">
+                
+                ## Unidade Origem (com autocomplete)
+                #set($fieldId = "unidade_origem_s")
+                #set($fieldLabel = "Unidade de Origem")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Equipe Origem (com autocomplete)
+                #set($fieldId = "equipe_origem_s")
+                #set($fieldLabel = "Equipe de Origem")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Unidade Atual (com autocomplete)
+                #set($fieldId = "nome_unidade_atual_s")
+                #set($fieldLabel = "Unidade Atual")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Equipe Atual (com autocomplete)
+                #set($fieldId = "nome_equipe_atual_s")
+                #set($fieldLabel = "Equipe Atual")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+            </div>
+        </div>
+
+        ## Seção: Partes Envolvidas
+        <div class="filter-section" data-section="parties">
+            <h3>
+                <i class="fas fa-users"></i> 
+                Partes Envolvidas
+            </h3>
+            <div class="form-grid">
+                
+                ## NI Contribuinte
+                #set($fieldId = "ni_contribuinte_s")
+                #set($fieldLabel = "NI do Contribuinte")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Nome do Contribuinte
+                #set($fieldId = "nome_contribuinte_s")
+                #set($fieldLabel = "Nome do Contribuinte")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## CPF Responsável
+                #set($fieldId = "cpf_responsavel_s")
+                #set($fieldLabel = "CPF do Responsável")
+                #set($hasAutocomplete = false)
+                #set($inputMask = "cpf")
+                #parse("components/filters/text-field-with-toggle.vm")
+                #set($inputMask = false)
+                
+                ## Nome Usuário Juntada
+                #set($fieldId = "nome_usuario_juntada_doc_s")
+                #set($fieldLabel = "Nome Usuário Juntada")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Nome Relator DRJ
+                #set($fieldId = "nome_relator_drj_s")
+                #set($fieldLabel = "Nome Relator DRJ")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+            </div>
+        </div>
+
+        ## Seção: Julgamento
+        <div class="filter-section" data-section="judgment">
+            <h3>
+                <i class="fas fa-gavel"></i> 
+                Julgamento
+            </h3>
+            <div class="form-grid">
+                
+                ## Alegações no Recurso (com autocomplete)
+                #set($fieldId = "aleg_recurso_contrib_txt")
+                #set($fieldLabel = "Alegações no Recurso")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Resultado Julgamento DRJ nível 1 (com autocomplete)
+                #set($fieldId = "result_questdrj_nivel1_s")
+                #set($fieldLabel = "Resultado Julgamento DRJ nível 1")
+                #set($hasAutocomplete = true)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+                ## Resultado Julgamento DRJ nível 2
+                #set($fieldId = "result_questdrj_nivel2_s")
+                #set($fieldLabel = "Resultado Julgamento DRJ nível 2")
+                #set($hasAutocomplete = false)
+                #parse("components/filters/text-field-with-toggle.vm")
+                
+            </div>
+        </div>
+
+    </div>
+
+    ## Footer com ações
+    <div class="dialog-footer">
+        <button 
+            type="button" 
+            class="btn btn-help" 
+            onclick="window.open('../../help.html', '_blank', 'width=800,height=600,scrollbars=1')"
+            title="Abrir ajuda"
+            aria-label="Abrir página de ajuda"
+        >
+            <i class="fas fa-question-circle"></i>
+            Ajuda
+        </button>
+        
+        <div class="spacer"></div>
+        
+        <button 
+            type="button" 
+            class="btn btn-secondary" 
+            onclick="AdvancedFilters.clearAll()"
+            aria-label="Limpar todos os filtros"
+        >
+            <i class="fas fa-eraser"></i>
+            Limpar Filtros
+        </button>
+        
+        <button 
+            type="button" 
+            class="btn btn-primary" 
+            onclick="AdvancedFilters.apply()"
+            aria-label="Aplicar filtros e buscar"
+        >
+            <i class="fas fa-check"></i>
+            Aplicar Filtros
+        </button>
+    </div>
+    
+</div>
