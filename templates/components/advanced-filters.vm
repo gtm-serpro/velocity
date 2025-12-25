@@ -7,6 +7,10 @@
 ## - JS: /assets/js/components/advanced-filters.js
 ## - Config: /config/field-labels.vm
 ##
+## MODIFICAÇÕES:
+## - Campo de busca "q" adicionado no topo do dialog
+## - Sincronizado com o campo do header (o que digita em um aparece no outro)
+##
 
 ## Overlay do dialog
 <div class="dialog-overlay" id="dialogOverlay" onclick="AdvancedFilters.close(event)"></div>
@@ -45,6 +49,61 @@
     ## Body com filtros
     <div class="dialog-body">
         
+        ## ================================================
+        ## NOVO: Campo de busca principal no topo do dialog
+        ## Sincronizado com o campo do header
+        ## Acessível e navegável por teclado
+        ## ================================================
+        <div class="filter-section filter-section-search" data-section="main-search">
+            <h3>
+                <i class="fas fa-search"></i> 
+                Busca Geral
+            </h3>
+            <div class="dialog-search-wrapper">
+                <div class="form-group form-group-search">
+                    <label for="dialog-q" class="sr-only">Termo de busca</label>
+                    <div class="search-input-container" role="search">
+                        <span class="search-icon" aria-hidden="true">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            id="dialog-q" 
+                            name="dialog-q" 
+                            class="search-input dialog-search-input"
+                            placeholder="Digite o termo de busca no conteúdo dos documentos..."
+                            value="$!esc.html($params.get('q'))"
+                            autocomplete="off"
+                            aria-describedby="dialog-q-help dialog-q-kbd"
+                            aria-label="Campo de busca geral. Pressione Enter para buscar ou Escape para limpar."
+                        >
+                        ## Botão de limpar (aparece só quando tem texto)
+                        <button 
+                            type="button" 
+                            class="search-clear-btn" 
+                            id="dialog-q-clear"
+                            aria-label="Limpar campo de busca"
+                            title="Limpar (Esc)"
+                            tabindex="0"
+                            hidden
+                        >
+                            <i class="fas fa-times"></i>
+                        </button>
+                        ## Indicador de atalho de teclado
+                        <span class="search-kbd-hint" id="dialog-q-kbd" aria-hidden="true">
+                            <kbd>Enter</kbd> para buscar
+                        </span>
+                    </div>
+                    <small id="dialog-q-help" class="form-help">
+                        Busca no conteúdo dos documentos. Use os filtros abaixo para refinar sua pesquisa.
+                        <span class="kbd-instructions">
+                            Atalhos: <kbd>Enter</kbd> buscar • <kbd>Esc</kbd> limpar campo
+                        </span>
+                    </small>
+                </div>
+            </div>
+        </div>
+
         ## ================================================
         ## Seção: Filtros de Data
         ## APENAS: Data do Protocolo do Processo e Data da Juntada

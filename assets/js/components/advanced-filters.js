@@ -1,6 +1,10 @@
 /**
  * components/advanced-filters.js
  * Lógica do dialog de filtros avançados
+ * 
+ * MODIFICAÇÕES:
+ * - Abre automaticamente ao entrar na página sem query string
+ * - Campo de busca "q" dentro do dialog sincronizado com o header
  */
 
 const AdvancedFilters = (function() {
@@ -14,9 +18,12 @@ const AdvancedFilters = (function() {
             dialogBody: '.dialog-body',
             maximizeBtn: '.dialog-maximize',
             maximizeIcon: '#maximizeIcon',
-            textInputs: '.dialog-box input[type="text"]',
+            textInputs: '.dialog-box input[type="text"]:not(#dialog-q)', // Exclui o campo q do dialog
             dateInputs: '.dialog-box input[type="date"]',
-            toggles: '.toggle-switch'
+            toggles: '.toggle-switch',
+            // Campos de busca principal (header e dialog)
+            headerSearch: '#q',
+            dialogSearch: '#dialog-q'
         },
         classes: {
             active: 'active',
@@ -33,6 +40,13 @@ const AdvancedFilters = (function() {
     function init() {
         cacheElements();
         bindEvents();
+        setupSearchSync();
+        setupSearchClearButton();
+        setupSearchKeyboardShortcuts();
+        
+        // Verifica se deve abrir automaticamente
+        checkAutoOpen();
+        
         console.log('AdvancedFilters: Inicializado');
     }
 
@@ -45,7 +59,10 @@ const AdvancedFilters = (function() {
             dialog: document.querySelector(config.selectors.dialog),
             dialogBody: document.querySelector(config.selectors.dialogBody),
             maximizeBtn: document.querySelector(config.selectors.maximizeBtn),
-            maximizeIcon: document.querySelector(config.selectors.maximizeIcon)
+            maximizeIcon: document.querySelector(config.selectors.maximizeIcon),
+            headerSearch: document.querySelector(config.selectors.headerSearch),
+            dialogSearch: document.querySelector(config.selectors.dialogSearch),
+            dialogSearchClear: document.querySelector('#dialog-q-clear')
         };
     }
 
@@ -55,6 +72,168 @@ const AdvancedFilters = (function() {
     function bindEvents() {
         // Atalho de teclado: Escape fecha o dialog
         document.addEventListener('keydown', handleKeydown);
+    }
+
+    /**
+     * Configura sincronização bidirecional entre campos de busca
+     */
+    function setupSearchSync() {
+        if (!elements.headerSearch || !elements.dialogSearch) {
+            console.warn('AdvancedFilters: Campos de busca não encontrados para sincronização');
+            return;
+        }
+
+        // Quando digita no header, atualiza no dialog
+        elements.headerSearch.addEventListener('input', function() {
+            elements.dialogSearch.value = this.value;
+        });
+
+        // Quando digita no dialog, atualiza no header
+        elements.dialogSearch.addEventListener('input', function() {
+            elements.headerSearch.value = this.value;
+        });
+
+        // Sincroniza o valor inicial (se header já tem valor)
+        if (elements.headerSearch.value) {
+            elements.dialogSearch.value = elements.headerSearch.value;
+        }
+
+        console.log('AdvancedFilters: Sincronização de campos de busca configurada');
+    }
+
+    /**
+     * Configura o botão de limpar o campo de busca
+     */
+    function setupSearchClearButton() {
+        if (!elements.dialogSearch || !elements.dialogSearchClear) {
+            console.warn('AdvancedFilters: Elementos do botão limpar não encontrados');
+            return;
+        }
+
+        var input = elements.dialogSearch;
+        var clearBtn = elements.dialogSearchClear;
+
+        // Função para mostrar/ocultar o botão baseado no conteúdo
+        function updateClearButtonVisibility() {
+            if (input.value.trim().length > 0) {
+                clearBtn.hidden = false;
+                clearBtn.setAttribute('aria-hidden', 'false');
+            } else {
+                clearBtn.hidden = true;
+                clearBtn.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        // Atualiza visibilidade ao digitar
+        input.addEventListener('input', updateClearButtonVisibility);
+
+        // Também verifica no focus (caso valor já exista)
+        input.addEventListener('focus', updateClearButtonVisibility);
+
+        // Ação de limpar
+        clearBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            clearSearchField();
+            input.focus(); // Mantém o foco no campo
+        });
+
+        // Verifica estado inicial
+        updateClearButtonVisibility();
+
+        console.log('AdvancedFilters: Botão limpar configurado');
+    }
+
+    /**
+     * Limpa o campo de busca (dialog e header)
+     */
+    function clearSearchField() {
+        if (elements.dialogSearch) {
+            elements.dialogSearch.value = '';
+            // Dispara evento input para atualizar o botão de limpar
+            elements.dialogSearch.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (elements.headerSearch) {
+            elements.headerSearch.value = '';
+        }
+        
+        // Anuncia para leitores de tela
+        announceToScreenReader('Campo de busca limpo');
+        
+        console.log('AdvancedFilters: Campo de busca limpo');
+    }
+
+    /**
+     * Configura atalhos de teclado para o campo de busca
+     */
+    function setupSearchKeyboardShortcuts() {
+        if (!elements.dialogSearch) return;
+
+        elements.dialogSearch.addEventListener('keydown', function(e) {
+            // Enter - Aplica os filtros e busca
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                apply();
+                return;
+            }
+
+            // Escape - Limpa o campo (se tiver texto) ou fecha o dialog (se vazio)
+            if (e.key === 'Escape') {
+                if (this.value.trim().length > 0) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Evita que feche o dialog
+                    clearSearchField();
+                }
+                // Se vazio, deixa o evento propagar para fechar o dialog
+                return;
+            }
+        });
+
+        console.log('AdvancedFilters: Atalhos de teclado configurados');
+    }
+
+    /**
+     * Anuncia mensagem para leitores de tela (acessibilidade)
+     */
+    function announceToScreenReader(message) {
+        var announcement = document.getElementById('sr-announcements');
+        
+        // Cria o elemento de anúncios se não existir
+        if (!announcement) {
+            announcement = document.createElement('div');
+            announcement.id = 'sr-announcements';
+            announcement.setAttribute('role', 'status');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            document.body.appendChild(announcement);
+        }
+
+        // Limpa e adiciona a mensagem
+        announcement.textContent = '';
+        setTimeout(function() {
+            announcement.textContent = message;
+        }, 100);
+    }
+
+    /**
+     * Verifica se deve abrir o dialog automaticamente
+     * Abre se não houver parâmetros de busca na URL
+     */
+    function checkAutoOpen() {
+        var urlParams = new URLSearchParams(window.location.search);
+        
+        // Parâmetros que indicam que uma busca foi feita
+        var hasQuery = urlParams.has('q') && urlParams.get('q').trim() !== '';
+        var hasFilterQuery = urlParams.has('fq') && urlParams.get('fq').trim() !== '';
+        
+        // Se não tem busca nem filtros, abre o dialog automaticamente
+        if (!hasQuery && !hasFilterQuery) {
+            // Pequeno delay para garantir que o DOM está pronto
+            setTimeout(function() {
+                open();
+                console.log('AdvancedFilters: Dialog aberto automaticamente (sem query na URL)');
+            }, 100);
+        }
     }
 
     /**
@@ -91,11 +270,35 @@ const AdvancedFilters = (function() {
         elements.dialog.classList.add(config.classes.active);
         document.body.style.overflow = 'hidden';
 
-        // Foca no primeiro campo
+        // Recacheia o botão de limpar (pode não existir na primeira carga)
+        if (!elements.dialogSearchClear) {
+            elements.dialogSearchClear = document.querySelector('#dialog-q-clear');
+            if (elements.dialogSearchClear) {
+                setupSearchClearButton();
+            }
+        }
+
+        // Sincroniza o campo de busca ao abrir
+        if (elements.headerSearch && elements.dialogSearch) {
+            elements.dialogSearch.value = elements.headerSearch.value;
+            // Dispara evento para atualizar o botão de limpar
+            elements.dialogSearch.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        // Foca no campo de busca do dialog (prioridade) ou primeiro campo
         setTimeout(function() {
-            var firstInput = elements.dialog.querySelector('input[type="text"], input[type="date"]');
-            if (firstInput) firstInput.focus();
+            if (elements.dialogSearch) {
+                elements.dialogSearch.focus();
+                // Seleciona todo o texto para facilitar substituição
+                elements.dialogSearch.select();
+            } else {
+                var firstInput = elements.dialog.querySelector('input[type="text"], input[type="date"]');
+                if (firstInput) firstInput.focus();
+            }
         }, 100);
+
+        // Anuncia abertura para leitores de tela
+        announceToScreenReader('Dialog de filtros avançados aberto. Pressione Escape para fechar.');
 
         console.log('AdvancedFilters: Dialog aberto');
     }
@@ -114,6 +317,20 @@ const AdvancedFilters = (function() {
         elements.overlay.classList.remove(config.classes.active);
         elements.dialog.classList.remove(config.classes.active);
         document.body.style.overflow = '';
+
+        // Garante que o header está sincronizado ao fechar
+        if (elements.headerSearch && elements.dialogSearch) {
+            elements.headerSearch.value = elements.dialogSearch.value;
+        }
+
+        // Anuncia fechamento para leitores de tela
+        announceToScreenReader('Dialog de filtros fechado');
+
+        // Retorna o foco para o botão que abriu o dialog (se existir)
+        var openButton = document.querySelector('[data-opens="filters-dialog"]');
+        if (openButton) {
+            openButton.focus();
+        }
 
         console.log('AdvancedFilters: Dialog fechado');
     }
@@ -137,7 +354,7 @@ const AdvancedFilters = (function() {
      * Limpa todos os filtros
      */
     function clearAll() {
-        // Limpar inputs de texto
+        // Limpar inputs de texto (exceto o campo de busca principal do dialog)
         var textInputs = document.querySelectorAll(config.selectors.textInputs);
         textInputs.forEach(function(input) {
             input.value = '';
@@ -157,7 +374,23 @@ const AdvancedFilters = (function() {
             }
         });
 
+        // NÃO limpa o campo de busca principal (q) - isso é intencional
+        // O usuário pode querer manter o termo de busca e apenas limpar os filtros
+
         console.log('AdvancedFilters: Todos os filtros limpos');
+    }
+
+    /**
+     * Limpa tudo incluindo o campo de busca
+     */
+    function clearAllIncludingSearch() {
+        clearAll();
+        
+        // Limpa também o campo de busca
+        if (elements.headerSearch) elements.headerSearch.value = '';
+        if (elements.dialogSearch) elements.dialogSearch.value = '';
+        
+        console.log('AdvancedFilters: Todos os filtros e busca limpos');
     }
 
     /**
@@ -167,18 +400,34 @@ const AdvancedFilters = (function() {
         try {
             var filters = collectFilters();
             
-            if (filters) {
-                // Adiciona ao campo de busca principal
-                if (typeof SearchForm !== 'undefined') {
+            // Pega o valor do campo de busca (do dialog ou header)
+            var searchQuery = '';
+            if (elements.dialogSearch && elements.dialogSearch.value.trim()) {
+                searchQuery = elements.dialogSearch.value.trim();
+            } else if (elements.headerSearch && elements.headerSearch.value.trim()) {
+                searchQuery = elements.headerSearch.value.trim();
+            }
+
+            // Garante que o header está atualizado
+            if (elements.headerSearch && searchQuery) {
+                elements.headerSearch.value = searchQuery;
+            }
+
+            if (filters || searchQuery) {
+                // Adiciona filtros ao campo de busca principal
+                if (filters && typeof SearchForm !== 'undefined') {
                     SearchForm.appendToQuery(filters);
                 }
+                
                 close();
                 
                 // Submit do formulário
                 var submitBtn = document.querySelector('#querySubmit');
                 if (submitBtn) submitBtn.click();
                 
-                console.log('AdvancedFilters: Filtros aplicados', filters);
+                console.log('AdvancedFilters: Filtros aplicados', { query: searchQuery, filters: filters });
+            } else {
+                alert('Por favor, preencha ao menos um campo de busca ou filtro.');
             }
         } catch (error) {
             console.error('AdvancedFilters: Erro ao aplicar filtros', error);
@@ -327,6 +576,8 @@ const AdvancedFilters = (function() {
         close: close,
         toggleMaximize: toggleMaximize,
         clearAll: clearAll,
+        clearAllIncludingSearch: clearAllIncludingSearch,
+        clearSearchField: clearSearchField,
         apply: apply,
         isOpen: isOpen
     };
