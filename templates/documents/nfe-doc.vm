@@ -1,0 +1,261 @@
+##
+## templates/documents/nfe-doc.vm
+## Template para documento do eProcesso com botões de download
+##
+## Renderiza um hit de documento com:
+## - Botões de download (PDF original e OCR) no header
+## - Campos do processo formatados
+## - Highlighting do conteúdo buscado
+##
+
+## Obtém o ID e monta os links de download
+#if($doc.getFieldValue('id'))
+    #set($id = $doc.getFieldValue('id'))
+    #set($link = 'https://eprocesso.suiterfb.receita.fazenda/eprocesso/api/documentos/' + $id.trim() + '/obterbinario/download')
+    #set($linkOCR = 'https://eprocesso.suiterfb.receita.fazenda/eprocesso/api/documentos/' + $id.trim() + '/obterbinarioocr/download')
+#end
+
+##
+## Lógica de exibição dos ícones de download:
+## - SN (pesquisável=S, original_pesquisável=N): Exibe DOIS ícones (original + OCR)
+## - NN (pesquisável=N, original_pesquisável=N): Exibe apenas ícone original
+## - SS (pesquisável=S, original_pesquisável=S): Exibe ícone "original pesquisável"
+##
+
+<div class="result-document eprocesso-doc" id="doc-$!{id}">
+    
+    ## ========================================
+    ## HEADER DO CARD (com botões de download)
+    ## ========================================
+    <div class="result-title">
+        <div class="result-title-content">
+            
+            ## Botões de Download
+            <div class="download-buttons">
+                #if($doc.getFieldValue('arquivo_indexado_s') == 'S')
+                    
+                    ## Caso 1: Versão OCR disponível (original não pesquisável)
+                    #if($doc.getFieldValue('indicador_pesquisavel_s') == 'S' && $doc.getFieldValue('indicador_original_pesquisavel_s') == 'N')
+                        <a href="$link" target="_blank" class="btn-download btn-download-original" title="Baixar arquivo original (PDF)">
+                            <i class="fas fa-file-pdf"></i>
+                            <span class="btn-download-label">Original</span>
+                        </a>
+                        <a href="$linkOCR" target="_blank" class="btn-download btn-download-ocr" title="Baixar arquivo pesquisável (PDF com OCR)">
+                            <i class="fas fa-file-pdf"></i>
+                            <span class="btn-download-label">Pesquisável</span>
+                        </a>
+                    #end
+                    
+                    ## Caso 2: Apenas original disponível (não pesquisável)
+                    #if($doc.getFieldValue('indicador_pesquisavel_s') == 'N' && $doc.getFieldValue('indicador_original_pesquisavel_s') == 'N')
+                        <a href="$link" target="_blank" class="btn-download btn-download-original" title="Baixar arquivo original (PDF)">
+                            <i class="fas fa-file-pdf"></i>
+                            <span class="btn-download-label">Original</span>
+                        </a>
+                    #end
+                    
+                    ## Caso 3: Original já é pesquisável
+                    #if($doc.getFieldValue('indicador_pesquisavel_s') == 'S' && $doc.getFieldValue('indicador_original_pesquisavel_s') == 'S')
+                        <a href="$link" target="_blank" class="btn-download btn-download-searchable" title="Baixar arquivo original pesquisável (PDF)">
+                            <i class="fas fa-file-pdf"></i>
+                            <span class="btn-download-label">PDF</span>
+                        </a>
+                    #end
+                    
+                #else
+                    ## Arquivo não indexado - ícone desabilitado
+                    <span class="btn-download btn-download-disabled" title="PDF não disponível para download">
+                        <i class="fas fa-file-pdf"></i>
+                    </span>
+                #end
+            </div>
+            
+            ## Título do documento
+            <span class="document-title">
+                #if($doc.getFieldValue('id'))
+                    #if($doc.getFieldValue('titulo_s'))
+                        <strong>$doc.getFieldValue('tipo_documento_s')</strong> - $doc.getFieldValue('titulo_s')
+                    #else
+                        <strong>$doc.getFieldValue('tipo_documento_s')</strong>
+                    #end
+                #else
+                    <em>Documento sem identificação</em>
+                #end
+            </span>
+            
+        </div>
+    </div>
+    
+    ## ========================================
+    ## CORPO DO CARD (campos do documento)
+    ## ========================================
+    <div class="result-body">
+        
+        ## Número do Processo
+        #if($doc.getFieldValue('processo_s'))
+            <div class="field-row">
+                <span class="field-name">Número do Processo:</span>
+                <span class="field-value">#field('processo_s')</span>
+            </div>
+        #end
+        
+        ## Datas
+        #if($doc.getFieldValue('dt_anexacao_tdt'))
+            <div class="field-row">
+                <span class="field-name">Data Anexação:</span>
+                <span class="field-value">$date.format('dd/MM/yyyy HH:mm', $doc.getFieldValue('dt_anexacao_tdt'), $date.getLocale(), $date.getTimeZone().getTimeZone('UTC'))</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('dt_protocolo_tdt'))
+            <div class="field-row">
+                <span class="field-name">Data Protocolo:</span>
+                <span class="field-value">$date.format('dd/MM/yyyy HH:mm', $doc.getFieldValue('dt_protocolo_tdt'), $date.getLocale(), $date.getTimeZone().getTimeZone('UTC'))</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('dt_juntada_tdt'))
+            <div class="field-row">
+                <span class="field-name">Data Juntada:</span>
+                <span class="field-value">$date.format('dd/MM/yyyy HH:mm', $doc.getFieldValue('dt_juntada_tdt'), $date.getLocale(), $date.getTimeZone().getTimeZone('UTC'))</span>
+            </div>
+        #end
+        
+        ## Unidade e Equipe
+        #if($doc.getFieldValue('unidade_origem_s'))
+            <div class="field-row">
+                <span class="field-name">Unidade Origem:</span>
+                <span class="field-value">#field('unidade_origem_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('equipe_origem_s'))
+            <div class="field-row">
+                <span class="field-name">Equipe Origem:</span>
+                <span class="field-value">#field('equipe_origem_s')</span>
+            </div>
+        #end
+        
+        ## Tipo e Grupo do Processo
+        #if($doc.getFieldValue('tipo_documento_s'))
+            <div class="field-row">
+                <span class="field-name">Tipo Documento:</span>
+                <span class="field-value">#field('tipo_documento_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('titulo_s'))
+            <div class="field-row">
+                <span class="field-name">Título:</span>
+                <span class="field-value">#field('titulo_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('grupo_processo_s'))
+            <div class="field-row">
+                <span class="field-name">Grupo Processo:</span>
+                <span class="field-value">#field('grupo_processo_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('tipo_processo_s'))
+            <div class="field-row">
+                <span class="field-name">Tipo Processo:</span>
+                <span class="field-value">#field('tipo_processo_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('subtipo_processo_s'))
+            <div class="field-row">
+                <span class="field-name">Subtipo Processo:</span>
+                <span class="field-value">#field('subtipo_processo_s')</span>
+            </div>
+        #end
+        
+        ## Contribuinte
+        #if($doc.getFieldValue('ni_contribuinte_s'))
+            <div class="field-row">
+                <span class="field-name">NI Contribuinte:</span>
+                <span class="field-value">#field('ni_contribuinte_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('nome_contribuinte_s'))
+            <div class="field-row">
+                <span class="field-name">Nome Contribuinte:</span>
+                <span class="field-value">#field('nome_contribuinte_s')</span>
+            </div>
+        #end
+        
+        ## Equipe e Unidade Atual
+        #if($doc.getFieldValue('nome_equipe_atual_s'))
+            <div class="field-row">
+                <span class="field-name">Equipe Atual:</span>
+                <span class="field-value">#field('nome_equipe_atual_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('nome_unidade_atual_s'))
+            <div class="field-row">
+                <span class="field-name">Unidade Atual:</span>
+                <span class="field-value">#field('nome_unidade_atual_s')</span>
+            </div>
+        #end
+        
+        ## Responsável
+        #if($doc.getFieldValue('cpf_responsavel_s'))
+            <div class="field-row">
+                <span class="field-name">CPF Responsável:</span>
+                <span class="field-value">#field('cpf_responsavel_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('nome_usuario_juntada_doc_s'))
+            <div class="field-row">
+                <span class="field-name">Usuário Juntada:</span>
+                <span class="field-value">#field('nome_usuario_juntada_doc_s')</span>
+            </div>
+        #end
+        
+        ## Tributo e Assuntos
+        #if($doc.getFieldValue('tributo_act_s'))
+            <div class="field-row">
+                <span class="field-name">Tributo ACT:</span>
+                <span class="field-value">#field('tributo_act_s')</span>
+            </div>
+        #end
+        
+        #if($doc.getFieldValue('assuntos_objetos_s'))
+            <div class="field-row">
+                <span class="field-name">Assuntos/Objetos:</span>
+                <span class="field-value">#field('assuntos_objetos_s')</span>
+            </div>
+        #end
+        
+        ## Alegações
+        #if($doc.getFieldValue('aleg_recurso_contrib_txt'))
+            <div class="field-row">
+                <span class="field-name">Alegações:</span>
+                <span class="field-value">#field('aleg_recurso_contrib_txt')</span>
+            </div>
+        #end
+        
+        ## Número documento principal
+        #if($doc.getFieldValue('numero_doc_princiapal_exp_s'))
+            <div class="field-row">
+                <span class="field-name">Nr Doc Principal:</span>
+                <span class="field-value">#field('numero_doc_princiapal_exp_s')</span>
+            </div>
+        #end
+        
+        ## Trecho do conteúdo (highlighting)
+        #if($request.params.get("q"))
+            <div class="field-row field-row-highlight">
+                <span class="field-name">Trecho:</span>
+                <span class="field-value">#field('conteudo_txt')</span>
+            </div>
+        #end
+        
+    </div>
+    
+</div>

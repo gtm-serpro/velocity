@@ -1,0 +1,296 @@
+/**
+ * download-buttons.css
+ * Estilos para os botões de download no header do card de resultado
+ */
+
+/* ============================================
+   HEADER DO CARD - LAYOUT
+   ============================================ */
+.result-title-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.document-title {
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* ============================================
+   CONTAINER DOS BOTÕES DE DOWNLOAD
+   ============================================ */
+.download-buttons {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   BOTÃO DE DOWNLOAD BASE
+   ============================================ */
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: var(--transition-fast);
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-download i {
+    font-size: 14px;
+}
+
+.btn-download-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* ============================================
+   BOTÃO - ARQUIVO ORIGINAL
+   ============================================ */
+.btn-download-original {
+    background-color: #fff3e0;
+    color: #e65100;
+    border-color: #ffcc80;
+}
+
+.btn-download-original:hover {
+    background-color: #ffe0b2;
+    border-color: #ff9800;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(230, 81, 0, 0.2);
+    text-decoration: none;
+}
+
+.btn-download-original:active {
+    transform: translateY(0);
+}
+
+.btn-download-original i {
+    color: #e65100;
+}
+
+/* ============================================
+   BOTÃO - ARQUIVO PESQUISÁVEL (OCR)
+   ============================================ */
+.btn-download-ocr {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border-color: #90caf9;
+}
+
+.btn-download-ocr:hover {
+    background-color: #bbdefb;
+    border-color: #2196f3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(21, 101, 192, 0.2);
+    text-decoration: none;
+}
+
+.btn-download-ocr:active {
+    transform: translateY(0);
+}
+
+.btn-download-ocr i {
+    color: #1565c0;
+}
+
+/* ============================================
+   BOTÃO - PDF PESQUISÁVEL (único)
+   ============================================ */
+.btn-download-searchable {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-color: #a5d6a7;
+}
+
+.btn-download-searchable:hover {
+    background-color: #c8e6c9;
+    border-color: #4caf50;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2);
+    text-decoration: none;
+}
+
+.btn-download-searchable:active {
+    transform: translateY(0);
+}
+
+.btn-download-searchable i {
+    color: #2e7d32;
+}
+
+/* ============================================
+   BOTÃO - DESABILITADO
+   ============================================ */
+.btn-download-disabled {
+    background-color: var(--background-gray);
+    color: var(--text-muted);
+    border-color: var(--border-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-download-disabled i {
+    color: var(--text-muted);
+}
+
+/* ============================================
+   TOOLTIP CUSTOMIZADO
+   ============================================ */
+.btn-download[title] {
+    position: relative;
+}
+
+.btn-download:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-dark);
+    color: var(--text-inverse);
+    padding: 6px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    z-index: var(--z-tooltip);
+    opacity: 0;
+    animation: tooltipFadeIn 0.2s ease forwards;
+    animation-delay: 0.3s;
+}
+
+.btn-download:hover::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--background-dark);
+    z-index: var(--z-tooltip);
+    opacity: 0;
+    animation: tooltipFadeIn 0.2s ease forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes tooltipFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   VERSÃO COMPACTA (apenas ícones)
+   ============================================ */
+.download-buttons.compact .btn-download {
+    padding: 6px 8px;
+}
+
+.download-buttons.compact .btn-download-label {
+    display: none;
+}
+
+/* ============================================
+   VERSÃO PARA MOBILE
+   ============================================ */
+@media (max-width: 768px) {
+    .result-title-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .download-buttons {
+        order: 2;
+        width: 100%;
+    }
+    
+    .btn-download {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .document-title {
+        order: 1;
+        width: 100%;
+    }
+}
+
+/* ============================================
+   ALTO CONTRASTE
+   ============================================ */
+.high-contrast .btn-download-original {
+    background-color: #000;
+    color: #ff0;
+    border-color: #ff0;
+}
+
+.high-contrast .btn-download-original:hover {
+    background-color: #ff0;
+    color: #000;
+}
+
+.high-contrast .btn-download-ocr {
+    background-color: #000;
+    color: #0ff;
+    border-color: #0ff;
+}
+
+.high-contrast .btn-download-ocr:hover {
+    background-color: #0ff;
+    color: #000;
+}
+
+.high-contrast .btn-download-searchable {
+    background-color: #000;
+    color: #0f0;
+    border-color: #0f0;
+}
+
+.high-contrast .btn-download-searchable:hover {
+    background-color: #0f0;
+    color: #000;
+}
+
+.high-contrast .btn-download-disabled {
+    background-color: #333;
+    color: #666;
+    border-color: #666;
+}
+
+/* ============================================
+   ANIMAÇÃO DE LOADING (para downloads lentos)
+   ============================================ */
+.btn-download.loading {
+    pointer-events: none;
+    position: relative;
+}
+
+.btn-download.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   PRINT - Esconde botões na impressão
+   ============================================ */
+@media print {
+    .download-buttons {
+        display: none !important;
+    }
+}

@@ -1,38 +1,30 @@
-## ============================================
+##
 ## templates/documents/hit.vm
-## ============================================
+## Dispatcher para templates de documentos
 ##
-## Template genérico para documento de resultado
+## Verifica os campos do documento e chama o template apropriado
 ##
+
 #set($docId = $doc.getFieldValue('id'))
 
-<div class="result-document" id="doc-$docId">
-    <div class="result-title">
-        <strong>#field('title')</strong>
-    </div>
+<div class="result-document-wrapper">
+
+    ## Documento do eProcesso (tem campo 'id' do eProcesso)
+    #if($doc.getFieldValue('id'))
+        #parse("documents/nfe-doc.vm")
     
-    <div class="result-body">
-        #foreach($fieldName in $doc.getFieldNames())
-            #if($fieldName != 'id' && $fieldName != 'title')
-                <div>
-                    <span class="field-name">$fieldName:</span>
-                    #field($fieldName)
-                </div>
-            #end
-        #end
-    </div>
+    ## Documento de produto (tem campo 'name')
+    #elseif($doc.getFieldValue('name'))
+        #parse("documents/product-doc.vm")
     
-    ## Highlighting se disponível
-    #if($response.highlighting.get($docId))
-        <div class="highlight-box">
-            #foreach($entry in $response.highlighting.get($docId).entrySet())
-                <div>
-                    <span class="field-name">$entry.key:</span>
-                    #foreach($snippet in $entry.value)
-                        <span class="highlight">$snippet</span>
-                    #end
-                </div>
-            #end
-        </div>
+    ## Documento join (tem campo 'compName_s')
+    #elseif($doc.getFieldValue('compName_s'))
+        #parse("documents/join-doc.vm")
+    
+    ## Fallback para richtext
+    #else
+        #parse("documents/richtext-doc.vm")
+    
     #end
+
 </div>

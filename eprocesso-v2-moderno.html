@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>eProcesso Buscador - Receita Federal do Brasil</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/img/icone-eprocesso2.png">
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    
+    <style>
+/* ============================================
+   CSS VARIABLES - Design System Gov.br Moderno
+   ============================================ */
+:root {
+    /* Cores Primárias */
+    --primary-color: #1351B4;
+    --primary-dark: #071D41;
+    --primary-light: #2670E8;
+    --primary-lightest: #C5D4EB;
+    
+    /* Cores Secundárias */
+    --secondary-color: #636363;
+    --secondary-dark: #333333;
+    --secondary-light: #888888;
+    
+    /* Cores de Status */
+    --success-color: #168821;
+    --success-light: #D4EDDA;
+    --warning-color: #FFCD07;
+    --warning-light: #FFF3CD;
+    --danger-color: #E52207;
+    --danger-light: #F8D7DA;
+    --info-color: #155BCB;
+    --info-light: #D1ECF1;
+    
+    /* Cores de Fundo */
+    --bg-white: #FFFFFF;
+    --bg-light: #F8F9FA;
+    --bg-gray: #E9ECEF;
+    --bg-dark: #071D41;
+    
+    /* Cores de Texto */
+    --text-primary: #1A1A1A;
+    --text-secondary: #555555;
+    --text-muted: #6C757D;
+    --text-light: #ADB5BD;
+    --text-inverse: #FFFFFF;
+    
+    /* Bordas */
+    --border-color: #DEE2E6;
+    --border-light: #E9ECEF;
+    --border-dark: #CED4DA;
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+    --border-radius-full: 9999px;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Espaçamentos */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Tipografia */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    
+    /* Transições */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* Z-index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-tooltip: 1070;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-light);
+    min-height: 100vh;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.header {
+    background: var(--bg-dark);
+    padding: var(--spacing-md) var(--spacing-xl);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header-logo img,
+.header-logo svg {
+    height: 48px;
+    width: auto;
+}
+
+.header-logo-text {
+    color: var(--text-inverse);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.header-logos-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.header-logos-right img,
+.header-logos-right svg {
+    height: 40px;
+    width: auto;
+    opacity: 0.9;
+    transition: opacity var(--transition-fast);
+}
+
+.header-logos-right img:hover,
+.header-logos-right svg:hover {
+    opacity: 1;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--spacing-xl);
+    min-height: calc(100vh - 80px);
+}
+
+/* ============================================
+   SIDEBAR (Navegação Facetada)
+   ============================================ */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.sidebar-card {
+    background: var(--bg-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.sidebar-card-header {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.sidebar-card-header i {
+    font-size: var(--font-size-base);
+}
+
+.sidebar-card-body {
+    padding: var(--spacing-md);
+}
+
+/* Stats */
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: var(--font-size-sm);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Facets */
+.facet-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.facet-group:last-child {
+    margin-bottom: 0;
+}
+
+.facet-title {
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--primary-lightest);
+}
+
+.facet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.facet-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.facet-item:hover {
+    background: var(--primary-lightest);
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+.facet-item-count {
+    background: var(--bg-gray);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.facet-item:hover .facet-item-count {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+}
+
+/* ============================================
+   CONTENT AREA
+   ============================================ */
+.content-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* ============================================
+   SEARCH BOX
+   ============================================ */
+.search-box {
+    background: var(--bg-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+}
+
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.search-input-row {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: stretch;
+}
+
+.search-input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 48px 0 var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+    transition: all var(--transition-fast);
+    background: var(--bg-white);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(19, 81, 180, 0.15);
+}
+
+.search-input::placeholder {
+    color: var(--text-light);
+}
+
+.search-input-icon {
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: var(--font-size-lg);
+}
+
+.search-clear-btn {
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius-full);
+    background: var(--bg-gray);
+    color: var(--text-muted);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+}
+
+.search-clear-btn:hover {
+    background: var(--danger-color);
+    color: var(--text-inverse);
+}
+
+.search-input-wrapper.has-value .search-clear-btn {
+    display: flex;
+}
+
+.search-input-wrapper.has-value .search-input-icon {
+    display: none;
+}
+
+/* Search Buttons */
+.search-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    height: 48px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background: var(--bg-white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+.btn-icon {
+    width: 48px;
+    padding: 0;
+}
+
+/* Active Filters */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-light);
+}
+
+.active-filters-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--primary-lightest);
+    color: var(--primary-dark);
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.filter-tag:hover {
+    background: var(--danger-light);
+    color: var(--danger-color);
+    text-decoration: none;
+}
+
+.filter-tag-remove {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-full);
+    font-size: 10px;
+}
+
+/* ============================================
+   RESULTS INFO
+   ============================================ */
+.results-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.results-count {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.results-count strong {
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+}
+
+.results-pagination {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.pagination-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-gray);
+    color: var(--text-secondary);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+.pagination-info {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.pagination-current {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+}
+
+/* ============================================
+   RESULTS LIST
+   ============================================ */
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.result-card {
+    background: var(--bg-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    border: 1px solid var(--border-light);
+}
+
+.result-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    border-color: var(--primary-lightest);
+}
+
+.result-card-header {
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-white) 100%);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.result-card-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.result-card-title i {
+    color: var(--primary-light);
+}
+
+.result-card-body {
+    padding: var(--spacing-lg);
+}
+
+.result-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm) var(--spacing-lg);
+}
+
+.result-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.result-field-label {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.result-field-value {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+}
+
+.result-highlight {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--warning-light);
+    border-left: 3px solid var(--warning-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.result-highlight-label {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.result-highlight-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.highlight {
+    background: var(--warning-color);
+    color: var(--text-primary);
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    background: var(--bg-white);
+    border-top: 1px solid var(--border-light);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
+.footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.footer-link:hover {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+/* ============================================
+   MODAL - FILTROS AVANÇADOS
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: var(--z-modal-backdrop);
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.modal-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: var(--bg-white);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+    z-index: var(--z-modal);
+    width: 95%;
+    max-width: 900px;
+    max-height: 90vh;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    transition: all var(--transition-base);
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-full);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xl);
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+/* Filter Sections */
+.filter-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.filter-section:last-child {
+    margin-bottom: 0;
+}
+
+.filter-section-title {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--primary-lightest);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.filter-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Form Groups */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.form-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.form-label .badge {
+    background: var(--info-color);
+    color: var(--text-inverse);
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: var(--border-radius-full);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.form-input-group {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.form-input {
+    flex: 1;
+    height: 44px;
+    padding: 0 var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    background: var(--bg-white);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(19, 81, 180, 0.1);
+}
+
+/* Toggle Button (Contém/Não Contém/Igual) */
+.toggle-btn {
+    min-width: 120px;
+    height: 44px;
+    padding: 0 var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-light);
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    transition: all var(--transition-fast);
+}
+
+.toggle-btn:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-white);
+}
+
+.toggle-btn.mode-contains {
+    background: var(--success-light);
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.toggle-btn.mode-excludes {
+    background: var(--danger-light);
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.toggle-btn.mode-exact {
+    background: var(--info-light);
+    border-color: var(--info-color);
+    color: var(--info-color);
+}
+
+/* Date Range */
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.date-range-label {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 30px;
+}
+
+.date-range input {
+    flex: 1;
+}
+
+/* Value Range */
+.value-range {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-light);
+}
+
+/* ============================================
+   AUTOCOMPLETE - jQuery UI Customizado
+   ============================================ */
+.ui-autocomplete {
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10000 !important;
+    background: var(--bg-white) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow-lg) !important;
+    padding: var(--spacing-xs) !important;
+}
+
+.ui-menu-item {
+    padding: 0 !important;
+    margin: 2px 0 !important;
+}
+
+.ui-menu-item-wrapper {
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    border-radius: var(--border-radius-sm) !important;
+    font-size: var(--font-size-sm) !important;
+    color: var(--text-primary) !important;
+    transition: all var(--transition-fast) !important;
+}
+
+.ui-menu-item-wrapper:hover,
+.ui-state-active {
+    background: var(--primary-lightest) !important;
+    color: var(--primary-dark) !important;
+    border: none !important;
+    margin: 0 !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        order: 2;
+    }
+    
+    .content-area {
+        order: 1;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-grid-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .header-logos-right {
+        display: none;
+    }
+    
+    .search-input-row {
+        flex-direction: column;
+    }
+    
+    .search-buttons {
+        width: 100%;
+    }
+    
+    .search-buttons .btn {
+        flex: 1;
+    }
+    
+    .results-info {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+    }
+    
+    .modal {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+    
+    .modal-header {
+        border-radius: 0;
+    }
+    
+    .value-range {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .header,
+    .footer,
+    .sidebar,
+    .search-box,
+    .modal-overlay,
+    .modal {
+        display: none !important;
+    }
+    
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-logo">
+                <!-- Logo eProcesso -->
+                <svg width="200" height="48" viewBox="0 0 200 48">
+                    <rect fill="#fff" rx="6" width="200" height="48"/>
+                    <text x="12" y="31" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#1351B4">eProcesso</text>
+                    <text x="120" y="31" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#666">Buscador</text>
+                </svg>
+            </div>
+            <div class="header-logos-right">
+                <svg width="120" height="40" viewBox="0 0 120 40">
+                    <rect fill="rgba(255,255,255,0.95)" rx="4" width="120" height="40"/>
+                    <text x="10" y="25" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1351B4">Receita Federal</text>
+                </svg>
+                <svg width="60" height="40" viewBox="0 0 60 40">
+                    <rect fill="rgba(255,255,255,0.95)" rx="4" width="60" height="40"/>
+                    <text x="12" y="25" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1351B4">PGFN</text>
+                </svg>
+                <svg width="60" height="40" viewBox="0 0 60 40">
+                    <rect fill="rgba(255,255,255,0.95)" rx="4" width="60" height="40"/>
+                    <text x="10" y="25" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1351B4">CARF</text>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main class="main-content">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <!-- Estatísticas -->
+            <div class="sidebar-card">
+                <div class="sidebar-card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    Estatísticas
+                </div>
+                <div class="sidebar-card-body">
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <span class="stat-label">Mínimo</span>
+                            <span class="stat-value">R$ 1.234,56</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Máximo</span>
+                            <span class="stat-value">R$ 9.876.543,21</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Soma</span>
+                            <span class="stat-value">R$ 45.678.901,23</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Média</span>
+                            <span class="stat-value">R$ 123.456,78</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facetas -->
+            <div class="sidebar-card">
+                <div class="sidebar-card-header">
+                    <i class="fas fa-filter"></i>
+                    Filtros Rápidos
+                </div>
+                <div class="sidebar-card-body">
+                    <div class="facet-group">
+                        <div class="facet-title">Tipo de Processo</div>
+                        <div class="facet-list">
+                            <a href="#" class="facet-item">
+                                <span>IRPF</span>
+                                <span class="facet-item-count">1.234</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>IRPJ</span>
+                                <span class="facet-item-count">987</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>IPI</span>
+                                <span class="facet-item-count">654</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>COFINS</span>
+                                <span class="facet-item-count">432</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>PIS</span>
+                                <span class="facet-item-count">321</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="facet-group">
+                        <div class="facet-title">Situação do Documento</div>
+                        <div class="facet-list">
+                            <a href="#" class="facet-item">
+                                <span>Em andamento</span>
+                                <span class="facet-item-count">2.345</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>Arquivado</span>
+                                <span class="facet-item-count">1.876</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>Julgado</span>
+                                <span class="facet-item-count">543</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>Suspenso</span>
+                                <span class="facet-item-count">234</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="facet-group">
+                        <div class="facet-title">Unidade Atual</div>
+                        <div class="facet-list">
+                            <a href="#" class="facet-item">
+                                <span>DRF São Paulo</span>
+                                <span class="facet-item-count">876</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>DRF Rio de Janeiro</span>
+                                <span class="facet-item-count">654</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>DRF Belo Horizonte</span>
+                                <span class="facet-item-count">432</span>
+                            </a>
+                            <a href="#" class="facet-item">
+                                <span>DRF Brasília</span>
+                                <span class="facet-item-count">321</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+            
+            <!-- Search Box -->
+            <div class="search-box">
+                <form class="search-form" id="searchForm">
+                    <div class="search-input-row">
+                        <div class="search-input-wrapper has-value">
+                            <input 
+                                type="text" 
+                                class="search-input" 
+                                id="q" 
+                                name="q" 
+                                placeholder="Digite sua busca..."
+                                value="processo tributário 2024"
+                                autocomplete="off"
+                            >
+                            <i class="fas fa-search search-input-icon"></i>
+                            <button type="button" class="search-clear-btn" onclick="clearSearch()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="search-buttons">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                                Buscar
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="openFilters()">
+                                <i class="fas fa-sliders-h"></i>
+                                Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Filters -->
+                    <div class="active-filters">
+                        <span class="active-filters-label">Filtros ativos:</span>
+                        <a href="#" class="filter-tag">
+                            tipo_processo_s:IRPF
+                            <span class="filter-tag-remove"><i class="fas fa-times"></i></span>
+                        </a>
+                        <a href="#" class="filter-tag">
+                            situacao_s:Em andamento
+                            <span class="filter-tag-remove"><i class="fas fa-times"></i></span>
+                        </a>
+                        <a href="#" class="filter-tag">
+                            dt_protocolo:[2024-01-01 TO 2024-12-31]
+                            <span class="filter-tag-remove"><i class="fas fa-times"></i></span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Info -->
+            <div class="results-info">
+                <div class="results-count">
+                    <strong>12.345</strong> resultados encontrados em 45ms
+                </div>
+                <div class="results-pagination">
+                    <a href="#" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </a>
+                    <span class="pagination-info">
+                        Página <span class="pagination-current">1</span> de 1.235
+                    </span>
+                    <a href="#" class="pagination-btn">
+                        Próxima <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Results List -->
+            <div class="results-list">
+                <!-- Result 1 -->
+                <article class="result-card">
+                    <div class="result-card-header">
+                        <h3 class="result-card-title">
+                            <i class="fas fa-file-alt"></i>
+                            Processo Administrativo Fiscal nº 10283.720001/2024-15
+                        </h3>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-fields">
+                            <div class="result-field">
+                                <span class="result-field-label">Tipo de Processo</span>
+                                <span class="result-field-value">IRPF - Imposto de Renda Pessoa Física</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Contribuinte</span>
+                                <span class="result-field-value">João da Silva Santos</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Situação do Documento</span>
+                                <span class="result-field-value">Em andamento</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Valor do Processo</span>
+                                <span class="result-field-value">R$ 45.678,90</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Unidade Atual</span>
+                                <span class="result-field-value">DRF São Paulo - Equipe de Julgamento</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Data do Protocolo</span>
+                                <span class="result-field-value">15/03/2024 10:30</span>
+                            </div>
+                        </div>
+                        <div class="result-highlight">
+                            <div class="result-highlight-label">Trecho encontrado:</div>
+                            <div class="result-highlight-text">
+                                Dedução indevida de despesas médicas no exercício 2023. O contribuinte apresentou <span class="highlight">processo tributário</span> contestando a glosa realizada pela fiscalização...
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Result 2 -->
+                <article class="result-card">
+                    <div class="result-card-header">
+                        <h3 class="result-card-title">
+                            <i class="fas fa-file-alt"></i>
+                            Processo Administrativo Fiscal nº 10283.720002/2024-60
+                        </h3>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-fields">
+                            <div class="result-field">
+                                <span class="result-field-label">Tipo de Processo</span>
+                                <span class="result-field-value">IRPJ - Imposto de Renda Pessoa Jurídica</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Contribuinte</span>
+                                <span class="result-field-value">Empresa ABC Ltda</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Situação do Documento</span>
+                                <span class="result-field-value">Julgado - Procedente em parte</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Valor do Processo</span>
+                                <span class="result-field-value">R$ 1.234.567,89</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Unidade Atual</span>
+                                <span class="result-field-value">CARF - 1ª Turma</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Data do Protocolo</span>
+                                <span class="result-field-value">22/01/2024 14:15</span>
+                            </div>
+                        </div>
+                        <div class="result-highlight">
+                            <div class="result-highlight-label">Trecho encontrado:</div>
+                            <div class="result-highlight-text">
+                                Questionamento sobre a base de cálculo do <span class="highlight">tributo</span> incidente sobre operações de exportação realizadas no período de apuração...
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Result 3 -->
+                <article class="result-card">
+                    <div class="result-card-header">
+                        <h3 class="result-card-title">
+                            <i class="fas fa-file-alt"></i>
+                            Processo Administrativo Fiscal nº 10283.720003/2024-04
+                        </h3>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-fields">
+                            <div class="result-field">
+                                <span class="result-field-label">Tipo de Processo</span>
+                                <span class="result-field-value">COFINS</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Contribuinte</span>
+                                <span class="result-field-value">Indústria XYZ S.A.</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Situação do Documento</span>
+                                <span class="result-field-value">Em andamento</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Valor do Processo</span>
+                                <span class="result-field-value">R$ 567.890,12</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Unidade Atual</span>
+                                <span class="result-field-value">DRF Rio de Janeiro - Equipe de Fiscalização</span>
+                            </div>
+                            <div class="result-field">
+                                <span class="result-field-label">Data do Protocolo</span>
+                                <span class="result-field-value">08/02/2024 09:45</span>
+                            </div>
+                        </div>
+                        <div class="result-highlight">
+                            <div class="result-highlight-label">Trecho encontrado:</div>
+                            <div class="result-highlight-text">
+                                Compensação de créditos de <span class="highlight">processo</span> anterior com débitos de COFINS do período 2023...
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination Bottom -->
+            <div class="results-info">
+                <div class="results-count">
+                    <strong>12.345</strong> resultados encontrados
+                </div>
+                <div class="results-pagination">
+                    <a href="#" class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </a>
+                    <span class="pagination-info">
+                        Página <span class="pagination-current">1</span> de 1.235
+                    </span>
+                    <a href="#" class="pagination-btn">
+                        Próxima <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">
+                <i class="fas fa-file-code"></i> XML
+            </a>
+            <a href="#" class="footer-link">
+                <i class="fas fa-file-alt"></i> JSON
+            </a>
+            <a href="#" class="footer-link">
+                <i class="fas fa-file-csv"></i> CSV
+            </a>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         MODAL - FILTROS AVANÇADOS
+         ============================================ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeFilters()"></div>
+    <div class="modal" id="filtersModal">
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="fas fa-sliders-h"></i>
+                Filtros Avançados
+            </h2>
+            <button class="modal-close" onclick="closeFilters()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+            <!-- Filtros de Data (APENAS 2 CAMPOS CONFORME SOLICITADO) -->
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Filtros de Data
+                </h3>
+                <div class="filter-grid">
+                    <!-- Data do Protocolo do Processo -->
+                    <div class="form-group">
+                        <label class="form-label">Data do Protocolo do Processo</label>
+                        <div class="date-range">
+                            <span class="date-range-label">De:</span>
+                            <input type="date" class="form-input" id="dt_protocolo_from" value="2024-01-01">
+                        </div>
+                        <div class="date-range" style="margin-top: 8px;">
+                            <span class="date-range-label">Até:</span>
+                            <input type="date" class="form-input" id="dt_protocolo_to" value="2024-12-31">
+                        </div>
+                    </div>
+                    
+                    <!-- Data da Juntada -->
+                    <div class="form-group">
+                        <label class="form-label">Data da Juntada</label>
+                        <div class="date-range">
+                            <span class="date-range-label">De:</span>
+                            <input type="date" class="form-input" id="dt_juntada_from">
+                        </div>
+                        <div class="date-range" style="margin-top: 8px;">
+                            <span class="date-range-label">Até:</span>
+                            <input type="date" class="form-input" id="dt_juntada_to">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processo e Documento -->
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <i class="fas fa-file-alt"></i>
+                    Processo e Documento
+                </h3>
+                <div class="filter-grid">
+                    <!-- Grupo Processo -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Grupo do Processo
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="grupo_processo_s" placeholder="Selecione ou digite..." data-field="grupo_processo_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tipo Processo -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Tipo de Processo
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="tipo_processo_s" placeholder="Selecione ou digite..." value="IRPF" data-field="tipo_processo_s">
+                            <button type="button" class="toggle-btn mode-exact" onclick="toggleMode(this)" data-mode="exact">
+                                <i class="fas fa-equals"></i> Igual
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Subtipo Processo -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Subtipo de Processo
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="subtipo_processo_s" placeholder="Selecione ou digite..." data-field="subtipo_processo_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Número do Processo -->
+                    <div class="form-group">
+                        <label class="form-label">Número do Processo</label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input" id="processo_s" placeholder="Ex: 10283.720001/2024-15">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- CORRIGIDO: Situação do Documento (não "Situação Processo") -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Situação do Documento
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="situacao_s" placeholder="Selecione ou digite..." value="Arquivado" data-field="situacao_s">
+                            <button type="button" class="toggle-btn mode-excludes" onclick="toggleMode(this)" data-mode="excludes">
+                                <i class="fas fa-times"></i> Não Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tipo do Documento -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Tipo do Documento
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="tipo_documento_s" placeholder="Selecione ou digite..." data-field="tipo_documento_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Valor do Processo -->
+                    <div class="value-range">
+                        <div class="form-group">
+                            <label class="form-label">Valor Mínimo</label>
+                            <input type="text" class="form-input" id="valor_min" placeholder="R$ 0,00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Valor Máximo</label>
+                            <input type="text" class="form-input" id="valor_max" placeholder="R$ 0,00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unidade e Equipe -->
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <i class="fas fa-building"></i>
+                    Unidade e Equipe
+                </h3>
+                <div class="filter-grid">
+                    <!-- CORRIGIDO: Unidade de Origem do Documento -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Unidade de Origem do Documento
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="unidade_origem_s" placeholder="Selecione ou digite..." data-field="unidade_origem_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- CORRIGIDO: Equipe de Origem do Documento -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Equipe de Origem do Documento
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="equipe_origem_s" placeholder="Selecione ou digite..." data-field="equipe_origem_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Unidade Atual -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Unidade Atual
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="nome_unidade_atual_s" placeholder="Selecione ou digite..." data-field="nome_unidade_atual_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Equipe Atual -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Equipe Atual
+                            <span class="badge">AUTO</span>
+                        </label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input autocomplete-field" id="nome_equipe_atual_s" placeholder="Selecione ou digite..." data-field="nome_equipe_atual_s">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partes Envolvidas -->
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <i class="fas fa-users"></i>
+                    Partes Envolvidas
+                </h3>
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label class="form-label">NI do Contribuinte</label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input" id="ni_contribuinte_s" placeholder="CPF ou CNPJ">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nome do Contribuinte</label>
+                        <div class="form-input-group">
+                            <input type="text" class="form-input" id="nome_contribuinte_s" placeholder="Nome do contribuinte">
+                            <button type="button" class="toggle-btn mode-contains" onclick="toggleMode(this)" data-mode="contains">
+                                <i class="fas fa-check"></i> Contém
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="clearAllFilters()">
+                <i class="fas fa-eraser"></i> Limpar
+            </button>
+            <button type="button" class="btn btn-primary" onclick="applyFilters()">
+                <i class="fas fa-check"></i> Aplicar Filtros
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SCRIPTS
+         ============================================ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+// ============================================
+// DADOS MOCKADOS PARA AUTOCOMPLETE
+// (Em produção, virão do Solr Terms API)
+// ============================================
+const autocompleteData = {
+    'grupo_processo_s': [
+        'CONTRIBUINTE - PESSOA FÍSICA',
+        'CONTRIBUINTE - PESSOA JURÍDICA',
+        'RESTITUIÇÃO',
+        'RESSARCIMENTO',
+        'COMPENSAÇÃO',
+        'PARCELAMENTO',
+        'REVISÃO DE OFÍCIO'
+    ],
+    'tipo_processo_s': [
+        'IRPF - Imposto de Renda Pessoa Física',
+        'IRPJ - Imposto de Renda Pessoa Jurídica',
+        'IPI - Imposto sobre Produtos Industrializados',
+        'COFINS - Contribuição para Financiamento da Seguridade Social',
+        'PIS - Programa de Integração Social',
+        'CSLL - Contribuição Social sobre Lucro Líquido',
+        'IOF - Imposto sobre Operações Financeiras'
+    ],
+    'subtipo_processo_s': [
+        'DECLARAÇÃO DE AJUSTE ANUAL',
+        'MALHA FISCAL',
+        'AUTO DE INFRAÇÃO',
+        'REPRESENTAÇÃO FISCAL',
+        'MANDADO DE PROCEDIMENTO FISCAL'
+    ],
+    'situacao_s': [
+        'Em andamento',
+        'Arquivado',
+        'Julgado - Procedente',
+        'Julgado - Improcedente',
+        'Julgado - Procedente em parte',
+        'Suspenso',
+        'Cancelado',
+        'Aguardando análise'
+    ],
+    'tipo_documento_s': [
+        'Termo de Intimação',
+        'Auto de Infração',
+        'Decisão',
+        'Recurso Voluntário',
+        'Recurso de Ofício',
+        'Parecer',
+        'Despacho',
+        'Manifestação de Inconformidade'
+    ],
+    'unidade_origem_s': [
+        'DRF São Paulo',
+        'DRF Rio de Janeiro',
+        'DRF Belo Horizonte',
+        'DRF Brasília',
+        'DRF Curitiba',
+        'DRF Porto Alegre',
+        'DRF Salvador',
+        'DRF Recife',
+        'DRF Fortaleza',
+        'DRF Manaus'
+    ],
+    'equipe_origem_s': [
+        'Equipe de Fiscalização',
+        'Equipe de Julgamento',
+        'Equipe de Auditoria',
+        'Equipe de Arrecadação',
+        'Equipe de Cobrança',
+        'CAC - Centro de Atendimento ao Contribuinte'
+    ],
+    'nome_unidade_atual_s': [
+        'CARF - 1ª Turma',
+        'CARF - 2ª Turma',
+        'CARF - 3ª Turma',
+        'DRJ São Paulo',
+        'DRJ Rio de Janeiro',
+        'DRJ Brasília',
+        'DRF São Paulo',
+        'DRF Rio de Janeiro'
+    ],
+    'nome_equipe_atual_s': [
+        'Turma de Julgamento 1',
+        'Turma de Julgamento 2',
+        'Equipe de Análise',
+        'Equipe de Protocolo',
+        'Secretaria'
+    ]
+};
+
+// ============================================
+// INICIALIZAÇÃO DO AUTOCOMPLETE
+// (Mostra valores ao clicar, filtra ao digitar)
+// ============================================
+$(document).ready(function() {
+    $('.autocomplete-field').each(function() {
+        const fieldId = $(this).attr('id');
+        const data = autocompleteData[fieldId] || [];
+        
+        $(this).autocomplete({
+            source: function(request, response) {
+                // Filtra os resultados baseado no que foi digitado
+                const term = request.term.toLowerCase();
+                const filtered = data.filter(item => 
+                    item.toLowerCase().includes(term)
+                );
+                response(filtered);
+            },
+            minLength: 0, // Permite mostrar ao clicar (sem digitar nada)
+            delay: 0,
+            select: function(event, ui) {
+                $(this).val(ui.item.value);
+                return false;
+            }
+        });
+        
+        // Mostra autocomplete ao focar no campo (mesmo sem digitar)
+        $(this).on('focus', function() {
+            $(this).autocomplete('search', $(this).val());
+        });
+    });
+    
+    // Input de busca principal - atualiza classe has-value
+    $('#q').on('input', function() {
+        const wrapper = $(this).parent();
+        if ($(this).val()) {
+            wrapper.addClass('has-value');
+        } else {
+            wrapper.removeClass('has-value');
+        }
+    });
+});
+
+// ============================================
+// FUNÇÕES DO MODAL
+// ============================================
+function openFilters() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('filtersModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFilters() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.getElementById('filtersModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ============================================
+// TOGGLE MODE (Contém / Não Contém / Igual)
+// ============================================
+function toggleMode(btn) {
+    const modes = [
+        { mode: 'contains', icon: 'fa-check', text: 'Contém', class: 'mode-contains' },
+        { mode: 'excludes', icon: 'fa-times', text: 'Não Contém', class: 'mode-excludes' },
+        { mode: 'exact', icon: 'fa-equals', text: 'Igual', class: 'mode-exact' }
+    ];
+    
+    const currentMode = btn.dataset.mode || 'contains';
+    const currentIndex = modes.findIndex(m => m.mode === currentMode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    const next = modes[nextIndex];
+    
+    // Remove todas as classes de modo
+    btn.classList.remove('mode-contains', 'mode-excludes', 'mode-exact');
+    // Adiciona a nova classe
+    btn.classList.add(next.class);
+    // Atualiza o data attribute
+    btn.dataset.mode = next.mode;
+    // Atualiza o conteúdo
+    btn.innerHTML = `<i class="fas ${next.icon}"></i> ${next.text}`;
+}
+
+// ============================================
+// LIMPAR BUSCA
+// ============================================
+function clearSearch() {
+    const input = document.getElementById('q');
+    input.value = '';
+    input.parentElement.classList.remove('has-value');
+    input.focus();
+}
+
+// ============================================
+// LIMPAR TODOS OS FILTROS
+// ============================================
+function clearAllFilters() {
+    // Limpa inputs de texto
+    document.querySelectorAll('.modal input[type="text"]').forEach(input => {
+        input.value = '';
+    });
+    
+    // Limpa inputs de data
+    document.querySelectorAll('.modal input[type="date"]').forEach(input => {
+        input.value = '';
+    });
+    
+    // Reseta todos os toggles para "Contém"
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.classList.remove('mode-excludes', 'mode-exact');
+        btn.classList.add('mode-contains');
+        btn.dataset.mode = 'contains';
+        btn.innerHTML = '<i class="fas fa-check"></i> Contém';
+    });
+}
+
+// ============================================
+// APLICAR FILTROS
+// ============================================
+function applyFilters() {
+    // Em produção, isso construiria a query Solr
+    alert('Filtros aplicados com sucesso!');
+    closeFilters();
+}
+
+// ============================================
+// FECHAR COM ESC
+// ============================================
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeFilters();
+    }
+});
+    </script>
+</body>
+</html>
