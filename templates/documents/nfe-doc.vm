@@ -240,11 +240,11 @@
             </div>
         #end
         
-        ## Número documento principal
-        #if($doc.getFieldValue('numero_doc_princiapal_exp_s'))
+        ## Número documento principal (CORRIGIDO: era 'numero_doc_princiapal_exp_s')
+        #if($doc.getFieldValue('numero_doc_principal_exp_s'))
             <div class="field-row">
                 <span class="field-name">Nr Doc Principal:</span>
-                <span class="field-value">#field('numero_doc_princiapal_exp_s')</span>
+                <span class="field-value">#field('numero_doc_principal_exp_s')</span>
             </div>
         #end
         

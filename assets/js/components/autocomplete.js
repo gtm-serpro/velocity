@@ -15,8 +15,9 @@ const Autocomplete = (function() {
     'use strict';
 
     // Configuração
+    // URL configurável: usa variável global se definida, senão usa caminho relativo
     var config = {
-        solrBaseUrl: 'https://eprocesso-buscador.receita.fazenda/solr/eprocesso',
+        solrBaseUrl: window.SOLR_BASE_URL || '/solr/eprocesso',
         limit: 100,  // Aumentado para pegar mais valores do domínio
         minLength: 0 // Permite abrir sem digitar nada
     };
