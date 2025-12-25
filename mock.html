@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eProcesso Buscador - Preview</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- jQuery UI CSS para autocomplete -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    
+    <!-- CSS Inline (compilado) -->
+    <style>
+/* ============================================
+   _variables.css
+   ============================================ */
+:root {
+    /* CORES PRIMÁRIAS (Gov.br) */
+    --primary-color: #1351B4;
+    --primary-dark: #0C326F;
+    --primary-light: #2670E8;
+    --primary-lightest: #C5D4EB;
+    
+    /* CORES SECUNDÁRIAS */
+    --secondary-color: #666666;
+    --secondary-dark: #4A4A4A;
+    --secondary-light: #888888;
+    
+    /* CORES DE STATUS */
+    --success-color: #168821;
+    --success-light: #E3F9E5;
+    --warning-color: #FFCD07;
+    --warning-light: #FFF5CC;
+    --danger-color: #E52207;
+    --danger-light: #FDE0DB;
+    --info-color: #155BCB;
+    --info-light: #D4E5FF;
+    
+    /* CORES DE FUNDO */
+    --background-white: #FFFFFF;
+    --background-light: #F9F9F9;
+    --background-gray: #F0F0F0;
+    --background-dark: #333333;
+    
+    /* CORES DE BORDA */
+    --border-color: #DDDDDD;
+    --border-light: #E8E8E8;
+    --border-dark: #CCCCCC;
+    
+    /* CORES DE TEXTO */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-muted: #888888;
+    --text-light: #AAAAAA;
+    --text-inverse: #FFFFFF;
+    
+    /* SOMBRAS */
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.16);
+    
+    /* ESPAÇAMENTOS */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+    
+    /* BORDAS */
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+    --border-radius-full: 50%;
+    
+    /* TIPOGRAFIA */
+    --font-family-base: 'Rawline', 'Raleway', Arial, Helvetica, sans-serif;
+    --font-family-mono: 'Courier New', Courier, monospace;
+    
+    --font-size-xs: 11px;
+    --font-size-sm: 13px;
+    --font-size-base: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-xxl: 24px;
+    --font-size-xxxl: 32px;
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    --line-height-tight: 1.2;
+    --line-height-base: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* TRANSIÇÕES */
+    --transition-fast: all 0.15s ease;
+    --transition-base: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    
+    /* Z-INDEX */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
+    
+    /* LARGURAS MÁXIMAS */
+    --max-width-sm: 540px;
+    --max-width-md: 720px;
+    --max-width-lg: 960px;
+    --max-width-xl: 1140px;
+    --max-width-xxl: 1320px;
+}
+
+/* ============================================
+   reset.css
+   ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, 
+a, img, ul, li, form, label, table, tbody, tr, th, td,
+article, aside, footer, header, nav, section {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+input:focus, button:focus, textarea:focus, select:focus {
+    outline: none;
+}
+
+/* ============================================
+   typography.css
+   ============================================ */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-base);
+    color: var(--text-primary);
+    background-color: var(--background-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+a {
+    color: var(--primary-color);
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+strong, b {
+    font-weight: var(--font-weight-bold);
+}
+
+/* ============================================
+   header.css
+   ============================================ */
+#header {
+    width: 100%;
+    position: relative;
+    z-index: var(--z-sticky);
+}
+
+#top3 {
+    height: 84px;
+    background: linear-gradient(135deg, #1351B4 0%, #0C326F 100%);
+    border-top: 3px solid #0071BC;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-md);
+    overflow: hidden;
+}
+
+#logo-eprocesso {
+    height: 60px;
+    margin-left: 10px;
+}
+
+.header-logos-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header-logos-right img {
+    height: 50px;
+    opacity: 0.9;
+}
+
+.header-title {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ============================================
+   search-form.css
+   ============================================ */
+.query-box {
+    background: var(--background-white);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+}
+
+.search-input-wrapper {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-input-wrapper > label {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 16px;
+    min-width: 60px;
+}
+
+.input-group {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    width: 100%;
+    height: 42px;
+    border: 2px solid var(--border-color);
+    font-size: 16px;
+    padding: 0 40px 0 var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: var(--transition-base);
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(19, 81, 180, 0.1);
+}
+
+.clear-input-btn {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: #999;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+}
+
+.clear-input-btn:hover {
+    background: #f0f0f0;
+    color: var(--secondary-color);
+}
+
+.input-group.has-value .clear-input-btn {
+    display: flex;
+}
+
+.search-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px var(--spacing-lg);
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--background-white);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(19, 81, 180, 0.2);
+}
+
+.btn-filters {
+    background: var(--background-white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-filters:hover {
+    background: var(--primary-color);
+    color: var(--background-white);
+}
+
+.active-filters {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.filters-label {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 6px 12px;
+    background: var(--background-white);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--secondary-color);
+    transition: var(--transition-base);
+    cursor: pointer;
+}
+
+.filter-tag:hover {
+    background: #fee;
+    border-color: #e57373;
+    color: #b71c1c;
+    text-decoration: none;
+}
+
+/* ============================================
+   navigation.css
+   ============================================ */
+.navigators {
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    float: left;
+    margin: 10px 5px 5px 10px;
+    padding: 13px 8px;
+    position: relative;
+    width: 268px;
+}
+
+.navigators h2 {
+    border-bottom: 1px solid #ccc;
+    color: var(--primary-color);
+    font-size: 14px;
+    margin: 5px -6px;
+    padding: 10px 5px 2px;
+    text-transform: uppercase;
+}
+
+.navigators h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.navigators ul {
+    margin: 5px 0;
+    padding-left: 10px;
+}
+
+.navigators li {
+    color: #606060;
+    padding: 2px 0;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.navigators li a {
+    color: #606060;
+    transition: var(--transition-base);
+}
+
+.navigators li a:hover {
+    color: var(--primary-color);
+}
+
+.facet-field {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+/* ============================================
+   pagination.css
+   ============================================ */
+.pagination {
+    margin: 5px 5px 5px 290px;
+    padding: 10px 15px;
+    background: var(--background-white);
+    border-radius: 4px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination .results-found {
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    color: var(--background-white);
+    font-weight: bold;
+    transition: var(--transition-base);
+}
+
+.pagination a:hover {
+    background-color: var(--secondary-dark);
+    text-decoration: none;
+}
+
+.page-num {
+    background: #e3f2fd;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* ============================================
+   results.css
+   ============================================ */
+.results {
+    margin-left: 290px;
+    padding: 0 5px;
+}
+
+.result-document {
+    border: 1px solid #9f9f9f;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+    margin: 5px 5px 20px 5px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    transition: var(--transition-base);
+}
+
+.result-document:hover {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.result-document .result-title {
+    background-color: var(--background-white);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    color: #000;
+    margin: -15px -15px 10px;
+    padding: 12px 15px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px 4px 0 0;
+}
+
+.result-document .result-title a {
+    color: var(--primary-color);
+}
+
+.result-body {
+    background: #e8e8e8;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.result-document .field-row {
+    color: #404040;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 3px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-document .field-row:last-child {
+    border-bottom: none;
+}
+
+.field-name {
+    font-weight: bold;
+    color: var(--primary-color);
+    min-width: 150px;
+    display: inline-block;
+}
+
+.highlight {
+    color: white;
+    background-color: #ff9800;
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+/* ============================================
+   footer.css
+   ============================================ */
+#footer {
+    background-color: var(--background-gray);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    margin-left: 290px;
+    text-align: center;
+}
+
+#footer a {
+    color: var(--primary-color);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-base);
+}
+
+#footer a:hover {
+    background-color: var(--primary-color);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+/* ============================================
+   advanced-filters.css
+   ============================================ */
+.dialog-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    animation: fadeIn 0.3s;
+}
+
+.dialog-overlay.active {
+    display: block;
+}
+
+.dialog-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background-white);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    max-width: 1200px;
+    max-height: 85vh;
+    width: 95%;
+    display: none;
+    flex-direction: column;
+}
+
+.dialog-box.active {
+    display: flex;
+}
+
+.dialog-header {
+    background: var(--primary-color);
+    color: var(--background-white);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+}
+
+.dialog-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: white;
+}
+
+.dialog-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.dialog-maximize,
+.dialog-close {
+    background: rgba(255, 255, 255, 0);
+    color: var(--background-white);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-maximize:hover,
+.dialog-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.dialog-body {
+    padding: var(--spacing-md);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.filter-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    border: 1px solid #e0e0e0;
+}
+
+.filter-section h3 {
+    color: var(--primary-color);
+    font-size: 16px;
+    margin: 0 0 var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.form-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+    font-size: 13px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: var(--transition-base);
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(19, 81, 180, 0.1);
+}
+
+.field-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: stretch;
+}
+
+.field-group input[type="text"] {
+    flex: 1;
+}
+
+.field-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: 4px;
+}
+
+.autocomplete-badge {
+    background: #2196F3;
+    color: var(--background-white);
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.toggle-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: var(--background-light);
+    color: #333;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition-base);
+    height: 42px;
+    white-space: nowrap;
+    min-width: 110px;
+}
+
+.toggle-switch:hover {
+    background-color: #f1f1f1;
+    border-color: #bbb;
+}
+
+.toggle-switch.exclude {
+    background-color: #ffe6e6;
+    border-color: #e57373;
+    color: #b71c1c;
+}
+
+.toggle-switch.exact {
+    background-color: #e3f2fd;
+    border-color: #2196F3;
+    color: var(--primary-color);
+}
+
+.date-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.date-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.date-row .date-label {
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--secondary-color);
+    min-width: 30px;
+    margin: 0;
+}
+
+.date-row input[type="date"] {
+    flex: 1;
+    padding: 8px;
+}
+
+.valor-range {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    background-color: #e8e8e8;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #d0d0d0;
+}
+
+.dialog-footer {
+    padding: 12px var(--spacing-md);
+    background: var(--background-white);
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    border-radius: 0 0 12px 12px;
+}
+
+.dialog-footer .spacer {
+    flex: 1;
+}
+
+.btn-help {
+    background: var(--background-light);
+    color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary {
+    background: var(--background-white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================
+   contrast.css (simplificado)
+   ============================================ */
+.high-contrast {
+    --primary-color: #FFFF00;
+    --background-white: #000000;
+    --background-light: #1A1A1A;
+    --text-primary: #FFFFFF;
+    --border-color: #FFFFFF;
+}
+
+.high-contrast body {
+    background-color: #000;
+    color: #fff;
+}
+
+.high-contrast a {
+    color: #FFFF00;
+}
+
+/* ============================================
+   Utilitários
+   ============================================ */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#content {
+    min-height: calc(100vh - 200px);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .navigators {
+        float: none;
+        width: auto;
+        margin: 10px;
+    }
+    
+    .results,
+    .pagination,
+    #footer {
+        margin-left: 0;
+    }
+    
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-input-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .input-group {
+        min-width: 100%;
+    }
+    
+    .search-actions {
+        width: 100%;
+    }
+    
+    .btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .form-grid,
+    .form-grid-2,
+    .form-grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .valor-range {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+    }
+    
+    #top3 {
+        height: auto;
+        padding: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .header-logos-right {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <div id="header">
+        <div id="top3">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <svg id="logo-eprocesso" width="200" height="60" viewBox="0 0 200 60">
+                    <rect fill="#fff" rx="5" width="200" height="60"/>
+                    <text x="15" y="38" font-family="Arial" font-size="20" font-weight="bold" fill="#1351B4">eProcesso</text>
+                    <text x="130" y="38" font-family="Arial" font-size="12" fill="#666">Buscador</text>
+                </svg>
+            </div>
+            <div class="header-logos-right">
+                <svg width="100" height="50" viewBox="0 0 100 50">
+                    <rect fill="rgba(255,255,255,0.9)" rx="3" width="100" height="50"/>
+                    <text x="10" y="30" font-family="Arial" font-size="11" fill="#1351B4">Receita Federal</text>
+                </svg>
+                <svg width="60" height="50" viewBox="0 0 60 50">
+                    <rect fill="rgba(255,255,255,0.9)" rx="3" width="60" height="50"/>
+                    <text x="10" y="30" font-family="Arial" font-size="11" fill="#1351B4">PGFN</text>
+                </svg>
+                <svg width="60" height="50" viewBox="0 0 60 50">
+                    <rect fill="rgba(255,255,255,0.9)" rx="3" width="60" height="50"/>
+                    <text x="10" y="30" font-family="Arial" font-size="11" fill="#1351B4">CARF</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CONTENT
+         ============================================ -->
+    <div id="content">
+        
+        <!-- Query Box -->
+        <div class="query-box">
+            <form id="query-form">
+                <div class="search-input-wrapper">
+                    <label for="q">Buscar:</label>
+                    <div class="input-group has-value">
+                        <input type="text" id="q" name="q" value="processo tributário" placeholder="Digite sua busca..." autocomplete="off">
+                        <button type="button" class="clear-input-btn" title="Limpar busca">×</button>
+                    </div>
+                    
+                    <div class="search-actions">
+                        <button type="button" class="btn btn-filters" onclick="openFilters()">
+                            <i class="fas fa-filter"></i> 
+                            Filtros Avançados
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filtros ativos -->
+                <div class="active-filters">
+                    <span class="filters-label">Filtros ativos:</span>
+                    <a href="#" class="filter-tag">
+                        tipo_processo_s:IRPF
+                        <span class="remove-icon">×</span>
+                    </a>
+                    <a href="#" class="filter-tag">
+                        situacao_s:Em andamento
+                        <span class="remove-icon">×</span>
+                    </a>
+                    <a href="#" class="filter-tag">
+                        dt_protocolo_tdt:[2024-01-01 TO 2024-12-31]
+                        <span class="remove-icon">×</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Navegação Facetada -->
+        <div class="navigators">
+            <h2 title="Estatísticas">
+                <i class="fas fa-chart-bar"></i> Estatísticas
+            </h2>
+            <span class="facet-field">Valor do Processo</span>
+            <ul>
+                <li><strong>Mínimo:</strong> R$ 1.234,56</li>
+                <li><strong>Máximo:</strong> R$ 9.876.543,21</li>
+                <li><strong>Soma:</strong> R$ 45.678.901,23</li>
+                <li><strong>Média:</strong> R$ 123.456,78</li>
+            </ul>
+            
+            <h2 title="Busca Facetada">
+                <i class="fas fa-filter"></i> Busca Facetada
+            </h2>
+            
+            <span class="facet-field">Tipo Processo</span>
+            <ul>
+                <li><a href="#">IRPF</a> (1.234)</li>
+                <li><a href="#">IRPJ</a> (987)</li>
+                <li><a href="#">IPI</a> (654)</li>
+                <li><a href="#">COFINS</a> (432)</li>
+                <li><a href="#">PIS</a> (321)</li>
+            </ul>
+            
+            <span class="facet-field">Situação</span>
+            <ul>
+                <li><a href="#">Em andamento</a> (2.345)</li>
+                <li><a href="#">Arquivado</a> (1.876)</li>
+                <li><a href="#">Julgado</a> (543)</li>
+                <li><a href="#">Suspenso</a> (234)</li>
+            </ul>
+            
+            <span class="facet-field">Unidade Atual</span>
+            <ul>
+                <li><a href="#">DRF São Paulo</a> (876)</li>
+                <li><a href="#">DRF Rio de Janeiro</a> (654)</li>
+                <li><a href="#">DRF Belo Horizonte</a> (432)</li>
+                <li><a href="#">DRF Brasília</a> (321)</li>
+                <li><a href="#">DRF Curitiba</a> (234)</li>
+            </ul>
+            
+            <span class="facet-field">Tributo ACT</span>
+            <ul>
+                <li><a href="#">Imposto de Renda</a> (1.543)</li>
+                <li><a href="#">Contribuição Social</a> (987)</li>
+                <li><a href="#">IPI</a> (654)</li>
+                <li><a href="#">IOF</a> (321)</li>
+            </ul>
+        </div>
+
+        <!-- Paginação Superior -->
+        <div class="pagination">
+            <span>
+                <span class="results-found">12.345</span>
+                resultados encontrados em 45 ms.
+            </span>
+            <div class="pagination-controls">
+                <a href="#">anterior</a>
+                Página <span class="page-num">1</span> de <span>1.235</span>
+                <a href="#">próxima</a>
+            </div>
+        </div>
+
+        <!-- Resultados -->
+        <div class="results">
+            <!-- Resultado 1 -->
+            <div class="result-document">
+                <div class="result-title">
+                    <a href="#">Processo Administrativo Fiscal nº 10283.720001/2024-15</a>
+                </div>
+                <div class="result-body">
+                    <div class="field-row">
+                        <span class="field-name">Tipo Processo:</span> IRPF - Imposto de Renda Pessoa Física
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Contribuinte:</span> João da Silva Santos (CPF: ***.456.789-**)
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Situação:</span> Em andamento
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Valor:</span> R$ 45.678,90
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Unidade Atual:</span> DRF São Paulo - Equipe de Julgamento
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Data Protocolo:</span> 15/03/2024 10:30
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Assunto:</span> Dedução indevida de despesas médicas no exercício 2023. O contribuinte apresentou <span class="highlight">processo tributário</span> contestando a glosa...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultado 2 -->
+            <div class="result-document">
+                <div class="result-title">
+                    <a href="#">Processo Administrativo Fiscal nº 10283.720002/2024-60</a>
+                </div>
+                <div class="result-body">
+                    <div class="field-row">
+                        <span class="field-name">Tipo Processo:</span> IRPJ - Imposto de Renda Pessoa Jurídica
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Contribuinte:</span> Empresa ABC Ltda (CNPJ: 12.345.678/0001-90)
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Situação:</span> Julgado - Procedente em parte
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Valor:</span> R$ 1.234.567,89
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Unidade Atual:</span> CARF - 1ª Turma
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Data Protocolo:</span> 22/01/2024 14:15
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Assunto:</span> Questionamento sobre a base de cálculo do <span class="highlight">tributo</span> incidente sobre operações de exportação...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultado 3 -->
+            <div class="result-document">
+                <div class="result-title">
+                    <a href="#">Processo Administrativo Fiscal nº 10283.720003/2024-04</a>
+                </div>
+                <div class="result-body">
+                    <div class="field-row">
+                        <span class="field-name">Tipo Processo:</span> COFINS - Contribuição para Financiamento da Seguridade Social
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Contribuinte:</span> Indústria XYZ S.A. (CNPJ: 98.765.432/0001-10)
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Situação:</span> Em andamento
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Valor:</span> R$ 567.890,12
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Unidade Atual:</span> DRF Rio de Janeiro - Equipe de Fiscalização
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Data Protocolo:</span> 08/02/2024 09:45
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Assunto:</span> Compensação de créditos de <span class="highlight">processo</span> anterior com débitos de COFINS do período 2023...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultado 4 -->
+            <div class="result-document">
+                <div class="result-title">
+                    <a href="#">Processo Administrativo Fiscal nº 10283.720004/2024-49</a>
+                </div>
+                <div class="result-body">
+                    <div class="field-row">
+                        <span class="field-name">Tipo Processo:</span> IPI - Imposto sobre Produtos Industrializados
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Contribuinte:</span> Fábrica de Bebidas Norte Ltda (CNPJ: 11.222.333/0001-44)
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Situação:</span> Suspenso - Aguardando perícia
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Valor:</span> R$ 2.345.678,90
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Unidade Atual:</span> DRF Manaus - Equipe de Auditoria
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Data Protocolo:</span> 30/04/2024 16:20
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Assunto:</span> Classificação fiscal de produto industrializado, <span class="highlight">tributário</span> referente ao NCM incorreto aplicado...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultado 5 -->
+            <div class="result-document">
+                <div class="result-title">
+                    <a href="#">Processo Administrativo Fiscal nº 10283.720005/2024-93</a>
+                </div>
+                <div class="result-body">
+                    <div class="field-row">
+                        <span class="field-name">Tipo Processo:</span> PIS - Programa de Integração Social
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Contribuinte:</span> Comércio Varejista Sul S.A. (CNPJ: 55.666.777/0001-88)
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Situação:</span> Arquivado - Pagamento integral
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Valor:</span> R$ 89.012,34
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Unidade Atual:</span> DRF Porto Alegre - Arquivo
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Data Protocolo:</span> 12/05/2024 11:00
+                    </div>
+                    <div class="field-row">
+                        <span class="field-name">Assunto:</span> Regularização de débitos de PIS referentes ao <span class="highlight">processo tributário</span> de parcelamento especial...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paginação Inferior -->
+        <div class="pagination">
+            <span>
+                <span class="results-found">12.345</span>
+                resultados encontrados em 45 ms.
+            </span>
+            <div class="pagination-controls">
+                <a href="#">anterior</a>
+                Página <span class="page-num">1</span> de <span>1.235</span>
+                <a href="#">próxima</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <div>
+                <a href="#" title="Resultados em XML">Resultados em XML</a>,
+                <a href="#" title="Resultados em JSON">em JSON</a> e 
+                <a href="#" title="Resultados em CSV">em CSV</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         DIALOG DE FILTROS AVANÇADOS
+         ============================================ -->
+    <div class="dialog-overlay" id="dialogOverlay" onclick="closeFilters()"></div>
+    <div class="dialog-box" id="dialogBox">
+        <div class="dialog-header">
+            <h2>
+                <i class="fas fa-sliders-h"></i>
+                Filtros Avançados de Busca
+            </h2>
+            <div class="dialog-controls">
+                <button type="button" class="dialog-maximize" title="Maximizar">⛶</button>
+                <button type="button" class="dialog-close" onclick="closeFilters()" title="Fechar">×</button>
+            </div>
+        </div>
+
+        <div class="dialog-body">
+            <!-- Seção: Filtros de Data -->
+            <div class="filter-section">
+                <h3><i class="fas fa-calendar"></i> Filtros de Data</h3>
+                <div class="form-grid form-grid-4">
+                    <div class="form-group">
+                        <label>Data do Protocolo</label>
+                        <div class="date-group">
+                            <div class="date-row">
+                                <label class="date-label">De:</label>
+                                <input type="date" id="dt_protocolo_from">
+                            </div>
+                            <div class="date-row">
+                                <label class="date-label">Até:</label>
+                                <input type="date" id="dt_protocolo_to">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Data da Juntada</label>
+                        <div class="date-group">
+                            <div class="date-row">
+                                <label class="date-label">De:</label>
+                                <input type="date">
+                            </div>
+                            <div class="date-row">
+                                <label class="date-label">Até:</label>
+                                <input type="date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Data de Registro</label>
+                        <div class="date-group">
+                            <div class="date-row">
+                                <label class="date-label">De:</label>
+                                <input type="date">
+                            </div>
+                            <div class="date-row">
+                                <label class="date-label">Até:</label>
+                                <input type="date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Data de Anexação</label>
+                        <div class="date-group">
+                            <div class="date-row">
+                                <label class="date-label">De:</label>
+                                <input type="date">
+                            </div>
+                            <div class="date-row">
+                                <label class="date-label">Até:</label>
+                                <input type="date">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção: Processo e Documento -->
+            <div class="filter-section">
+                <h3><i class="fas fa-file-alt"></i> Processo e Documento</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Grupo Processo</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Grupo Processo">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Tipo Processo</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Tipo Processo" value="IRPF">
+                            <button type="button" class="toggle-switch exact" onclick="toggleMode(this)">
+                                <span class="toggle-icon">=</span>
+                                <span class="toggle-text">Igual</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Subtipo Processo</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Subtipo Processo">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <label>Número do Processo</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Ex: 10283.720001/2024-15">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Situação do Processo</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Situação" value="Arquivado">
+                            <button type="button" class="toggle-switch exclude" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✗</span>
+                                <span class="toggle-text">Não Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Tipo do Documento</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Tipo do Documento">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Valor do Processo -->
+                    <div class="valor-range">
+                        <div class="form-group">
+                            <label>Valor Mínimo</label>
+                            <input type="text" placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Máximo</label>
+                            <input type="text" placeholder="0,00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção: Unidade e Equipe -->
+            <div class="filter-section">
+                <h3><i class="fas fa-building"></i> Unidade e Equipe</h3>
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Unidade de Origem</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Unidade de Origem">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Equipe de Origem</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Equipe de Origem">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Unidade Atual</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Unidade Atual">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <span class="autocomplete-badge"><i class="fas fa-magic"></i> AUTO</span>
+                            <label>Equipe Atual</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Equipe Atual">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção: Partes Envolvidas -->
+            <div class="filter-section">
+                <h3><i class="fas fa-users"></i> Partes Envolvidas</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <label>NI do Contribuinte</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="CPF ou CNPJ">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <label>Nome do Contribuinte</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="Nome do Contribuinte">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="field-wrapper">
+                            <label>CPF do Responsável</label>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" placeholder="000.000.000-00">
+                            <button type="button" class="toggle-switch" onclick="toggleMode(this)">
+                                <span class="toggle-icon">✓</span>
+                                <span class="toggle-text">Contém</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-footer">
+            <button type="button" class="btn btn-help">
+                <i class="fas fa-question-circle"></i>
+                Ajuda
+            </button>
+            
+            <div class="spacer"></div>
+            
+            <button type="button" class="btn btn-secondary">
+                <i class="fas fa-eraser"></i>
+                Limpar Filtros
+            </button>
+            
+            <button type="button" class="btn btn-primary" onclick="closeFilters()">
+                <i class="fas fa-check"></i>
+                Aplicar Filtros
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SCRIPTS
+         ============================================ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+        // Abrir/Fechar filtros avançados
+        function openFilters() {
+            document.getElementById('dialogOverlay').classList.add('active');
+            document.getElementById('dialogBox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFilters() {
+            document.getElementById('dialogOverlay').classList.remove('active');
+            document.getElementById('dialogBox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Toggle mode (Contém / Não Contém / Igual)
+        function toggleMode(element) {
+            const modes = [
+                { mode: 'contains', icon: '✓', text: 'Contém', class: '' },
+                { mode: 'excludes', icon: '✗', text: 'Não Contém', class: 'exclude' },
+                { mode: 'exact', icon: '=', text: 'Igual', class: 'exact' }
+            ];
+            
+            const currentClass = element.classList.contains('exclude') ? 'exclude' : 
+                                 element.classList.contains('exact') ? 'exact' : '';
+            
+            let currentIndex = modes.findIndex(m => m.class === currentClass);
+            let nextIndex = (currentIndex + 1) % modes.length;
+            let next = modes[nextIndex];
+            
+            element.classList.remove('exclude', 'exact');
+            if (next.class) element.classList.add(next.class);
+            
+            element.querySelector('.toggle-icon').textContent = next.icon;
+            element.querySelector('.toggle-text').textContent = next.text;
+        }
+        
+        // Limpar campo de busca
+        document.querySelector('.clear-input-btn').addEventListener('click', function() {
+            document.getElementById('q').value = '';
+            this.parentElement.classList.remove('has-value');
+        });
+        
+        // Mostrar/esconder botão de limpar
+        document.getElementById('q').addEventListener('input', function() {
+            if (this.value) {
+                this.parentElement.classList.add('has-value');
+            } else {
+                this.parentElement.classList.remove('has-value');
+            }
+        });
+        
+        // Fechar com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFilters();
+            }
+        });
+        
+        // Toggle alto contraste
+        function toggleContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+        
+        // Simular autocomplete
+        $(function() {
+            var sugestoes = [
+                "IRPF - Imposto de Renda Pessoa Física",
+                "IRPJ - Imposto de Renda Pessoa Jurídica",
+                "IPI - Imposto sobre Produtos Industrializados",
+                "COFINS - Contribuição para Financiamento da Seguridade Social",
+                "PIS - Programa de Integração Social",
+                "CSLL - Contribuição Social sobre o Lucro Líquido",
+                "IOF - Imposto sobre Operações Financeiras"
+            ];
+            
+            $(".dialog-box input[type='text']").autocomplete({
+                source: sugestoes,
+                minLength: 1
+            });
+        });
+    </script>
+</body>
+</html>

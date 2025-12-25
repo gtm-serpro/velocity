@@ -1,8 +1,5 @@
-// ============================================
-// assets/js/components/advanced-filters.js
-// ============================================
 /**
- * advanced-filters.js
+ * components/advanced-filters.js
  * Lógica do dialog de filtros avançados
  */
 
@@ -36,7 +33,6 @@ const AdvancedFilters = (function() {
     function init() {
         cacheElements();
         bindEvents();
-        
         console.log('AdvancedFilters: Inicializado');
     }
 
@@ -59,9 +55,6 @@ const AdvancedFilters = (function() {
     function bindEvents() {
         // Atalho de teclado: Escape fecha o dialog
         document.addEventListener('keydown', handleKeydown);
-
-        // Atalho de teclado: F11 maximiza/restaura
-        document.addEventListener('keydown', handleF11);
     }
 
     /**
@@ -71,12 +64,6 @@ const AdvancedFilters = (function() {
         if (event.key === 'Escape' && isOpen()) {
             close(event);
         }
-    }
-
-    /**
-     * Manipula F11 para maximizar
-     */
-    function handleF11(event) {
         if (event.key === 'F11' && isOpen()) {
             event.preventDefault();
             toggleMaximize(event);
@@ -94,6 +81,10 @@ const AdvancedFilters = (function() {
      * Abre o dialog
      */
     function open() {
+        if (!elements.overlay || !elements.dialog) {
+            cacheElements();
+        }
+        
         if (!elements.overlay || !elements.dialog) return;
 
         elements.overlay.classList.add(config.classes.active);
@@ -136,21 +127,10 @@ const AdvancedFilters = (function() {
             event.stopPropagation();
         }
 
-        if (!elements.dialog || !elements.maximizeIcon) return;
+        if (!elements.dialog) return;
 
-        var isMaximized = elements.dialog.classList.contains(config.classes.maximized);
-
-        if (isMaximized) {
-            elements.dialog.classList.remove(config.classes.maximized);
-            elements.maximizeIcon.textContent = '⛶';
-            elements.maximizeBtn.title = 'Maximizar';
-            console.log('AdvancedFilters: Dialog restaurado');
-        } else {
-            elements.dialog.classList.add(config.classes.maximized);
-            elements.maximizeIcon.textContent = '⛶';
-            elements.maximizeBtn.title = 'Restaurar';
-            console.log('AdvancedFilters: Dialog maximizado');
-        }
+        elements.dialog.classList.toggle(config.classes.maximized);
+        console.log('AdvancedFilters: Toggle maximizar');
     }
 
     /**
@@ -159,23 +139,23 @@ const AdvancedFilters = (function() {
     function clearAll() {
         // Limpar inputs de texto
         var textInputs = document.querySelectorAll(config.selectors.textInputs);
-        for (var i = 0; i < textInputs.length; i++) {
-            textInputs[i].value = '';
-        }
+        textInputs.forEach(function(input) {
+            input.value = '';
+        });
 
         // Limpar inputs de data
         var dateInputs = document.querySelectorAll(config.selectors.dateInputs);
-        for (var i = 0; i < dateInputs.length; i++) {
-            dateInputs[i].value = '';
-        }
+        dateInputs.forEach(function(input) {
+            input.value = '';
+        });
 
         // Resetar todos os toggles para "Contém"
         var toggles = document.querySelectorAll(config.selectors.toggles);
-        for (var i = 0; i < toggles.length; i++) {
-            if (toggles[i].dataset.mode !== 'contains') {
-                ToggleMode.reset(toggles[i]);
+        toggles.forEach(function(toggle) {
+            if (typeof ToggleMode !== 'undefined') {
+                ToggleMode.reset(toggle);
             }
-        }
+        });
 
         console.log('AdvancedFilters: Todos os filtros limpos');
     }
@@ -188,7 +168,10 @@ const AdvancedFilters = (function() {
             var filters = collectFilters();
             
             if (filters) {
-                SearchForm.appendToQuery(filters);
+                // Adiciona ao campo de busca principal
+                if (typeof SearchForm !== 'undefined') {
+                    SearchForm.appendToQuery(filters);
+                }
                 close();
                 
                 // Submit do formulário
@@ -210,7 +193,7 @@ const AdvancedFilters = (function() {
         var searchValue = '';
         var today = new Date().toISOString().slice(0, 10);
 
-        // Processar filtros de data
+        // Processar filtros de data (APENAS 2 CAMPOS AGORA)
         var dateFilters = collectDateFilters(today);
         if (dateFilters === 'error') return null;
         searchValue += dateFilters;
@@ -227,40 +210,14 @@ const AdvancedFilters = (function() {
     }
 
     /**
-     * Valida CPF e Datas
-     */
-    function validateFilters() {
-        const errors = [];
-        
-        // Validar CPF se preenchido
-        const cpfInput = document.getElementById('cpf_responsavel_s');
-        if (cpfInput && cpfInput.value && !ValidationUtils.isValidCPF(cpfInput.value)) {
-            errors.push('CPF inválido');
-        }
-        
-        // Validar datas
-        const dateFields = ['dt_protocolo_tdt', 'dt_juntada_tdt'];
-        dateFields.forEach(field => {
-            const from = document.getElementById(field + '_from');
-            const to = document.getElementById(field + '_to');
-            if (from?.value && to?.value && from.value > to.value) {
-                errors.push(`${field}: Data inicial maior que final`);
-            }
-        });
-        
-        return errors;
-    }
-
-
-    /**
      * Coleta filtros de data
+     * ATUALIZADO: Apenas dt_protocolo_tdt e dt_juntada_tdt
      */
     function collectDateFilters(today) {
+        // REMOVIDOS: dt_registro_tdt e dt_anexacao_tdt
         var dateFields = [
-            { id: 'dt_protocolo_tdt', label: 'Data Protocolo' },
-            { id: 'dt_juntada_tdt', label: 'Data Juntada' },
-            { id: 'dt_registro_tdt', label: 'Data Registro' },
-            { id: 'dt_anexacao_tdt', label: 'Data Anexação' }
+            { id: 'dt_protocolo_tdt', label: 'Data do Protocolo do Processo' },
+            { id: 'dt_juntada_tdt', label: 'Data da Juntada' }
         ];
 
         var result = '';
@@ -285,7 +242,12 @@ const AdvancedFilters = (function() {
         if (!fromInput) return '';
 
         var from = fromInput.value ? fromInput.value + 'T00:00:00Z' : '';
-        var to = toInput && toInput.value ? toInput.value + 'T23:59:59Z' : today + 'T23:59:59Z';
+        var to = toInput && toInput.value ? toInput.value + 'T23:59:59Z' : '';
+
+        // Se apenas "De" foi preenchido, usa hoje como "Até"
+        if (from && !to) {
+            to = today + 'T23:59:59Z';
+        }
 
         // Validação básica
         if (from && to && from > to) {
@@ -303,8 +265,8 @@ const AdvancedFilters = (function() {
         var fromInput = document.getElementById('valor_processo_d_from');
         var toInput = document.getElementById('valor_processo_d_to');
 
-        var valorFrom = fromInput ? fromInput.value || '*' : '*';
-        var valorTo = toInput ? toInput.value || '*' : '*';
+        var valorFrom = fromInput && fromInput.value ? fromInput.value : '*';
+        var valorTo = toInput && toInput.value ? toInput.value : '*';
 
         if (valorFrom !== '*' || valorTo !== '*') {
             return 'valor_processo_d:[' + valorFrom + ' TO ' + valorTo + '] ';
@@ -329,16 +291,23 @@ const AdvancedFilters = (function() {
 
         var result = '';
 
-        for (var i = 0; i < textFields.length; i++) {
-            var fieldId = textFields[i];
+        textFields.forEach(function(fieldId) {
             var element = document.getElementById(fieldId);
-            if (!element || !element.value.trim()) continue;
+            if (!element || !element.value.trim()) return;
 
-            var fieldValue = SolrUtils.escape(element.value.trim(), fieldId);
+            var fieldValue = element.value.trim();
+            
+            // Escapa caracteres especiais do Solr
+            if (typeof SolrUtils !== 'undefined') {
+                fieldValue = SolrUtils.escape(fieldValue, fieldId);
+            }
+            
+            // Obtém o modo do toggle associado
             var fieldGroup = element.closest('.field-group');
             var toggleSwitch = fieldGroup ? fieldGroup.querySelector('.toggle-switch') : null;
             var mode = toggleSwitch ? (toggleSwitch.dataset.mode || 'contains') : 'contains';
 
+            // Constrói a query baseado no modo
             if (mode === 'excludes') {
                 result += '-' + fieldId + ':*' + fieldValue + '* ';
             } else if (mode === 'exact') {
@@ -346,7 +315,7 @@ const AdvancedFilters = (function() {
             } else {
                 result += fieldId + ':*' + fieldValue + '* ';
             }
-        }
+        });
 
         return result;
     }

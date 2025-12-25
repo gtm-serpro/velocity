@@ -1,92 +1,116 @@
-// ============================================
-// assets/js/components/autocomplete.js
-// ============================================
 /**
  * components/autocomplete.js
  * Gerencia o autocomplete dos campos com sugestões
+ * 
+ * COMPORTAMENTO:
+ * 1. Ao CLICAR (focus) no campo → mostra TODOS os valores do domínio
+ * 2. Conforme o usuário DIGITA → filtra os valores (client-side)
+ * 3. Os valores são carregados UMA VEZ e cacheados
+ * 
+ * Isso permite ao usuário visualizar o padrão do conteúdo
+ * (maiúsculo/minúsculo, nomenclatura, etc.) antes de digitar.
  */
 
 const Autocomplete = (function() {
     'use strict';
 
     // Configuração
-    const config = {
+    var config = {
         solrBaseUrl: 'https://eprocesso-buscador.receita.fazenda/solr/eprocesso',
-        limit: 20,
-        minLength: 2,
-        delay: 300,
-        cache: {}
+        limit: 100,  // Aumentado para pegar mais valores do domínio
+        minLength: 0 // Permite abrir sem digitar nada
     };
 
-    // Timers para debounce
-    const timers = {};
+    // Cache dos valores por campo (carrega uma vez, usa sempre)
+    var valuesCache = {};
+    
+    // Controle de campos já inicializados
+    var initializedFields = {};
 
     /**
-     * Carrega sugestões para um campo
+     * Inicializa o autocomplete para um campo
+     * Carrega os valores do domínio e configura o jQuery UI Autocomplete
+     * 
      * @param {HTMLElement} input - Elemento do input
      */
-    function load(input) {
-        if (!input || !input.value) return;
-
-        const fieldName = input.name || input.id;
-        const query = input.value.trim();
-
-        // Ignora se muito curto
-        if (query.length < config.minLength) return;
-
-        // Debounce: cancela timer anterior e cria novo
-        if (timers[fieldName]) {
-            clearTimeout(timers[fieldName]);
+    function init(input) {
+        if (!input) return;
+        
+        var fieldName = input.name || input.id;
+        
+        // Evita inicializar duas vezes
+        if (initializedFields[fieldName]) {
+            return;
         }
-
-        timers[fieldName] = setTimeout(function() {
-            fetchSuggestions(input, fieldName, query);
-        }, config.delay);
+        
+        // Marca como inicializado
+        initializedFields[fieldName] = true;
+        
+        // Carrega valores do domínio (se ainda não estiver no cache)
+        if (!valuesCache[fieldName]) {
+            loadDomainValues(fieldName, function(values) {
+                valuesCache[fieldName] = values;
+                setupAutocomplete(input, values);
+            });
+        } else {
+            setupAutocomplete(input, valuesCache[fieldName]);
+        }
     }
 
     /**
-     * Busca sugestões no Solr
-     * @param {HTMLElement} input - Elemento do input
+     * Carrega TODOS os valores do domínio de um campo via Solr Terms API
+     * Não usa prefix, pega todos os valores ordenados por frequência
+     * 
      * @param {string} fieldName - Nome do campo
-     * @param {string} query - Termo de busca
+     * @param {Function} callback - Função chamada com os valores
      */
-    function fetchSuggestions(input, fieldName, query) {
-        // Verifica cache
-        const cacheKey = fieldName + ':' + query;
-        if (config.cache[cacheKey]) {
-            applySuggestions(input, config.cache[cacheKey]);
-            return;
-        }
+    function loadDomainValues(fieldName, callback) {
+        var xhr = new XMLHttpRequest();
+        var solrField = fieldName;
 
         // Campo especial para busca geral
-        const solrField = (fieldName === 'q') ? 'conteudo_txt' : fieldName;
+        if (fieldName === 'q') {
+            solrField = 'conteudo_txt';
+        }
 
-        // Monta URL
-        const url = config.solrBaseUrl + '/terms' +
-                    '?limit=' + config.limit +
-                    '&terms.prefix=' + encodeURIComponent(query) +
-                    '&terms.sort=count' +
-                    '&omitHeader=true' +
-                    '&terms.fl=' + solrField;
+        // URL SEM terms.prefix para pegar TODOS os valores
+        var url = config.solrBaseUrl + '/terms' +
+                  '?terms.fl=' + solrField +
+                  '&terms.limit=' + config.limit +
+                  '&terms.sort=count' +  // Ordena por frequência (mais usados primeiro)
+                  '&omitHeader=true' +
+                  '&wt=json';
 
-        console.log('Autocomplete: Buscando sugestões para', fieldName);
+        console.log('Autocomplete: Carregando domínio de', fieldName);
 
-        // Faz requisição
-        const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         
         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    const suggestions = parseSuggestions(response, solrField);
-                    
-                    // Adiciona ao cache
-                    config.cache[cacheKey] = suggestions;
-                    
-                    applySuggestions(input, suggestions);
-                } catch (error) {
-                    console.error('Autocomplete: Erro ao processar resposta', error);
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        var values = [];
+                        
+                        // Processa resposta do Solr Terms
+                        // Formato: { terms: { campo: [termo1, count1, termo2, count2, ...] } }
+                        if (response.terms && response.terms[solrField]) {
+                            var terms = response.terms[solrField];
+                            for (var i = 0; i < terms.length; i += 2) {
+                                values.push(terms[i]);
+                            }
+                        }
+                        
+                        console.log('Autocomplete: Carregados', values.length, 'valores para', fieldName);
+                        callback(values);
+                        
+                    } catch (error) {
+                        console.error('Autocomplete: Erro ao processar resposta', error);
+                        callback([]);
+                    }
+                } else {
+                    console.error('Autocomplete: Erro HTTP', xhr.status);
+                    callback([]);
                 }
             }
         };
@@ -95,77 +119,114 @@ const Autocomplete = (function() {
     }
 
     /**
-     * Processa resposta do Solr e extrai sugestões
-     * @param {Object} response - Resposta do Solr
-     * @param {string} field - Nome do campo
-     * @return {Array} Lista de sugestões
-     */
-    function parseSuggestions(response, field) {
-        const suggestions = [];
-        
-        if (response.terms && response.terms[field]) {
-            const terms = response.terms[field];
-            
-            // A resposta vem como [termo1, count1, termo2, count2, ...]
-            for (let i = 0; i < terms.length; i += 2) {
-                suggestions.push(terms[i]);
-            }
-        }
-
-        return suggestions;
-    }
-
-    /**
-     * Aplica sugestões ao campo usando jQuery UI Autocomplete
+     * Configura o jQuery UI Autocomplete com filtragem client-side
+     * 
      * @param {HTMLElement} input - Elemento do input
-     * @param {Array} suggestions - Lista de sugestões
+     * @param {Array} allValues - Todos os valores do domínio
      */
-    function applySuggestions(input, suggestions) {
-        if (!input || !window.$ || !$.fn.autocomplete) {
+    function setupAutocomplete(input, allValues) {
+        // Verifica se jQuery UI está disponível
+        if (!window.$ || !$.fn.autocomplete) {
             console.warn('Autocomplete: jQuery UI não disponível');
             return;
         }
 
-        const $input = $(input);
+        var $input = $(input);
 
-        // Inicializa ou atualiza autocomplete
-        if ($input.data('ui-autocomplete')) {
-            $input.autocomplete('option', 'source', suggestions);
-        } else {
-            $input.autocomplete({
-                source: suggestions,
-                minLength: config.minLength,
-                delay: 0, // Delay já foi aplicado no debounce
-                select: function(event, ui) {
-                    console.log('Autocomplete: Selecionado', ui.item.value);
+        // Configura autocomplete com filtragem client-side
+        $input.autocomplete({
+            // Source é uma função que filtra os valores
+            source: function(request, response) {
+                var term = request.term.toLowerCase();
+                
+                if (!term) {
+                    // Se não digitou nada, mostra todos (limitado a 20 para performance)
+                    response(allValues.slice(0, 20));
+                } else {
+                    // Filtra valores que CONTÊM o termo (não apenas começam com)
+                    var filtered = allValues.filter(function(value) {
+                        return value.toLowerCase().indexOf(term) !== -1;
+                    });
+                    response(filtered.slice(0, 20));
                 }
-            });
+            },
+            minLength: 0, // Permite abrir sem digitar
+            delay: 0,     // Sem delay (filtragem é local)
+            
+            // Ao selecionar um item
+            select: function(event, ui) {
+                $input.val(ui.item.value);
+                $input.trigger('change');
+                return false;
+            },
+            
+            // Ao focar em um item (navegação por teclado)
+            focus: function(event, ui) {
+                return false; // Não preenche o input ao navegar
+            }
+        });
 
-            // Ajusta z-index dos elementos autocomplete
+        // IMPORTANTE: Abre o autocomplete ao clicar/focar no campo
+        $input.on('focus', function() {
+            // Pequeno delay para garantir que o autocomplete está pronto
             setTimeout(function() {
-                $('[id^="ui-id-"]').css('z-index', 9999);
+                $input.autocomplete('search', $input.val());
             }, 100);
-        }
+        });
+        
+        // Também abre ao clicar (para casos onde já está focado)
+        $input.on('click', function() {
+            if (!$input.autocomplete('widget').is(':visible')) {
+                $input.autocomplete('search', $input.val());
+            }
+        });
+
+        // Ajusta z-index para funcionar dentro do dialog
+        $input.autocomplete('widget').css('z-index', 10000);
+        
+        console.log('Autocomplete: Configurado para', input.name || input.id);
     }
 
     /**
-     * Limpa o cache de sugestões
-     * @param {string} fieldName - Nome do campo (opcional)
+     * Função legada para compatibilidade com onkeyup="loadValues(this)"
+     * Agora apenas garante que o campo está inicializado
+     * 
+     * @param {HTMLElement} input - Elemento do input
+     */
+    function load(input) {
+        // Se ainda não inicializou, inicializa agora
+        var fieldName = input.name || input.id;
+        if (!initializedFields[fieldName]) {
+            init(input);
+        }
+        // Não precisa fazer mais nada - o jQuery UI Autocomplete
+        // já está configurado para filtrar automaticamente
+    }
+
+    /**
+     * Inicializa todos os campos com autocomplete na página
+     * Deve ser chamado no document.ready
+     */
+    function initAll() {
+        var fields = document.querySelectorAll('[data-autocomplete="true"], .ac_input');
+        fields.forEach(function(field) {
+            init(field);
+        });
+        console.log('Autocomplete: Inicializados', fields.length, 'campos');
+    }
+
+    /**
+     * Limpa o cache de um campo específico
+     * @param {string} fieldName - Nome do campo (opcional, se não informado limpa tudo)
      */
     function clearCache(fieldName) {
         if (fieldName) {
-            // Limpa cache de um campo específico
-            Object.keys(config.cache).forEach(function(key) {
-                if (key.startsWith(fieldName + ':')) {
-                    delete config.cache[key];
-                }
-            });
+            delete valuesCache[fieldName];
+            delete initializedFields[fieldName];
         } else {
-            // Limpa todo o cache
-            config.cache = {};
+            valuesCache = {};
+            initializedFields = {};
         }
-
-        console.log('Autocomplete: Cache limpo');
     }
 
     /**
@@ -173,18 +234,37 @@ const Autocomplete = (function() {
      * @param {Object} options - Opções a serem alteradas
      */
     function configure(options) {
-        Object.assign(config, options);
+        if (options.solrBaseUrl) config.solrBaseUrl = options.solrBaseUrl;
+        if (options.limit) config.limit = options.limit;
+        if (options.minLength !== undefined) config.minLength = options.minLength;
     }
 
     // API pública
     return {
-        load,
-        clearCache,
-        configure
+        init: init,
+        initAll: initAll,
+        load: load,  // Compatibilidade com código legado
+        clearCache: clearCache,
+        configure: configure
     };
 })();
 
+/**
+ * Função global para compatibilidade com código legado
+ * No template: onkeyup="loadValues(this)"
+ * 
+ * Agora funciona de forma diferente:
+ * - Na primeira chamada, inicializa o autocomplete
+ * - Nas chamadas seguintes, não faz nada (jQuery UI já filtra automaticamente)
+ */
 function loadValues(input) {
     Autocomplete.load(input);
 }
-window.loadValues = loadValues;
+
+/**
+ * Inicialização automática quando o DOM estiver pronto
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa todos os campos de autocomplete
+    Autocomplete.initAll();
+});

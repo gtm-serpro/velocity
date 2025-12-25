@@ -2,17 +2,22 @@
 ## components/filters/text-field-with-toggle.vm
 ## Campo de texto com toggle de modo de busca (Contém/Não Contém/Igual)
 ##
-## Parâmetros esperados:
+## Parâmetros esperados (devem ser definidos ANTES do #parse):
 ## - $fieldId: ID do campo
 ## - $fieldLabel: Label do campo
 ## - $hasAutocomplete: boolean indicando se tem autocomplete
 ## - $inputMask: opcional, tipo de máscara (cpf, cnpj, etc)
 ##
+## COMPORTAMENTO DO AUTOCOMPLETE:
+## - Ao CLICAR no campo: mostra todos os valores do domínio
+## - Ao DIGITAR: filtra os valores que contêm o texto digitado
+## - Isso permite visualizar o padrão do conteúdo (maiúsculo/minúsculo)
+##
 
 <div class="form-group">
     <div class="field-wrapper">
         #if($hasAutocomplete)
-            <span class="autocomplete-badge" title="Campo com sugestões automáticas">
+            <span class="autocomplete-badge" title="Clique para ver opções disponíveis">
                 <i class="fas fa-magic"></i> AUTO
             </span>
         #end
@@ -24,13 +29,14 @@
             type="text" 
             id="$fieldId" 
             name="$fieldId" 
-            placeholder="$fieldLabel" 
+            placeholder="#if($hasAutocomplete)Clique para ver opções ou digite...#else$fieldLabel#end" 
             value="$!esc.html($params.get($fieldId))"
             #if($hasAutocomplete)
-                onkeyup="Autocomplete.load(this)" 
+                onfocus="Autocomplete.init(this)"
                 autocomplete="off" 
-                class="ac_input"
+                class="ac_input autocomplete-field"
                 data-autocomplete="true"
+                data-field="$fieldId"
             #end
             #if($inputMask)
                 data-mask="$inputMask"

@@ -45,17 +45,21 @@
     ## Body com filtros
     <div class="dialog-body">
         
+        ## ================================================
         ## Seção: Filtros de Data
+        ## APENAS: Data do Protocolo do Processo e Data da Juntada
+        ## REMOVIDOS: Data de Registro e Data de Anexação
+        ## ================================================
         <div class="filter-section" data-section="dates">
             <h3>
                 <i class="fas fa-calendar"></i> 
                 Filtros de Data
             </h3>
-            <div class="form-grid form-grid-4">
+            <div class="form-grid form-grid-2">
                 
-                ## Data do Protocolo
+                ## Data do Protocolo do Processo (label corrigido)
                 #set($fieldId = "dt_protocolo_tdt")
-                #set($fieldLabel = "Data do Protocolo")
+                #set($fieldLabel = "Data do Protocolo do Processo")
                 #parse("components/filters/date-range-field.vm")
                 
                 ## Data da Juntada
@@ -63,20 +67,12 @@
                 #set($fieldLabel = "Data da Juntada")
                 #parse("components/filters/date-range-field.vm")
                 
-                ## Data de Registro
-                #set($fieldId = "dt_registro_tdt")
-                #set($fieldLabel = "Data de Registro")
-                #parse("components/filters/date-range-field.vm")
-                
-                ## Data de Anexação
-                #set($fieldId = "dt_anexacao_tdt")
-                #set($fieldLabel = "Data de Anexação")
-                #parse("components/filters/date-range-field.vm")
-                
             </div>
         </div>
 
+        ## ================================================
         ## Seção: Processo e Documento
+        ## ================================================
         <div class="filter-section" data-section="process">
             <h3>
                 <i class="fas fa-file-alt"></i> 
@@ -108,9 +104,9 @@
                 #set($hasAutocomplete = false)
                 #parse("components/filters/text-field-with-toggle.vm")
                 
-                ## Situação Processo (com autocomplete)
+                ## Situação do Documento (CORRIGIDO - não é "Situação Processo")
                 #set($fieldId = "situacao_s")
-                #set($fieldLabel = "Situação do Processo")
+                #set($fieldLabel = "Situação do Documento")
                 #set($hasAutocomplete = true)
                 #parse("components/filters/text-field-with-toggle.vm")
                 
@@ -173,7 +169,9 @@
             </div>
         </div>
 
+        ## ================================================
         ## Seção: Unidade e Equipe
+        ## ================================================
         <div class="filter-section" data-section="unit">
             <h3>
                 <i class="fas fa-building"></i> 
@@ -181,15 +179,15 @@
             </h3>
             <div class="form-grid form-grid-2">
                 
-                ## Unidade Origem (com autocomplete)
+                ## Unidade de Origem do Documento (CORRIGIDO)
                 #set($fieldId = "unidade_origem_s")
-                #set($fieldLabel = "Unidade de Origem")
+                #set($fieldLabel = "Unidade de Origem do Documento")
                 #set($hasAutocomplete = true)
                 #parse("components/filters/text-field-with-toggle.vm")
                 
-                ## Equipe Origem (com autocomplete)
+                ## Equipe de Origem do Documento (CORRIGIDO)
                 #set($fieldId = "equipe_origem_s")
-                #set($fieldLabel = "Equipe de Origem")
+                #set($fieldLabel = "Equipe de Origem do Documento")
                 #set($hasAutocomplete = true)
                 #parse("components/filters/text-field-with-toggle.vm")
                 
@@ -208,7 +206,9 @@
             </div>
         </div>
 
+        ## ================================================
         ## Seção: Partes Envolvidas
+        ## ================================================
         <div class="filter-section" data-section="parties">
             <h3>
                 <i class="fas fa-users"></i> 
@@ -251,7 +251,9 @@
             </div>
         </div>
 
+        ## ================================================
         ## Seção: Julgamento
+        ## ================================================
         <div class="filter-section" data-section="judgment">
             <h3>
                 <i class="fas fa-gavel"></i> 
