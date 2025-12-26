@@ -97,7 +97,7 @@
 }
 
 /* Print styles */
-@media print {
+@fonts print {
     #header,
     #footer,
     .dialog-overlay,

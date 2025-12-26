@@ -12,11 +12,13 @@
 <body>
     #parse("layout/header.vm")
     
-    <div id="content">
-        $content
-    </div>
-    
-    #parse("layout/footer.vm")
+    <main>
+        <div id="content">
+            $content
+        </div>
+
+        #parse("layout/footer.vm")
+    </main>
     
     ## Scripts no final do body para melhor performance
     <script src="/js/jquery-3.6.0.js"></script>

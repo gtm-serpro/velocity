@@ -10,31 +10,37 @@
 #set($mltResults = $response.response.get("moreLikeThis"))
 #set($annotate = $params.get("annotateBrowse"))
 
+## templates/pages/search.vm
+
 ## Formulário de busca
 #parse("components/query-form.vm")
 
-## Sugestão de correção
-#parse("components/did-you-mean.vm")
+#set($hasQuery = $params.get('q') && $params.get('q').trim() != '')
+#set($hasFilters = $params.getParams('fq').size() > 0)
 
-## Navegação lateral (facetas e estatísticas)
-<div class="navigators">
-    #parse("components/stats.vm")
-    #parse("components/facets.vm")
-</div>
+#if($hasQuery || $hasFilters)
+    ## Sugestão de correção
+    #parse("components/did-you-mean.vm")
 
-## Paginação superior
-#parse("components/pagination.vm")
+    ## Navegação lateral
+    <div class="navigators">
+        #parse("components/facets.vm")
+    </div>
 
-## Mensagens de erro
-<div class="error">
-    #if($response.response.error.code)
-        <h1>ERROR $response.response.error.code</h1>
-        $response.response.error.msg
-    #end
-</div>
+    ## Paginação superior
+    #parse("components/pagination.vm")
 
-## Resultados
-#parse("components/search-results.vm")
+    ## Mensagens de erro
+    <div class="error">
+        #if($response.response.error.code)
+            <h1>ERROR $response.response.error.code</h1>
+            $response.response.error.msg
+        #end
+    </div>
 
-## Paginação inferior
-#parse("components/pagination.vm")
+    ## Resultados
+    #parse("components/search-results.vm")
+
+    ## Paginação inferior
+    #parse("components/pagination.vm")
+#end

@@ -12,19 +12,18 @@
     ## Documento do eProcesso (tem campo 'id' do eProcesso)
     #if($doc.getFieldValue('id'))
         #parse("documents/nfe-doc.vm")
-    
-    ## Documento de produto (tem campo 'name')
-    #elseif($doc.getFieldValue('name'))
-        #parse("documents/product-doc.vm")
-    
-    ## Documento join (tem campo 'compName_s')
-    #elseif($doc.getFieldValue('compName_s'))
-        #parse("documents/join-doc.vm")
-    
-    ## Fallback para richtext
     #else
-        #parse("documents/richtext-doc.vm")
-    
+        ## Fallback genérico
+        <div class="result-document">
+            <div class="result-title"><em>Documento sem identificação</em></div>
+            <div class="result-body">
+                #foreach($fieldName in $doc.fieldNames)
+                    #if($doc.getFieldValue($fieldName))
+                        <div><strong>$fieldName:</strong> $doc.getFieldValue($fieldName)</div>
+                    #end
+                #end
+            </div>
+        </div>
     #end
 
 </div>
