@@ -11,6 +11,7 @@ body{
     display: flex;
     flex-direction: column;
     background-color: #F7F9FA;
+    overflow:hidden;
 }
 button{
     cursor: pointer;

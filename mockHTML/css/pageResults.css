@@ -7,6 +7,7 @@
     border-right: 1px solid #ddd;
     background-color: white;
     padding:16px;
+    overflow-y:auto;
 }
 .facetGroup{
     display:flex;
@@ -17,11 +18,14 @@
     flex-direction:column;
     list-style-type: none;
     padding:0;
+    gap:2px;
 }
 .facetTitle{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    height:28px;
+    margin:8px 0 4px 0;
 }
 .facetTitle img{
     width:16px;
@@ -36,9 +40,23 @@
     align-items:center;
     border:none;
     background-color:transparent;
+    width: 100%;
+    padding:0 4px 0 8px;
+    height:22px;
 }
 .facetText button:hover{
     background-color:#F7F9FA;
+    border-radius: 4px 20px 20px 4px;
+}
+.facetText button:hover .facetNumber{
+    background-color:#fff;
+}
+.facetNumber{
+    background-color:#F7F9FA;
+    padding: 0 6px;
+    border-radius:20px;
+    border:1px solid #ccc;
+    font-size:11px;
 }
 /* right content */
 #mainContent{
