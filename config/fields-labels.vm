@@ -29,7 +29,5 @@
     'result_questdrj_nivel1_s': 'Resultado Julgamento DRJ Nível 1',
     'result_questdrj_nivel2_s': 'Resultado Julgamento DRJ Nível 2',
     'dt_protocolo_tdt': 'Data do Protocolo',
-    'dt_juntada_tdt': 'Data da Juntada',
-    'dt_registro_tdt': 'Data de Registro',
-    'dt_anexacao_tdt': 'Data de Anexação'
+    'dt_juntada_tdt': 'Data da Juntada'
 })

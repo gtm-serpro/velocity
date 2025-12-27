@@ -1,4 +1,4 @@
-/**
+/* *
  * header.css
  * Estilos do cabeçalho da aplicação
  */
@@ -6,16 +6,46 @@
 /* ============================================
    CONTAINER DO HEADER
    ============================================ */
-#header {
-    width: 100%;
-    position: relative;
-    z-index: var(--z-sticky);
-}
+* {font-family: var(--font-family-base);ascent-override:120%;descent-override:23.1%;line-gap-override:0.0%;size-adjust:105.05%}
+    html,body{padding:0;margin:0;font-family: sans-serif;font-size:13px;color:var(--textColor);background-color: var(--globalGrayLight);}
+    .hidden{display: none;}
+    button{color:var(--textColor);}
+    .truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis}
+    body{display: flex;flex-direction: column;max-height:100dvh;overflow: hidden;}
+    .btn{color:var(--textColor);cursor:pointer;display: flex;align-items: center;padding: var(--gSpace-xs);background-color: transparent;border:var(--borderStyle);border-radius: var(--gSpace-sm);height: calc(var(--headerItemsHeight) + 2*var(--globalWidth))}
+    
+    /* Icons */
+    .icon{fill:var(--globalGrayDark);width: 24px;height: 24px;flex-shrink: 0;}
+    
+    /* Header */
+    header{background-color: white;height: var(--headerHeight);border-bottom: var(--borderStyle);padding:0 var(--gSpace);display:flex;align-items: center;justify-content: space-between;gap:calc(2*var(--gSpace));}
+    .headerRight{flex:1;justify-content: end; display: flex;gap:calc(2*var(--gSpace));align-items: center;}
+    
+    /* Logo principal */
+    .logo img {height: var(--headerItemsHeight);width: auto;}
+    
+    /* Logos parceiros */
+    .logos{height: var(--headerItemsHeight);display: flex;gap: var(--gSpace);align-items: center;}
+    .logos svg {height: var(--headerItemsHeight);display: block;}
+    .logos img {height: var(--headerItemsHeight);width: auto;}
+    .logoIcon{filter: brightness(0) invert(.8);transition: filter 0.2s;}
+    .logoIcon:hover{filter:none;}
+    
+    /* Search */
+    .search{margin-left:var(--gSpace-sm);flex:1;max-width: 800px; display: flex;gap:var(--gSpace-xs);height: calc(var(--headerItemsHeight) + 2*var(--globalWidth));}
+    .search .btn{padding: 0 var(--gSpace);}
+    .searchInput{border-radius: var(--gSpace-sm);border:var(--borderStyle);width: 100%;color:var(--textColor);padding-left: var(--gSpace-sm);}
+    .inputGroup{position: relative;flex:1;display: flex;}
+    .searchClose{position: absolute;top:calc(50% - 8px);right: var(--gSpace-sm);width: var(--gSpace);height: var(--gSpace);}
+    
+    /* Acessibilidade */
+    .acessibilidade{display: flex;gap:var(--gSpace-xs)}
+    .acessibilidade .icon{width: 20px;height: 20px;}
 
 /* ============================================
    BARRA SUPERIOR (TOP3)
    ============================================ */
-#top3 {
+/* #top3 {
     height: 84px;
     background-image: url('/img/4fbae8678490deba79866a4ec705b22c.png');
     background-repeat: no-repeat;
@@ -29,12 +59,12 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 var(--spacing-md);
-}
+} */
 
 /* ============================================
    LOGOS
    ============================================ */
-#logo-eprocesso {
+/* #logo-eprocesso {
     float: left;
     margin: 8px 8px 8px 20px;
     max-height: 78px;
@@ -55,19 +85,19 @@
     max-height: 78px;
     vertical-align: middle;
     text-align: right;
-}
+} */
 
 /* Grupo de logos à direita */
-.header-logos-right {
+/* .header-logos-right {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-}
+} */
 
 /* ============================================
    NAVEGAÇÃO PRINCIPAL (SE HOUVER)
    ============================================ */
-.header-nav {
+/* .header-nav {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
@@ -84,12 +114,12 @@
 .header-nav a:hover {
     background-color: rgba(255, 255, 255, 0.2);
     text-decoration: none;
-}
+} */
 
 /* ============================================
    CONTROLES DO HEADER
    ============================================ */
-.header-controls {
+/* .header-controls {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -108,10 +138,10 @@
 
 .header-control-btn:hover {
     background: rgba(255, 255, 255, 0.2);
-}
+} */
 
 /* Botão de alto contraste */
-.contrast-toggle {
+/* .contrast-toggle {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
@@ -119,12 +149,12 @@
 
 .contrast-toggle i {
     font-size: var(--font-size-md);
-}
+} */
 
 /* ============================================
    RESPONSIVIDADE
    ============================================ */
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
     #top3 {
         height: auto;
         min-height: 60px;
@@ -179,12 +209,12 @@
         justify-content: center;
         margin-top: var(--spacing-sm);
     }
-}
+} */
 
 /* ============================================
    MODO ALTO CONTRASTE
    ============================================ */
-.high-contrast #top3 {
+/* .high-contrast #top3 {
     background-image: none;
     background-color: #000;
     border-top-color: #fff;
@@ -196,4 +226,4 @@
 .high-contrast #logo-carf,
 .high-contrast #logo-icone {
     filter: grayscale(100%) contrast(2);
-}
+} */

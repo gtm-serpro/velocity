@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="typography.css">
+    <title>Document</title>
+    <style>
+        html, body{
+            margin:0;
+        }
+        .iconColor{
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+        }
+        *,::placeholder {
+            color:red;
+            font-family:rawline, Fallback;
+        }
+        body{
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7F9FA;
+        }
+        button{
+            cursor: pointer;
+            border:1px solid #ddd;
+            border-radius: 4px;
+            padding: 0 8px;
+            height: 32px;
+        }
+        button:hover{
+            background-color: #ddd;
+        }
+        /* main header */
+        #mainHeader{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            border-bottom: 1px solid #ddd;
+            padding: 8px 16px;
+            background-color: white;
+        }
+        header img {
+            max-height: 32px;
+        }
+        #logos{
+            display: flex;
+            align-items: center;
+            gap:16px;
+        }
+        #logosParceiros{
+            display: flex;
+            height: 24px;
+            gap:8px;
+            filter:grayscale();
+            opacity: .3;
+        }
+        #accessibility{
+            display: flex;
+            gap:4px;
+        }
+        #accessibility button {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px;
+        }
+        #accessibility img{
+            width: 24px;
+        }
+        /* search */
+        search{
+            flex:1;
+            display: flex;
+        }
+        .searchForm{
+            display: flex;
+            flex:1;
+            gap:4px;
+            justify-content: end;
+        }
+        .searchInputWraper{
+            flex:1;
+            display: flex;
+            max-width: 600px;
+            position: relative;
+        }
+        .searchIcon{
+            position: absolute;
+            left: 6px;
+            top:6px;
+            width: 20px;
+            height: 20px;
+        }
+        .searchInput{
+            flex:1;
+            padding: 0 76px 0 28px;
+            border:1px solid #ddd;
+            border-radius: 4px;
+        }
+        .searchCloseBtn{
+            position: absolute;
+            top:5px;
+            right: 50px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px;
+            border-radius: 20px;
+            padding: 0;
+        }
+        .searchCloseBtn img{
+            width: 14px;
+            height: 14px;
+            display: block;
+        }
+        .searchKBD{
+            position: absolute;
+            top:5px;
+            right: 5px;
+            border:1px solid #ddd;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+        /* filters dialog */
+        #filtersDialog{
+            display: none;
+        }
+        /* page results */
+        #pageResults{
+            display: flex;
+            flex:1;
+        }
+        #sidebar {
+            width: 250px;
+            border-right: 1px solid #ddd;
+            background-color: white;
+        }
+        #mainContent{
+            display: flex;
+            flex-direction: column;
+            flex:1;
+        }
+        #results{
+            flex:1;
+            display: flex;
+            flex-direction: column;
+            
+        }
+        #pageResultsFooter{
+            display: flex;
+            padding: 8px 16px;
+            border-top:1px solid #ddd;
+            background-color: white;
+            justify-content: space-between;
+            align-items: center;
+            gap:24px;
+        }
+        #pageResultsFooterLeft{
+            align-items: center;
+            gap:24px;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div id="logos">
+            <!-- logo -->
+            <img id="logoMain" src="/assets/img/logos/logo-eprocesso-buscador.svg" alt="eProcesso Buscador">
+            <!-- logos parceiros -->
+            <div id="logosParceiros">
+                <img src="/assets/img/logos/logo-parceiro-receita.svg" alt="Receita Fedral">
+                <img src="/assets/img/logos/logo-parceiro-pgfn.svg" alt="PGFN">
+                <img src="/assets/img/logos/logo-parceiro-carf.svg" alt="CARF">
+            </div>
+        </div>
+        <!-- search -->
+        <search>
+            <form class="searchForm" action="">
+                <div class="searchInputWraper">
+                    <img class="searchIcon iconColor" src="/assets/img/icons/magnifying-glass-solid-full.svg" alt="Icone Buscar">
+                    <input class="searchInput" type="text" placeholder="Digite para buscar...">
+                    <button class="searchCloseBtn">
+                        <img class="iconColor" src="/assets/img/icons/xmark-solid-full.svg" alt="Icone Fechar">
+                    </button>
+                    <kbd class="searchKBD">Ctrl</kbd>
+                </div>
+                <button>Buscar</button>
+                <button>Filtrar</button>
+            </form>
+        </search>
+        <!-- acessibilidade -->
+        <div id="accessibility">
+            <button><img class="iconColor" src="/assets/img/icons/moon-solid-full.svg" alt="Light/Dark"></button>
+            <button><img class="iconColor" src="/assets/img/icons/circle-half-stroke-solid-full.svg" alt="Contrast"></button>
+            <button><img class="iconColor" src="/assets/img/icons/text-height-solid-full.svg" alt="FontSize"></button>
+        </div>
+    </header>
+    <main id="pageResults">
+        <aside id="sidebar">
+            <!-- loop groups -->
+                <!-- loop facets -->
+        </aside>
+        <section id="mainContent">
+            <section id="results">
+                <!-- loop results -->
+            </section>
+            <footer id="pageResultsFooter">
+                <div id="pageResultsFooterLeft">
+                    <!-- showing number results -->
+                    <div id="">
+                        Mostrando
+                        <span>1-10</span>
+                        de
+                        <span>123</span>
+                        resultados
+                    </div>
+                    <!-- pagination -->
+                    <div id="pagination">
+                        <button>Anterior</button>
+                        <button>...</button>
+                        <button>6</button>
+                        <button>7</button>
+                        <button active>8</button>
+                        <button>9</button>
+                        <button>10</button>
+                        <button>...</button>
+                        <button>Próximo</button>
+                    </div>
+                </div>            
+                <!-- download -->
+                <div id="downloadGroup">
+                    <button class="">XML</button>
+                    <button>JSON</button>
+                    <button>CSV</button>
+                </div>
+            </footer>
+        </section>
+    </main>
+    <div id="filtersDialog">
+        <header>
+            <!-- search -->
+            <search>
+                <form action="">
+                    <input type="text">
+                    <button>Buscar</button>
+                    <button>Filtrar</button>
+                </form>
+            </search>
+            <!-- closeBtn -->
+        </header>
+        <main>
+            <!-- filtersTags -->
+        </main>
+        <footer>
+            <!-- help -->
+            <!-- clearBtn -->
+            <!-- cancelBtn -->
+            <!-- submitBtn -->
+        </footer>
+    </div>
+    <div id="infoDialog">
+        <header>
+            <!-- tituloInfo -->
+            <!-- closeBtn -->
+        </header>
+        <main>
+            <!-- infoText -->
+        </main>
+    </div>
+    <div id="saibaMaisDialog">
+        <header>
+            <!-- tituloSaibaMais -->
+            <!-- closeBtn -->
+        </header>
+        <main>
+            <!-- saibaMaisText -->
+        </main>
+    </div>
+</body>
+</html>

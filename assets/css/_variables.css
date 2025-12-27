@@ -137,4 +137,8 @@
     --max-width-lg: 960px;
     --max-width-xl: 1140px;
     --max-width-xxl: 1320px;
+
+
+
+    --font-family-base:"Rawline";--headerIconSize: 28px;--sidebarWidth:250px;--shadowP: 0px 0px 5px 0px rgba(0, 0, 0, 0.1), 0px 0px 1px 0px rgba(0, 0, 0, 0.1);--shadowG: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;--textColor:#999;--primary:#1351B4;--headerHeight:50px;--headerItemsHeight:30px;--gSpace:15px;--gSpace-sm:calc(var(--gSpace)/2);--gSpace-xs:calc(var(--gSpace)/4);--globalGrayLight:#fafafa;--globalGray:#cbcbcb;--globalGrayDark:#aaa;--globalWidth:1px;--borderStyle:var(--globalWidth) solid var(--globalGray);--borderStylePrimary:var(--globalWidth) solid #F4921D;--borderStyleTransparent:var(--globalWidth) solid white;--globalBorderRadius:var(--gSpace-sm);
 }
