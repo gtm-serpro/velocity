@@ -1,5 +1,6 @@
 .iconColor{
-    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+    /* filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(200deg) brightness(118%) contrast(119%); */
+    opacity:.3;
 }
 *,::placeholder {
     color:#3D4551;
@@ -20,6 +21,7 @@ button{
     padding: 0 8px;
     height: 32px;
     background-color:#F7F9FA;
+    flex-shrink:0;
 }
 button:hover{
     background-color: #EDEFF0;

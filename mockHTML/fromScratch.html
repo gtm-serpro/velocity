@@ -41,7 +41,10 @@
                     <kbd class="searchKBD">Ctrl</kbd>
                 </div>
                 <button>Buscar</button>
-                <button>Filtrar</button>
+                <button class="filterBtn">
+                    <span class="filterBtnIcon"><img class="iconColor" src="/assets/img/icons/filter-solid-full.svg" alt=""></span>
+                    <span class="filterBtnText">Filtrar</span> 
+                </button>
             </form>
         </search>
         <!-- acessibilidade -->
@@ -56,68 +59,35 @@
                 <img class="iconColor" src="/assets/img/icons/text-height-solid-full.svg" alt="FontSize">
             </button>
         </div>
+        <div id="accessibilityDropdown">
+            <button id="accessibilityBtn">
+                <img class="iconColor" src="/assets/img/icons/universal-access-solid-full.svg" alt="Acessibilidade">
+            </button>
+            <ul id="accessibilityMenu">
+                <li><button value="theme">🌙 Tema escuro</button></li>
+                <li><button value="contrast">◐ Alto contraste</button></li>
+                <li><button value="fontUp">A+ Aumentar fonte</button></li>
+                <li><button value="fontDown">A- Diminuir fonte</button></li>
+            </ul>
+        </div>
     </header>
+    <div id="sidebarOverlay"></div>
     <main id="pageResults">
         <aside id="sidebar">
             <!-- loop groups -->
             <div class="facetGroup">
                 <button class="facetTitle">
-                    titulo
+                    <span>titulo muito longo que vai ser truncado</span>
                     <img class="iconColor" src="/assets/img/icons/chevron-down-solid-full.svg" alt="">
                 </button>
                 <ul>
                     <!-- loop facets -->
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                </ul>
-            </div>
-            <div class="facetGroup">
-                <button class="facetTitle">
-                    titulo
-                    <img class="iconColor" src="/assets/img/icons/chevron-down-solid-full.svg" alt="">
-                </button>
-                <ul>
-                    <!-- loop facets -->
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                </ul>
-            </div>
-            <div class="facetGroup">
-                <button class="facetTitle">
-                    titulo
-                    <img class="iconColor" src="/assets/img/icons/chevron-down-solid-full.svg" alt="">
-                </button>
-                <ul>
-                    <!-- loop facets -->
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
-                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
+                    <li class="facetText"><button><span>faceta com nome muito longo que vai ser truncado</span><span class="facetNumber">123</span></button></li>
+                    <li class="facetText"><button><span>faceta com nome muito longo que vai ser truncado</span><span class="facetNumber">123</span></button></li>
+                    <li class="facetText"><button><span>faceta com nome muito longo que vai ser truncado</span><span class="facetNumber">123</span></button></li>
+                    <li class="facetText"><button><span>faceta com nome muito longo que vai ser truncado</span><span class="facetNumber">123</span></button></li>
+                    <li class="facetText"><button><span>faceta com nome muito longo que vai ser truncado</span><span class="facetNumber">123</span></button></li>
+                    <li class="facetText"><button><span>faceta com nome muito longo que vai ser truncado</span><span class="facetNumber">123</span></button></li>
                 </ul>
             </div>
         </aside>
@@ -202,5 +172,6 @@
             <!-- saibaMaisText -->
         </main>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

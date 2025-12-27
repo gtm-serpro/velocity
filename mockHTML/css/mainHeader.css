@@ -12,12 +12,12 @@
 #sidebarBtn{
     width: 32px;
     height: 32px;
-    display: flex;
+    display: none;  /* escondido por padrão */
     justify-content: center;
     align-items: center;
     padding: 4px;
 }
-.sidebarBtn img{
+#sidebarBtn img{
     width: 24px;
 }
 #logoMain{
@@ -27,6 +27,7 @@
     display: flex;
     align-items: center;
     gap:16px;
+    flex-shrink: 0;
 }
 #logosParceiros{
     display: flex;
@@ -49,4 +50,134 @@
 }
 #accessibility img{
     width: 24px;
+}
+
+/* Select de acessibilidade (escondido em desktop) */
+#accessibilitySelect{
+    display: none;
+    height: 32px;
+    width:32px;
+    padding: 0 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #F7F9FA;
+    cursor: pointer;
+}
+.accessibilityBtn{
+    width:24px;
+}
+/* Dropdown de acessibilidade (escondido em desktop) */
+#accessibilityDropdown {
+    display: none;
+    position: relative;
+}
+
+#accessibilityBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+
+#accessibilityBtn img {
+    width: 24px;
+}
+
+#accessibilityMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    padding: 4px 0;
+    list-style: none;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-width: 160px;
+    z-index: 100;
+}
+
+#accessibilityMenu li {
+    display: block;
+}
+
+#accessibilityMenu button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    height: auto;
+    border-radius: 0;
+}
+
+#accessibilityMenu button:hover {
+    background-color: #F7F9FA;
+}
+
+#accessibilityMenu button span {
+    width: 20px;
+    text-align: center;
+}
+
+/* Menu aberto */
+#accessibilityDropdown.open #accessibilityMenu {
+    display: block;
+}
+
+/* Mobile - mostra dropdown */
+@media (max-width: 600px) {
+    #sidebarBtn {
+        display: flex;
+    }
+    #accessibility {
+        display: none;
+    }
+    #accessibilityDropdown {
+        display: block;
+    }
+    #mainHeader {
+        gap: 8px;
+        padding: 8px;
+    }
+    #mainHeaderLeft {
+        gap: 8px;
+    }
+}
+
+/* Tablet - esconde logos parceiros */
+@media (max-width: 900px) {
+    #logosParceiros {
+        display: none;
+    }
+    #mainHeader {
+        gap: 16px;
+    }
+}
+
+/* Mobile - mostra menu, troca botões por select */
+@media (max-width: 600px) {
+    #sidebarBtn {
+        display: flex;
+    }
+    #accessibility {
+        display: none;
+    }
+    #accessibilitySelect {
+        display: block;
+    }
+    #mainHeader {
+        gap: 8px;
+        padding: 8px;
+    }
+    #mainHeaderLeft {
+        gap: 8px;
+    }
 }

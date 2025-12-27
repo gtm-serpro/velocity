@@ -7,7 +7,7 @@
     width: 250px;
     border-right: 1px solid #ddd;
     background-color: white;
-    padding:0 8px 8px 8px;
+    padding:8px 12px 12px 12px;
     overflow-y:auto;
 }
 .facetGroup{
@@ -21,30 +21,54 @@
     padding:0;
     gap:2px;
 }
-.facetTitle{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    height:28px;
-    margin:8px 0 4px 0;
+.facetTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 28px;
+    margin: 8px 0 4px 0;
+    overflow: hidden;  /* adicionar */
+}
+
+.facetTitle span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
 }
 .facetTitle img{
     width:16px;
     height:16px;
 }
-.faceText{
-    display:flex;
-}
-.facetText button{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border:none;
-    background-color:transparent;
+.facetText button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background-color: transparent;
     width: 100%;
-    padding:0 4px 0 8px;
-    height:22px;
+    padding: 2px 4px 2px 8px;
+    height: 22px;
+    overflow: hidden;  /* adicionar */
 }
+
+.facetText button span:first-child {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+    text-align: left;
+}
+
+.facetNumber {
+    background-color: #F7F9FA;
+    padding: 0 6px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 11px;
+    flex-shrink: 0;  /* adicionar - impede que o número encolha */
+}
+
 .facetText button:hover{
     background-color:#F7F9FA;
     border-radius: 4px 20px 20px 4px;
@@ -70,21 +94,23 @@
     flex:1;
     display: flex;
     flex-direction: column;
-    padding:8px;
+    padding:12px;
     overflow-y:auto;
     gap:8px;
 }
 .result{
     background-color:white;
     height: 200px;
+    min-height: 200px;
     border-radius: 8px;
     border:1px solid #ddd;
+    flex-shrink: 0;
 }
 
 /* footer */
 #pageResultsFooter{
     display: flex;
-    padding: 8px;
+    padding: 8px 12px;
     border-top:1px solid #ddd;
     background-color: white;
     justify-content: space-between;
@@ -95,4 +121,36 @@
     align-items: center;
     gap:24px;
     display: flex;
+}
+/* Mobile - sidebar escondido por padrão */
+@media (max-width: 600px) {
+    #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100dvh;
+        z-index: 200;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    #sidebar.open {
+        transform: translateX(0);
+    }
+    
+    /* Overlay escuro quando sidebar aberto */
+    #sidebarOverlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 199;
+    }
+    
+    #sidebarOverlay.open {
+        display: block;
+    }
 }

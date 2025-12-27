@@ -9,9 +9,10 @@ search{
     justify-content: end;
 }
 .searchInputWraper{
-    flex:1;
+    flex: 1;
     display: flex;
     max-width: 600px;
+    min-width: 0;  /* permite encolher */
     position: relative;
 }
 .searchIcon{
@@ -22,10 +23,11 @@ search{
     height: 20px;
 }
 .searchInput{
-    flex:1;
+    flex: 1;
     padding: 0 72px 0 28px;
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 4px;
+    min-width: 0;
 }
 .searchCloseBtn{
     position: absolute;
@@ -56,4 +58,66 @@ search{
     align-items: center;
     padding: 0 4px;
     border-radius: 2px;
+}
+/* Ícone do filtro - escondido por padrão */
+.filterBtn img {
+    display: none;
+    width: 16px;
+    height: 16px;
+}
+
+.filterBtn .filterBtnIcon {
+    display: none;
+}
+.filterBtnText{
+    display:block;
+}
+/* Botão fechar - escondido por padrão */
+.searchCloseBtn {
+    position: absolute;
+    top: 5px;
+    right: 44px;
+    width: 22px;
+    height: 22px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    padding: 0;
+}
+
+/* Mostra o X só quando tem texto */
+.searchInputWraper.hasValue .searchCloseBtn {
+    display: flex;
+}
+@media (max-width: 800px) {
+    .searchInput {
+        padding: 0 28px 0 28px;
+    }
+}
+@media (max-width: 600px) {
+    .searchKBD {
+        display: none;
+    }
+    .searchCloseBtn {
+        right: 5px;
+    }
+    .filterBtn img {
+        display: block;
+    }
+    .filterBtn .filterBtnIcon {
+        display: flex;
+    }
+    .filterBtnText{
+        display:none;
+    }
+    .searchKBD {
+        display: none;
+    }
+    .searchInput {
+        padding: 0 28px 0 28px;  /* ajusta o padding direito */
+    }
+    .searchCloseBtn {
+        right: 5px;  /* reposiciona o botão de fechar */
+    }
 }
