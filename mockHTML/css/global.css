@@ -1,0 +1,25 @@
+.iconColor{
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+}
+*,::placeholder {
+    color:#3D4551;
+    font-family:rawline, Fallback;
+    font-size:14px;
+}
+body{
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background-color: #F7F9FA;
+}
+button{
+    cursor: pointer;
+    border:1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 8px;
+    height: 32px;
+    background-color:#F7F9FA;
+}
+button:hover{
+    background-color: #EDEFF0;
+}

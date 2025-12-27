@@ -3,194 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="typography.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/mainHeader.css">
+    <link rel="stylesheet" href="css/pageResults.css">
+    <link rel="stylesheet" href="css/filtersDialog.css">
     <title>Document</title>
-    <style>
-        html, body{
-            margin:0;
-        }
-        .iconColor{
-            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
-        }
-        *,::placeholder {
-            color:red;
-            font-family:rawline, Fallback;
-        }
-        body{
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            background-color: #F7F9FA;
-        }
-        button{
-            cursor: pointer;
-            border:1px solid #ddd;
-            border-radius: 4px;
-            padding: 0 8px;
-            height: 32px;
-        }
-        button:hover{
-            background-color: #ddd;
-        }
-        /* main header */
-        #mainHeader{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 24px;
-            border-bottom: 1px solid #ddd;
-            padding: 8px 16px;
-            background-color: white;
-        }
-        header img {
-            max-height: 32px;
-        }
-        .sidebarBtn{
-            width: 32px;
-            height: 32px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 4px;
-        }
-        .sidebarBtn img{
-            width: 24px;
-        }
-        #logos{
-            display: flex;
-            align-items: center;
-            gap:16px;
-        }
-        #logosParceiros{
-            display: flex;
-            height: 24px;
-            gap:8px;
-            filter:grayscale();
-            opacity: .3;
-        }
-        #accessibility{
-            display: flex;
-            gap:4px;
-        }
-        #accessibility button {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 4px;
-        }
-        #accessibility img{
-            width: 24px;
-        }
-        /* search */
-        search{
-            flex:1;
-            display: flex;
-        }
-        .searchForm{
-            display: flex;
-            flex:1;
-            gap:4px;
-            justify-content: end;
-        }
-        .searchInputWraper{
-            flex:1;
-            display: flex;
-            max-width: 600px;
-            position: relative;
-        }
-        .searchIcon{
-            position: absolute;
-            left: 6px;
-            top:6px;
-            width: 20px;
-            height: 20px;
-        }
-        .searchInput{
-            flex:1;
-            padding: 0 76px 0 28px;
-            border:1px solid #ddd;
-            border-radius: 4px;
-        }
-        .searchCloseBtn{
-            position: absolute;
-            top:5px;
-            right: 50px;
-            width: 22px;
-            height: 22px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 2px;
-            border-radius: 20px;
-            padding: 0;
-        }
-        .searchCloseBtn img{
-            width: 14px;
-            height: 14px;
-            display: block;
-        }
-        .searchKBD{
-            position: absolute;
-            top:5px;
-            right: 5px;
-            border:1px solid #ddd;
-            height: 22px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 4px;
-            border-radius: 2px;
-        }
-        /* filters dialog */
-        #filtersDialog{
-            display: none;
-        }
-        /* page results */
-        #pageResults{
-            display: flex;
-            flex:1;
-        }
-        #sidebar {
-            width: 250px;
-            border-right: 1px solid #ddd;
-            background-color: white;
-        }
-        #mainContent{
-            display: flex;
-            flex-direction: column;
-            flex:1;
-        }
-        #results{
-            flex:1;
-            display: flex;
-            flex-direction: column;
-            
-        }
-        #pageResultsFooter{
-            display: flex;
-            padding: 8px 16px;
-            border-top:1px solid #ddd;
-            background-color: white;
-            justify-content: space-between;
-            align-items: center;
-            gap:24px;
-        }
-        #pageResultsFooterLeft{
-            align-items: center;
-            gap:24px;
-            display: flex;
-        }
-    </style>
 </head>
 <body>
     <header id="mainHeader">
-        <button id="sidebarBtn">
-            <img class="iconColor" src="/assets/img/icons/bars-solid-full.svg" alt="Ícone Menu">
-        </button>
-        <div id="logos">
+        <div id="mainHeaderLeft">
+            <button id="sidebarBtn">
+                <img class="iconColor" src="/assets/img/icons/bars-solid-full.svg" alt="Ícone Menu">
+            </button>
             <!-- logo -->
             <img id="logoMain" src="/assets/img/logos/logo-eprocesso-buscador.svg" alt="eProcesso Buscador">
             <!-- logos parceiros -->
@@ -231,7 +57,16 @@
     <main id="pageResults">
         <aside id="sidebar">
             <!-- loop groups -->
-                <!-- loop facets -->
+            <div class="facetGroup">
+                <button class="facetTitle">
+                    titulo
+                    <img class="iconColor" src="/assets/img/icons/chevron-down-solid-full.svg" alt="">
+                </button>
+                <ul>
+                    <!-- loop facets -->
+                    <li class="facetText"><button>faceta 1 <span class="facetNumber">123</span></button></li>
+                </ul>
+            </div>
         </aside>
         <section id="mainContent">
             <section id="results">

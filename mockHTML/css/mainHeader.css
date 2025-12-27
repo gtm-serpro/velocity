@@ -1,0 +1,52 @@
+@import "search.css";
+
+#mainHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 16px;
+    background-color: white;
+}
+#sidebarBtn{
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+.sidebarBtn img{
+    width: 24px;
+}
+#logoMain{
+    height: 32px;
+}
+#mainHeaderLeft{
+    display: flex;
+    align-items: center;
+    gap:16px;
+}
+#logosParceiros{
+    display: flex;
+    height: 24px;
+    gap:8px;
+    filter:grayscale();
+    opacity: .3;
+}
+#accessibility{
+    display: flex;
+    gap:4px;
+}
+#accessibility button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+#accessibility img{
+    width: 24px;
+}
