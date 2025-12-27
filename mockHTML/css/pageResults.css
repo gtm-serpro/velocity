@@ -1,12 +1,13 @@
 #pageResults{
     display: flex;
     flex:1;
+    overflow:hidden;
 }
 #sidebar {
     width: 250px;
     border-right: 1px solid #ddd;
     background-color: white;
-    padding:16px;
+    padding:0 8px 8px 8px;
     overflow-y:auto;
 }
 .facetGroup{
@@ -55,7 +56,7 @@
     background-color:#F7F9FA;
     padding: 0 6px;
     border-radius:20px;
-    border:1px solid #ccc;
+    border:1px solid #ddd;
     font-size:11px;
 }
 /* right content */
@@ -63,16 +64,27 @@
     display: flex;
     flex-direction: column;
     flex:1;
+    overflow:hidden;
 }
 #results{
     flex:1;
     display: flex;
     flex-direction: column;
-    
+    padding:8px;
+    overflow-y:auto;
+    gap:8px;
 }
+.result{
+    background-color:white;
+    height: 200px;
+    border-radius: 8px;
+    border:1px solid #ddd;
+}
+
+/* footer */
 #pageResultsFooter{
     display: flex;
-    padding: 8px 16px;
+    padding: 8px;
     border-top:1px solid #ddd;
     background-color: white;
     justify-content: space-between;
