@@ -46,6 +46,17 @@
         header img {
             max-height: 32px;
         }
+        .sidebarBtn{
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px;
+        }
+        .sidebarBtn img{
+            width: 24px;
+        }
         #logos{
             display: flex;
             align-items: center;
@@ -176,6 +187,9 @@
 </head>
 <body>
     <header id="mainHeader">
+        <button id="sidebarBtn">
+            <img class="iconColor" src="/assets/img/icons/bars-solid-full.svg" alt="Ícone Menu">
+        </button>
         <div id="logos">
             <!-- logo -->
             <img id="logoMain" src="/assets/img/logos/logo-eprocesso-buscador.svg" alt="eProcesso Buscador">
@@ -203,9 +217,15 @@
         </search>
         <!-- acessibilidade -->
         <div id="accessibility">
-            <button><img class="iconColor" src="/assets/img/icons/moon-solid-full.svg" alt="Light/Dark"></button>
-            <button><img class="iconColor" src="/assets/img/icons/circle-half-stroke-solid-full.svg" alt="Contrast"></button>
-            <button><img class="iconColor" src="/assets/img/icons/text-height-solid-full.svg" alt="FontSize"></button>
+            <button>
+                <img class="iconColor" src="/assets/img/icons/moon-solid-full.svg" alt="Light/Dark">
+            </button>
+            <button>
+                <img class="iconColor" src="/assets/img/icons/circle-half-stroke-solid-full.svg" alt="Contrast">
+            </button>
+            <button>
+                <img class="iconColor" src="/assets/img/icons/text-height-solid-full.svg" alt="FontSize">
+            </button>
         </div>
     </header>
     <main id="pageResults">

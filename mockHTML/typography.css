@@ -1,144 +1,144 @@
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_100.woff)format("woff");
+    src:url(../assets/fonts/rawline-100.woff)format("woff");
     font-display:swap;
     font-weight:100;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_100i.woff)format("woff");
+    src:url(../assets/fonts/rawline-100i.woff)format("woff");
     font-display:swap;
     font-weight:100;
     font-style:italic;
-        ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_200.woff)format("woff");
+    src:url(../assets/fonts/rawline-200.woff)format("woff");
     font-display:swap;
     font-weight:200;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_200i.woff)format("woff");
+    src:url(../assets/fonts/rawline-200i.woff)format("woff");
     font-display:swap;
     font-weight:200;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_300.woff)format("woff");
+    src:url(../assets/fonts/rawline-300.woff)format("woff");
     font-display:swap;
     font-weight:300;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_300i.woff)format("woff");
+    src:url(../assets/fonts/rawline-300i.woff)format("woff");
     font-display:swap;
     font-weight:300;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_400.woff)format("woff");
+    src:url(../assets/fonts/rawline-400.woff) format("woff");
     font-display:swap;
     font-weight:400;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_400i.woff)format("woff");
+    src:url(../assets/fonts/rawline-400i.woff)format("woff");
     font-display:swap;
     font-weight:400;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_500.woff)format("woff");
+    src:url(../assets/fonts/rawline-500.woff)format("woff");
     font-display:swap;
     font-weight:500;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_500i.woff)format("woff");
+    src:url(../assets/fonts/rawline-500i.woff)format("woff");
     font-display:swap;
     font-weight:500;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_600.woff)format("woff");
+    src:url(../assets/fonts/rawline-600.woff)format("woff");
     font-display:swap;
     font-weight:600;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_600i.woff)format("woff");
+    src:url(../assets/fonts/rawline-600i.woff)format("woff");
     font-display:swap;
     font-weight:600;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_700.woff)format("woff");
+    src:url(../assets/fonts/rawline-700.woff)format("woff");
     font-display:swap;
     font-weight:700;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_700i.woff)format("woff");
+    src:url(../assets/fonts/rawline-700i.woff)format("woff");
     font-display:swap;
     font-weight:700;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_800.woff)format("woff");
+    src:url(../assets/fonts/rawline-800.woff)format("woff");
     font-display:swap;
     font-weight:800;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_800i.woff)format("woff");
+    src:url(../assets/fonts/rawline-800i.woff)format("woff");
     font-display:swap;
     font-weight:800;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_900.woff)format("woff");
+    src:url(../assets/fonts/rawline-900.woff)format("woff");
     font-display:swap;
     font-weight:900;
     font-style:normal;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
 @font-face{
     font-family:rawline;
-    src:url(../assets/fonts/rawline_900i.woff)format("woff");
+    src:url(../assets/fonts/rawline-900i.woff)format("woff");
     font-display:swap;
     font-weight:900;
     font-style:italic;
-    ascent-override: 110%
+    ascent-override: 100%;
 }
